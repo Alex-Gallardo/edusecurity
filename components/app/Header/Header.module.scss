@@ -1,0 +1,59 @@
+@mixin flexPosition($dir, $pos, $alg) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $pos;
+  align-items: $alg;
+}
+
+@mixin mobile {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+.container {
+  @include flexPosition(row, space-between, center);
+  width: 100vw;
+  height: 100px;
+  background-color: #07355f;
+  color: #fff;
+  padding: 24px;
+
+  h1 {
+    margin: 0px;
+  }
+
+  span {
+    font-weight: 300;
+  }
+
+  .config_perfil {
+    @include flexPosition(row, center, center);
+    width: auto;
+    height: auto;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+    }
+  }
+}
