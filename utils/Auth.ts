@@ -18,7 +18,7 @@ let GoogleProvider = new GoogleAuthProvider();
 
 const getAuthUser = async () => {
   const res = await getApp();
-  console.log("res:", res);
+  // console.log("res:", res);
   return getAuth(res);
 };
 

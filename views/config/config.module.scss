@@ -1,0 +1,68 @@
+@mixin flexPosition($dir, $pos, $alg) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $pos;
+  align-items: $alg;
+}
+
+@mixin mobile {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+.container {
+  @include flexPosition(column, center, center);
+  width: 100%;
+  height: 100%;
+  padding: 1em 5em;
+  color: #07355f;
+
+  section {
+    @include flexPosition(row, space-between, center);
+    width: 100%;
+    padding: 0px 32px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 8px 0px;
+
+    .perfil {
+      @include flexPosition(row, center, center);
+      height: auto;
+
+      img {
+        width: 96px;
+        height: 96px;
+        border-radius: 48px;
+      }
+
+      .perfil_info {
+        @include flexPosition(column, center, flex-start);
+        height: 100%;
+        margin: 0px 16px;
+
+        h2, p {
+            margin: 0px;
+        }
+      }
+    }
+  }
+}

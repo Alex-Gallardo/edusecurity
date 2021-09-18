@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 // STYLES
@@ -7,7 +7,6 @@ import "../styles/globals.scss";
 // PROVIDER
 import UserProvider from "../context/UserProvider";
 import { userListener } from "./../utils/Auth";
-import useAuthContext from "../hooks/useAuthContext";
 
 function MyApp({ Component, pageProps }) {
   // ROUTER
@@ -20,7 +19,7 @@ function MyApp({ Component, pageProps }) {
     (async () =>
       (listener = await userListener((user) => {
         if (user) {
-          router.push("/");
+          if (!router.pathname.startsWith("/watch")) router.push("/");
         } else {
           router.push("/login");
         }
