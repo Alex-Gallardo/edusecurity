@@ -31,10 +31,9 @@
 
 .container {
   @include flexPosition(column, flex-start, center);
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   height: auto;
-  //   overflow: hidden;
 }
 
 .main {

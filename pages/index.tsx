@@ -1,17 +1,19 @@
 import React from "react";
-
-// Component
+// STYLES
+import styles from "./index.module.scss";
+// COMPONENTS
 import Layout from "../components/app/Layout/Layout";
+// VIEWS
+import Home from "../views/home/home";
 
-// Estilos
-import styles from "../styles/Home.module.scss";
-
-const Home = () => {
+const Init = () => {
   return (
     <div className={styles.container}>
-      <Layout>{}</Layout>
+      <Layout>
+        <Home></Home>
+      </Layout>
     </div>
   );
 };
 
-export default Home;
+export default Init;

@@ -6,6 +6,7 @@ import Header from "../Header/Header";
 // Styles
 import Styles from "./Layout.module.scss";
 
+
 const Layout = ({ children }) => {
   const path = useRouter().pathname;
 

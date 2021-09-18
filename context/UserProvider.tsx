@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 
 // USERCONTEXT
 import UserContext from "./UserContext";
@@ -9,6 +9,7 @@ import { AGREGAR_USUARIO, ELIMINAR_USUARIO } from "../types";
 
 // REDUCER
 import UserReducer from "./UserReducer";
+import { userListener } from "../utils/Auth";
 
 const UserProvider = ({ children }) => {
   // STATE - USUARIOS
@@ -24,25 +25,47 @@ const UserProvider = ({ children }) => {
 
   const [state, dispath] = useReducer(UserReducer, initialState);
 
-  const agregarUsuario = (usuario: User) => {
+  const setUser = (usuario: User) => {
     dispath({
       type: AGREGAR_USUARIO,
       payload: usuario,
     });
   };
 
-  const agregarCurso = (curso: any) => {
+  const deleteUser = (curso: any) => {
     dispath({
       type: ELIMINAR_USUARIO,
     });
   };
 
+  useEffect(() => {
+    let listener;
+    const u: User = initialState;
+
+    // **Transforma una funcion asincrona a sincrona
+    (async () =>
+      (listener = await userListener((user) => {
+        if (user) {
+          u.name = user.displayName;
+          u.last_name = "";
+          u.photo_url = user.photoURL;
+          setUser(u);
+        } else {
+          setUser(u);
+        }
+      })))();
+
+    return () => {
+      listener();
+    };
+  }, []);
+
   return (
     <UserContext.Provider
       value={{
         user: state.user,
-        agregarUsuario,
-        agregarCurso,
+        setUser,
+        deleteUser,
       }}
     >
       {children}
