@@ -1,15 +1,19 @@
 import React, { FormEvent, useState } from "react";
 import { login } from "../../utils/Auth";
+import { facebookLogin, googleLogin } from "../../utils/Auth";
 
 // STYLES
 import Styles from "./login.module.scss";
+
+// @material
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 interface PropsLogin {
   sendToRegister: () => unknown;
 }
 
 const Login = (props: PropsLogin) => {
-
   const [state, setState] = useState<{ email: string; pass: string }>({
     email: "",
     pass: "",
@@ -29,25 +33,61 @@ const Login = (props: PropsLogin) => {
     console.log("Login:", res.user);
   };
 
+  // Ingresar con facebook
+  const singInFacebook = () => {
+    facebookLogin();
+  };
+
+  // Ingresar con Google
+  const singInGoogle = () => {
+    googleLogin();
+  };
+
   return (
     <main className={Styles.main} onSubmit={authUser}>
       <form className={Styles.info}>
-        <h2>User</h2>
-        <input
-          width="100%"
-          name="email"
+        <h1>Inicia sesion</h1>
+        <TextField
+          name="name"
+          label="Usuario"
+          variant="outlined"
           value={state.email}
           onChange={setValue}
         />
-        <h2>Password</h2>
-        <input
-          width="100%"
+        <TextField
           name="pass"
+          label="Contraseña"
+          variant="outlined"
           value={state.pass}
           onChange={setValue}
         />
-        <button type="submit">Enviar</button>
+        <Button type="submit" variant="contained">
+          Iniciar
+        </Button>
+        <h3>O</h3>
         <div className={Styles.cont_register}>
+          <Button className={Styles.btn} onClick={singInGoogle}>
+            <div className={Styles.cont_btn_auth}>
+              <img
+                className={Styles.img}
+                width="24px"
+                height="24px"
+                src="https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png"
+              />
+              Google
+            </div>
+          </Button>
+          <Button className={Styles.btn} onClick={singInFacebook}>
+            <div className={Styles.cont_btn_auth}>
+              <img
+                className={Styles.img}
+                width="24px"
+                height="24px"
+                src="https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-3-1.png"
+              />
+              Facebook
+            </div>
+          </Button>
           <p onClick={props.sendToRegister}>No tienes una cuenta?</p>
         </div>
       </form>

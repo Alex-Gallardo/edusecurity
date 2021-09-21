@@ -2,8 +2,9 @@ import React, { FormEvent, useState } from "react";
 import Styles from "./register.module.scss";
 
 // UTILS
-import { facebookLogin, register } from "../../utils/Auth";
-import { googleLogin } from "./../../utils/Auth";
+import { facebookLogin, register, googleLogin } from "../../utils/Auth";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 const Register = () => {
   const [state, setState] = useState<{ email: string; pass: string }>({
@@ -38,37 +39,48 @@ const Register = () => {
   return (
     <main className={Styles.main}>
       <form className={Styles.info} onSubmit={authUser}>
-        <h2>Email</h2>
-        <input
-          width="100%"
-          name="email"
+        <h1>Registrate</h1>
+        <TextField
+          name="name"
+          label="Usuario"
+          variant="outlined"
           value={state.email}
           onChange={setValue}
         />
-        <h2>Password</h2>
-        <input
-          width="100%"
+        <TextField
           name="pass"
+          label="Contraseña"
+          variant="outlined"
           value={state.pass}
           onChange={setValue}
         />
-        <button type="submit">Enviar</button>
-        <h1>Ó</h1>
+        <Button type="submit" variant="contained">
+          Enviar
+        </Button>
+        <h3>Ó</h3>
         <div className={Styles.cont_register}>
-          <div onClick={singInFacebook}>
-            <img
-              width="50px"
-              height="50px"
-              src="https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-3-1.png"
-            />
-          </div>
-          <div onClick={singInGoogle}>
-            <img
-              width="50px"
-              height="50px"
-              src="https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png"
-            />
-          </div>
+          <Button className={Styles.btn} onClick={singInGoogle}>
+            <div className={Styles.cont_btn_auth}>
+              <img
+                className={Styles.img}
+                width="24px"
+                height="24px"
+                src="https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png"
+              />
+              Google
+            </div>
+          </Button>
+          <Button className={Styles.btn} onClick={singInFacebook}>
+            <div className={Styles.cont_btn_auth}>
+              <img
+                className={Styles.img}
+                width="24px"
+                height="24px"
+                src="https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-3-1.png"
+              />
+              Facebook
+            </div>
+          </Button>
         </div>
       </form>
     </main>

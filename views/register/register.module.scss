@@ -38,29 +38,49 @@
   .info {
     @include flexPosition(column, center, center);
     width: 50%;
-    max-width: 600px;
-    height: 90%;
+    max-width: 400px;
+    height: auto;
     background-color: #fff;
     border-radius: 16px;
     padding: 16px;
+    color: #07355f;
 
-    h1{
-      margin-bottom: 0px;
+    h1 {
+      margin: 32px 0px;
     }
 
-    button {
-      margin-top: 16px;
+    h3 {
+      margin: 0px;
+      margin-bottom: 24px;
+    }
+
+    & > * {
+      margin-bottom: 32px;
     }
   }
-  
+
   .cont_register {
+    @include flexPosition(column, center, center);
+    width: 100%;
+
+    .btn {
       @include flexPosition(row, center, center);
       width: 100%;
-      padding-top: 24px;
+      margin: 0px;
+      padding: 12px 0px;
 
-      img {
-        margin: 0px 12px;
-        cursor: pointer;
+      .cont_btn_auth {
+        @include flexPosition(row, flex-start, center);
+        width: 150px;
+        height: auto;
       }
+    }
+
+    .img {
+      width: 24px;
+      height: 24px;
+      margin-right: 16px;
+      cursor: pointer;
+    }
   }
 }
