@@ -1,0 +1,50 @@
+@mixin flexPosition($dir, $pos, $alg) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $pos;
+  align-items: $alg;
+}
+
+@mixin mobile {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+.container {
+  @include flexPosition(row, space-between, center);
+  width: 100vw;
+  height: 100%;
+
+  aside {
+    @include flexPosition(column, flex-start, center);
+    height: auto;
+    flex: 1;
+    background-color: teal;
+  }
+
+  .cont_chd {
+    @include flexPosition(row, center, center);
+    flex: 4;
+    height: auto;
+    background-color: tomato;
+  }
+}

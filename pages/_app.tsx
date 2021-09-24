@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
     (async () =>
       (listener = await userListener((user) => {
         if (user) {
-          if (!router.pathname.startsWith("/watch")) router.push("/");
+          if (!router.pathname.startsWith("/watch") && !router.pathname.startsWith("/admin")) router.push("/");
         } else {
           router.push("/login");
         }

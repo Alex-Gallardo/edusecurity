@@ -1,6 +1,6 @@
 import Styles from "./home.module.scss";
 import { useContext } from "react";
-import UserContext from "./../../context/UserContext";
+import UserContext from "../../../context/UserContext";
 import Router from "next/router";
 
 // ==== COURSES

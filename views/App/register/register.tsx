@@ -1,19 +1,12 @@
 import React, { FormEvent, useState } from "react";
-import { login } from "../../utils/Auth";
-import { facebookLogin, googleLogin } from "../../utils/Auth";
+import Styles from "./register.module.scss";
 
-// STYLES
-import Styles from "./login.module.scss";
-
-// @material
+// UTILS
+import { facebookLogin, register, googleLogin } from "../../../utils/Auth";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-interface PropsLogin {
-  sendToRegister: () => unknown;
-}
-
-const Login = (props: PropsLogin) => {
+const Register = () => {
   const [state, setState] = useState<{ email: string; pass: string }>({
     email: "",
     pass: "",
@@ -27,10 +20,10 @@ const Login = (props: PropsLogin) => {
   };
 
   // Autenticar
-  const authUser = async (e: FormEvent) => {
+  const authUser = (e: FormEvent) => {
     e.preventDefault();
-    const res = await login(state.email, state.pass);
-    console.log("Login:", res.user);
+    const res = register(state.email, state.pass);
+    console.log("Register:", res);
   };
 
   // Ingresar con facebook
@@ -44,9 +37,9 @@ const Login = (props: PropsLogin) => {
   };
 
   return (
-    <main className={Styles.main} onSubmit={authUser}>
-      <form className={Styles.info}>
-        <h1>Inicia sesion</h1>
+    <main className={Styles.main}>
+      <form className={Styles.info} onSubmit={authUser}>
+        <h1>Registrate</h1>
         <TextField
           name="name"
           label="Usuario"
@@ -62,9 +55,9 @@ const Login = (props: PropsLogin) => {
           onChange={setValue}
         />
         <Button type="submit" variant="contained">
-          Iniciar
+          Enviar
         </Button>
-        <h3>O</h3>
+        <h3>Ó</h3>
         <div className={Styles.cont_register}>
           <Button className={Styles.btn} onClick={singInGoogle}>
             <div className={Styles.cont_btn_auth}>
@@ -88,11 +81,10 @@ const Login = (props: PropsLogin) => {
               Facebook
             </div>
           </Button>
-          <p onClick={props.sendToRegister}>No tienes una cuenta?</p>
         </div>
       </form>
     </main>
   );
 };
 
-export default Login;
+export default Register;

@@ -42,7 +42,7 @@
     padding: 0px 32px;
     background-color: #fff;
     border-radius: 10px;
-    margin: 8px 0px;
+    margin: 32px 0px;
 
     .perfil {
       @include flexPosition(row, center, center);
@@ -62,6 +62,31 @@
         h2, p {
             margin: 0px;
         }
+      }
+    }
+
+  }
+  
+  .cont_data {
+    @include flexPosition(row, flex-start, center);
+    width: 100%;
+    height: auto;
+    
+    .input_data {
+      margin-right: 24px;
+    }
+  }
+  
+  .info {
+    @include flexPosition(column, flex-start, flex-start);
+    margin: 0px;
+
+    .cont_info {
+      @include flexPosition(row, flex-start, center);
+      width: 100%;
+  
+      h3{
+        margin-right: 24px;
       }
     }
   }

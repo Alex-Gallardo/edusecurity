@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 // COMPONENTS
 import Layout from "../../components/app/Layout/Layout";
-import WatchResource from "../../views/watch-resource/watchresource";
+import WatchResource from "../../views/App/watch-resource/watchresource";
 
 interface Resource {
   id: string;
