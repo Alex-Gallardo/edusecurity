@@ -7,7 +7,8 @@ import {
   signInWithPopup,
   User,
   FacebookAuthProvider,
-  GoogleAuthProvider
+  GoogleAuthProvider,
+  getAdditionalUserInfo
 } from "firebase/auth";
 
 import getApp from "../keys/firebase";
@@ -22,7 +23,11 @@ const getAuthUser = async () => {
 };
 
 export const register = async (email: string, pass: string) => {
-  return createUserWithEmailAndPassword(await getAuthUser(), email, pass);
+  return createUserWithEmailAndPassword(await getAuthUser(), email, pass).then(
+    res => {
+      if (getAdditionalUserInfo(res).isNewUser) saveUser();
+    }
+  );
 };
 
 export const login = async (email: string, pass: string) => {
@@ -31,12 +36,16 @@ export const login = async (email: string, pass: string) => {
 
 export const facebookLogin = async () => {
   const auth = await getAuthUser();
-  return signInWithPopup(auth, FacebookProvider);
+  return signInWithPopup(auth, FacebookProvider).then(res => {
+    if (getAdditionalUserInfo(res).isNewUser) saveUser();
+  });
 };
 
 export const googleLogin = async () => {
   const auth = await getAuthUser();
-  return signInWithPopup(auth, GoogleProvider);
+  return signInWithPopup(auth, GoogleProvider).then(res => {
+    if (getAdditionalUserInfo(res).isNewUser) saveUser();
+  });
 };
 
 export const userListener = async (callback: (user: User) => unknown) => {
