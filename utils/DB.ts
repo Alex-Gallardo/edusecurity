@@ -7,7 +7,13 @@ import {
   doc,
   setDoc,
   deleteDoc,
-  getDoc
+  getDoc,
+  onSnapshot,
+  DocumentSnapshot,
+  FirestoreError,
+  Unsubscribe,
+  DocumentReference,
+  PartialWithFieldValue
 } from "firebase/firestore";
 
 // GLOBALES
@@ -25,32 +31,44 @@ export const getCollection = async (
 
   // DATABASE
   const firebaseApp = await getApp();
-  const db = globalDB ?? getFirestore(firebaseApp);
+  globalDB = globalDB ?? getFirestore(firebaseApp);
 
   // COLECCIÓN
-  return collection(db, colName);
+  return collection(globalDB, colName);
 };
 
-export const saveInCollection = async (
-  data: unknown,
+export const saveInCollection = async <T>(
+  data: PartialWithFieldValue<T>,
   dataId: string,
   colName: string,
   merge = false
 ) => {
   const collection = await getCollection(colName);
-  const colDoc = doc(collection, dataId);
+  const colDoc = doc(collection, dataId) as DocumentReference<T>;
   return setDoc(colDoc, data, { merge });
+};
+
+export const getFromCollection = async <T>(dataId: string, colName: string) => {
+  const collection = await getCollection(colName);
+  const colDoc = doc(collection, dataId);
+  const refDoc = await getDoc(colDoc);
+  return refDoc.data() as T;
+};
+
+export const getListener = async <T>(
+  dataId: string,
+  colName: string,
+  onNext: (snapshot: DocumentSnapshot<T>) => void,
+  onError?: (error: FirestoreError) => void,
+  onCompletion?: () => void
+) => {
+  const collection = await getCollection(colName);
+  const colDoc = doc(collection, dataId);
+  return onSnapshot(colDoc, onNext, onError, onCompletion);
 };
 
 export const deleteFromCollection = async (dataId: string, colName: string) => {
   const collection = await getCollection(colName);
   const colDoc = doc(collection, dataId);
   return deleteDoc(colDoc);
-};
-
-export const getFromCollection = async (dataId: string, colName: string) => {
-  const collection = await getCollection(colName);
-  const colDoc = doc(collection, dataId);
-  const refDoc = await getDoc(colDoc);
-  return refDoc.data();
 };
