@@ -1,4 +1,3 @@
-import firebase from "../keys/firebase";
 import "firebase/auth";
 import {
   getAuth,
@@ -8,7 +7,7 @@ import {
   signInWithPopup,
   User,
   FacebookAuthProvider,
-  GoogleAuthProvider,
+  GoogleAuthProvider
 } from "firebase/auth";
 
 import getApp from "../keys/firebase";
@@ -43,4 +42,3 @@ export const googleLogin = async () => {
 export const userListener = async (callback: (user: User) => unknown) => {
   return onAuthStateChanged(await getAuthUser(), callback);
 };
-
