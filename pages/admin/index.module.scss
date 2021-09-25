@@ -32,7 +32,7 @@
 .container {
   @include flexPosition(column, flex-start, stretch);
   width: 100%;
-  min-height: 100vh;
-  height: 100%;
-    background-color: blueviolet;
+  height: 100vh;
+  background-color: blueviolet;
+  position: relative;
 }

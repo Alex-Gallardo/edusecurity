@@ -37,6 +37,7 @@ export const getCollection = async (
   return collection(globalDB, colName);
 };
 
+// GUARDAR 
 export const saveInCollection = async <T>(
   data: PartialWithFieldValue<T>,
   dataId: string,
@@ -48,6 +49,7 @@ export const saveInCollection = async <T>(
   return setDoc(colDoc, data, { merge });
 };
 
+// OBTENER 
 export const getFromCollection = async <T>(dataId: string, colName: string) => {
   const collection = await getCollection(colName);
   const colDoc = doc(collection, dataId);
@@ -55,6 +57,7 @@ export const getFromCollection = async <T>(dataId: string, colName: string) => {
   return refDoc.data() as T;
 };
 
+// OBTENER TIEMPO REAL
 export const getListener = async <T>(
   dataId: string,
   colName: string,
@@ -67,6 +70,7 @@ export const getListener = async <T>(
   return onSnapshot(colDoc, onNext, onError, onCompletion);
 };
 
+// ELIMINAR
 export const deleteFromCollection = async (dataId: string, colName: string) => {
   const collection = await getCollection(colName);
   const colDoc = doc(collection, dataId);

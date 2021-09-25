@@ -8,6 +8,9 @@ import "../styles/globals.scss";
 import UserProvider from "../context/UserProvider";
 import { userListener } from "./../utils/Auth";
 
+// NEXT
+import AlertTemplate from "components/app/lualert";
+
 function MyApp({ Component, pageProps }) {
   // ROUTER
   const router = useRouter();
@@ -19,7 +22,11 @@ function MyApp({ Component, pageProps }) {
     (async () =>
       (listener = await userListener((user) => {
         if (user) {
-          if (!router.pathname.startsWith("/watch") && !router.pathname.startsWith("/admin")) router.push("/");
+          if (
+            !router.pathname.startsWith("/watch") &&
+            !router.pathname.startsWith("/admin")
+          )
+            router.push("/");
         } else {
           router.push("/login");
         }
@@ -32,6 +39,13 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <UserProvider>
+      <AlertTemplate
+        blurred
+        zIndex={100}
+        confirmColor="#1AA5BB"
+        cancelText="Cancelar"
+        confirmText="Aceptar"
+      />
       <Component {...pageProps} />
     </UserProvider>
   );

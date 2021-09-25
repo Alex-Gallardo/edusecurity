@@ -32,19 +32,31 @@
 .container {
   @include flexPosition(row, space-between, center);
   width: 100vw;
+  min-height: 80vh;
   height: 100%;
 
   aside {
     @include flexPosition(column, flex-start, center);
-    height: auto;
+    height: 100%;
     flex: 1;
-    background-color: teal;
+    background-color: #d9d9d9;
+    padding: 32px 2em;
+
+    section {
+      @include flexPosition(row, flex-start, center);
+      width: 100%;
+      cursor: pointer;
+
+      h3 {
+        margin-left: 16px;
+      }
+    }
   }
 
   .cont_chd {
     @include flexPosition(row, center, center);
     flex: 4;
-    height: auto;
+    height: 100%;
     background-color: tomato;
   }
 }

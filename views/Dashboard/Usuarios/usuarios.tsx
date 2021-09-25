@@ -1,14 +1,36 @@
-import React from 'react'
+import React, { useState } from "react";
+// STYLES
+import Styles from "./usuarios.module.scss";
+// COMPONENTS
+import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
-import Styles from './usuarios.module.scss'
+const Usuarios = () => {
+  const [state, setState] = useState<number>(0);
 
-const Usuarios = ()=>{
+  // Obtener todos los usuarios
 
-    return(
-        <main className={Styles.container}>
-            <h1>Usuarios</h1>
-        </main>
-    )
-}
+  const handleChange = (e: SelectChangeEvent) => {
+    const val = e.target.value;
+    setState(parseInt(val, 10));
+  };
 
-export default Usuarios
+  return (
+    <main className={Styles.container}>
+      <section className={Styles.header}>
+        <h1>Usuarios</h1>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={state + ""}
+          onChange={handleChange}
+        >
+          <MenuItem value={0}>Estudiante</MenuItem>
+          <MenuItem value={1}>Maestro</MenuItem>
+        </Select>
+      </section>
+      <section className={Styles.users}></section>
+    </main>
+  );
+};
+
+export default Usuarios;

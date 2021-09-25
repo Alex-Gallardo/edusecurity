@@ -5,13 +5,15 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signInWithPopup,
-  User,
+  User as UserFB,
   FacebookAuthProvider,
   GoogleAuthProvider,
-  getAdditionalUserInfo
+  getAdditionalUserInfo,
+  UserCredential,
 } from "firebase/auth";
 
 import getApp from "../keys/firebase";
+import { saveInCollection } from "./DB";
 
 let FacebookProvider = new FacebookAuthProvider();
 let GoogleProvider = new GoogleAuthProvider();
@@ -24,8 +26,8 @@ const getAuthUser = async () => {
 
 export const register = async (email: string, pass: string) => {
   return createUserWithEmailAndPassword(await getAuthUser(), email, pass).then(
-    res => {
-      if (getAdditionalUserInfo(res).isNewUser) saveUser();
+    (res) => {
+      if (getAdditionalUserInfo(res).isNewUser) saveUser(res);
     }
   );
 };
@@ -36,18 +38,42 @@ export const login = async (email: string, pass: string) => {
 
 export const facebookLogin = async () => {
   const auth = await getAuthUser();
-  return signInWithPopup(auth, FacebookProvider).then(res => {
-    if (getAdditionalUserInfo(res).isNewUser) saveUser();
+  return signInWithPopup(auth, FacebookProvider).then((res) => {
+    if (getAdditionalUserInfo(res).isNewUser) saveUser(res);
   });
 };
 
 export const googleLogin = async () => {
   const auth = await getAuthUser();
-  return signInWithPopup(auth, GoogleProvider).then(res => {
-    if (getAdditionalUserInfo(res).isNewUser) saveUser();
+  return signInWithPopup(auth, GoogleProvider).then((res) => {
+    if (getAdditionalUserInfo(res).isNewUser) saveUser(res);
   });
 };
 
-export const userListener = async (callback: (user: User) => unknown) => {
+export const logout = async () => {
+	const auth = await getAuthUser()
+	window.postMessage({
+		action: 'logout',
+	})
+	return auth.signOut()
+}
+
+export const userListener = async (callback: (user: UserFB) => unknown) => {
   return onAuthStateChanged(await getAuthUser(), callback);
+};
+
+export const saveUser = async (cred: UserCredential) => {
+  const {
+    user: { uid, photoURL, displayName },
+  } = cred;
+
+  const tmpUser: User = {
+    uid,
+    name: displayName,
+    last_name: "",
+    photo_url: photoURL,
+    state: 0,
+    courses_taken: [],
+  };
+  saveInCollection<User>(tmpUser, uid, "users");
 };
