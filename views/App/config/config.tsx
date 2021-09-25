@@ -19,12 +19,11 @@ import { logout } from "utils/Auth";
 import { saveInCollection } from "utils/DB";
 
 const Config = () => {
-  // ESTADO
-  const [state, setState] = useState<User>();
-
   // CONTEXT
   const userCtx = useContext(UserContext);
   const { user } = userCtx;
+  // ESTADO
+  const [state, setState] = useState<User>(user);
 
   // ROUTER
   const router = useRouter();
@@ -38,24 +37,32 @@ const Config = () => {
 
   // CERRAR SESSION
   const logOut = () => {
-    logout().then(() => router.push("/login"));
+    // @ts-ignore
+    window.Alert({
+      title: "Cierre de sesion",
+      body: "Seguro que quieres salir de esta cuenta",
+      type: "confirm",
+      onConfirm: () => {
+        logout().then(() => router.push("/login"));
+      },
+    });
   };
 
   // ACTUALIZAR DATOS USER
   const actDatUser = () => {
-
     try {
+      // @ts-ignore
       window.Alert({
-        title: 'Hola mundo',
-        body: 'Mcallister',
-        type: 'confirm',
-        onConfirm: ()=>{
-          saveInCollection<User>(user, user.uid, "users", true);
-        }
-      })
-
+        title: "Actualizar datos",
+        body: "Seguro que quieres actualizar tus datos?",
+        type: "confirm",
+        onConfirm: () => {
+          saveInCollection<User>(state, state.uid, "users", true);
+          router.push("/");
+        },
+      });
     } catch (error) {
-      console.error(error);
+      console.error("Error de actualizacion de datos", error);
     }
   };
 
@@ -84,16 +91,16 @@ const Config = () => {
           label="Nombre"
           variant="outlined"
           value={state?.name}
-          onChange={setValue}
           className={Styles.input_data}
+          onChange={setValue}
         ></TextField>
         <TextField
           name="last_name"
           label="Apellido"
           variant="outlined"
           value={state?.last_name}
-          onChange={setValue}
           className={Styles.input_data}
+          onChange={setValue}
         ></TextField>
       </section>
       <section className={Styles.info}>

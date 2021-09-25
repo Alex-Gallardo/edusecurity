@@ -1,3 +1,4 @@
+import { AlertProps } from './../components/app/lualert/utils/models';
 type EmptyFunction = () => unknown;
 
 interface Window {

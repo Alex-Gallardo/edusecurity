@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }) {
       <AlertTemplate
         blurred
         zIndex={100}
-        confirmColor="#1AA5BB"
+        confirmColor="#07355f"
         cancelText="Cancelar"
         confirmText="Aceptar"
       />

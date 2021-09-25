@@ -4,17 +4,17 @@ import { useEffect, useReducer } from "react";
 import UserContext from "./UserContext";
 
 // MODELS - TYPES
-import { User } from "../Models/User";
 import { AGREGAR_USUARIO, ELIMINAR_USUARIO } from "../types";
 
 // REDUCER
 import UserReducer from "./UserReducer";
 import { userListener } from "../utils/Auth";
+import { getFromCollection } from "./../utils/DB";
 
 const UserProvider = ({ children }) => {
   // STATE - USUARIOS
   const initialState: User = {
-    _id: new Date().toLocaleDateString("es"),
+    uid: new Date().getTime() + "",
     photo_url:
       "https://i.pinimg.com/550x/f7/da/98/f7da9864a7c3079df7c26173520d18fc.jpg",
     name: "Gumball",
@@ -46,10 +46,7 @@ const UserProvider = ({ children }) => {
     (async () =>
       (listener = await userListener((user) => {
         if (user) {
-          u.name = user.displayName;
-          u.last_name = "";
-          u.photo_url = user.photoURL;
-          setUser(u);
+          getFromCollection(user.uid, "users").then((res: User) => setUser(res));
         } else {
           setUser(u);
         }
