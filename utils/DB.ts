@@ -13,6 +13,7 @@ import {
   FirestoreError,
   Unsubscribe,
   DocumentReference,
+  getDocs,
   PartialWithFieldValue
 } from "firebase/firestore";
 
@@ -54,6 +55,13 @@ export const getFromCollection = async <T>(dataId: string, colName: string) => {
   const refDoc = await getDoc(colDoc);
   return refDoc.data() as T;
 };
+
+export const getAllFromCollection = async<T>(colName:string) => {
+  const collection = await getCollection(colName);
+  const docsRef = await getDocs(collection)
+  const docsData = docsRef.docs.map((doc) => doc.data()) as T[]
+  return docsData
+}
 
 export const getListener = async <T>(
   dataId: string,
