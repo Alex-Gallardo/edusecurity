@@ -41,8 +41,8 @@ const Register = () => {
       <form className={Styles.info} onSubmit={authUser}>
         <h1>Registrate</h1>
         <TextField
-          name="name"
-          label="Usuario"
+          name="email"
+          label="Correo"
           variant="outlined"
           value={state.email}
           onChange={setValue}
@@ -50,6 +50,7 @@ const Register = () => {
         <TextField
           name="pass"
           label="Contraseña"
+          type="password"
           variant="outlined"
           value={state.pass}
           onChange={setValue}

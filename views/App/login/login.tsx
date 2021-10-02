@@ -29,8 +29,22 @@ const Login = (props: PropsLogin) => {
   // Autenticar
   const authUser = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await login(state.email, state.pass);
+    try{
+      const res = await login(state.email, state.pass);
     console.log("Login:", res.user);
+      
+    }catch(error){ 
+      // @ts-ignore
+      window.Alert({
+        title:"Credenciales Invalidas",
+        body:"Favor revisar que tu correo y contraseña se encuentren escritas correctamente",
+        type:"confirm",
+        onConfirm:()=>{
+          setState({email:"",pass:""})
+        }
+      })
+    };
+      
   };
 
   // Ingresar con facebook
@@ -49,7 +63,7 @@ const Login = (props: PropsLogin) => {
         <h1>Inicia sesion</h1>
         <TextField
           name="email"
-          label="Usuario"
+          label="Correo"
           variant="outlined"
           value={state.email}
           onChange={setValue}
