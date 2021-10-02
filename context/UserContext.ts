@@ -1,25 +1,24 @@
 import { Context, createContext } from "react";
-import { User } from "../Models/User";
 
 // KEYS
 interface ContextProps {
   user: User;
   setUser: (user: User) => unknown;
-  deleteUser: (user: User) => unknown;
+  deleteUser: (id: string) => unknown;
 }
 
-// VALOR POR DEFECTO
+// VALORES POR DEFECTO
 const DefContext: ContextProps = {
   user: {
-    _id: "",
+    uid: "",
     photo_url: "",
     name: "",
     last_name: "",
     courses_taken: [],
     state: 0,
   },
-  setUser: () => {},
-  deleteUser: () => {},
+  setUser: ()=> {},
+  deleteUser: ()=> {},
 };
 
 // CONTEXTO

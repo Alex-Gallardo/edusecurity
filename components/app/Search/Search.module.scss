@@ -30,15 +30,26 @@
 }
 
 .container {
-  @include flexPosition(column, flex-start, stretch);
-  // display: inline-block;
-  width: 100%;
-  min-height: 100vh;
-  height: 100%;
+  @include flexPosition(row, flex-start, center);
+  width: auto;
+  height: auto;
+  position: relative;
 
-  .main {
-    @include flexPosition(column, flex-start, center);
+  .s_icon {
+    position: absolute;
+    left: 8px;
+    color: #6B6B6B;
+  }
+
+  .input {
+    min-width: 350px;
     width: 100%;
-    min-height: auto;
+    border: 0px;
+    padding: 10px 16px;
+    padding-left: 36px;
+    border-radius: 50px;
+    margin-right: 24px;
+    outline: none;
   }
 }
+

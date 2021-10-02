@@ -1,7 +1,6 @@
-interface Comment {
+interface GComment {
   _id: string;
   message: string;
-  date: Date;
   user_id: string;
 }
 
@@ -11,5 +10,5 @@ interface ForumComment {
   message: string;
   date: Date;
   user_id: string;
-  comments: Comment[];
+  comments: GComment[];
 }

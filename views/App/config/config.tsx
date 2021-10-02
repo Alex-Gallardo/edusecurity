@@ -68,7 +68,9 @@ const Config = () => {
 
   return (
     <main className={Styles.container}>
+      {/* HEADER */}
       <section style={{ marginTop: "32px" }}>
+        {/* PERFIL INFO */}
         <div className={Styles.perfil}>
           <img src={user?.photo_url} />
           <div className={Styles.perfil_info}>
@@ -78,13 +80,19 @@ const Config = () => {
             <p>{user?.state === 0 ? "Estudiante" : "Maestro"}</p>
           </div>
         </div>
-        <Button variant="contained" color="error" onClick={logOut}>
+
+        {/* CERRAR SESION */}
+        <Button variant="contained" color="secondary" onClick={logOut}>
           Cerrar Sesion
         </Button>
       </section>
+
+      {/* ACTUALIZA TU INFORMACION */}
       <section className={Styles.cont_data} style={{ margin: "0px" }}>
         <h2 style={{ margin: "0px" }}>Actualiza tu información</h2>
       </section>
+
+      {/* DAT INFORMACION */}
       <section className={Styles.cont_data}>
         <TextField
           name="name"
@@ -103,12 +111,16 @@ const Config = () => {
           onChange={setValue}
         ></TextField>
       </section>
+
+      {/* CURSOS TOMADOS */}
       <section className={Styles.info}>
         <div className={Styles.cont_info}>
           <h3>Cursos tomados</h3>
           <p>{state?.courses_taken.length || 0}</p>
         </div>
       </section>
+
+      {/* GUARDAR INFO */}
       <section>
         <Button variant="contained" color="primary" onClick={actDatUser}>
           Guardar
