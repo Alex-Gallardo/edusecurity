@@ -12,6 +12,7 @@ import VideoCmp from "components/app/VideoComponent/VideoCmp";
 // @MATERIAL
 import TextField from "@material-ui/core/TextField";
 import { saveInCollection } from "utils/DB";
+import Rating from "@mui/material/Rating";
 
 // ==== COURSES
 const courses = [
@@ -72,29 +73,37 @@ const Home = () => {
   const sudoUpUser = () => {
     // @ts-ignore
     window.Alert({
-      title: "Aplica para profesor!",
-      body: "Cuales son tus habilidades?",
+      title: "Aplica para ser profesor!",
+      body: "Cuentanos un poco sobre ti y tus habilidades",
       type: "confirm",
       customElements: (
         <TextField
-          id="outlined-multiline-static"
           name="message"
-          style={{ marginTop: "16px" }}
+          label="Tu respuesta"
           multiline
           fullWidth
-          label="Tu respuesta"
           maxRows={16}
           onChange={handleChange}
+          style={{ marginTop: "16px" }}
         />
       ),
       onConfirm: async () => {
+        const tmpC = comment;
         if (user) {
+          tmpC.user_id = user.uid;
+          return await saveInCollection<GComment>(
+            tmpC,
+            comment._id,
+            "RequestCheck"
+          ).then((_res) => {
+            // @ts-ignore
+            window.Alert({
+              title: "Solicitud enviada",
+              body: "Tu respuesta sera analizada y enseguida se te dara de alta",
+              type: "confirm",
+            });
+          });
         }
-        return await saveInCollection<GComment>(
-          comment,
-          comment._id,
-          "RequestCheck"
-        );
       },
     });
   };
@@ -107,25 +116,29 @@ const Home = () => {
         <div className={Styles.info}>
           <h1>Hola, {user?.name}</h1>
           <div className={Styles.section_info}>
-            <h3>({user?.state === 0 ? "Estudiante" : "Maestro"})</h3>
-            <p>4.0</p>
+            <h3>({user?.state === 1 ? "Maestro": "Estudiante"})</h3>
+            {user?.state === 1 ? (
+              <Rating name="read-only" value={user.score || 0} readOnly style={{marginLeft: '16px'}} />
+            ) : (
+              ""
+            )}
           </div>
         </div>
         {/* ENSENA / DASHBOARD */}
-        {user && user.state === 0 ? (
-          <div className={Styles.btn_teach} onClick={sudoUpUser}>
-            Enseña en <span>Edu</span>security
-          </div>
-        ) : (
+        {user && user.state === 1 ? (
           <div className={Styles.btn_dash}>
             <span>Edu</span> Dashboard
+          </div>
+        ) : (
+          <div className={Styles.btn_teach} onClick={sudoUpUser}>
+            Enseña en <span>Edu</span>security
           </div>
         )}
       </section>
 
       {/* EMPEZEMOS A APRENDER */}
       <section>
-        <h1 style={{marginBottom: '0px'}}>Empezemos a aprender!</h1>
+        <h1 style={{ marginBottom: "0px" }}>Empezemos a aprender!</h1>
         <div className={Styles.carousel}>
           {courses.map((course) => (
             <VideoCmp
@@ -139,7 +152,7 @@ const Home = () => {
 
       {/* QUE APRENDER AHORA */}
       <section>
-        <h1 style={{marginBottom: '0px'}}>Que aprender ahora</h1>
+        <h1 style={{ marginBottom: "0px" }}>Que aprender ahora</h1>
         <div className={Styles.carousel}>
           {courses.map((course) => {
             return (

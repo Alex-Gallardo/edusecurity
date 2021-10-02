@@ -49,26 +49,37 @@
     @include flexPosition(column, flex-start, center);
     width: 100%;
 
-    .user {
-      @include flexPosition(row, flex-start, center);
+    .box_user {
+      @include flexPosition(row, space-between, center);
       width: 100%;
       border: 2px solid #07355f;
       padding: 16px 24px;
       border-radius: 10px;
+      margin-bottom: 12px;
 
-      img {
-        width: 60px;
-        height: 60px;
-        border-radius: 30px;
-      }
+      .cont_dat {
+        @include flexPosition(row, center, center);
+        img {
+          width: 60px;
+          height: 60px;
+          border-radius: 30px;
+        }
 
-      .cont_user_info {
-        padding-left: 12px;
-        h3, p {
-          margin: 0px;
+        .cont_user_info {
+          padding-left: 12px;
+          h3,
+          p {
+            margin: 0px;
+          }
         }
       }
 
+      .box_actions {
+        @include flexPosition(row, center, center);
+
+        
+      }
     }
   }
 }
+

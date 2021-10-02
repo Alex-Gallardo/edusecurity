@@ -6,15 +6,23 @@ import Cancel from "@material-ui/icons/Cancel";
 import VerifiedUser from "@material-ui/icons/VerifiedUser";
 
 const Options = [
-  { name: "Usuarios", icon: <People/> },
-  { name: "Reportes", icon: <Cancel/> },
-  { name: "Verificacion", icon: <VerifiedUser/> },
+  { name: "Usuarios", icon: <People /> },
+  { name: "Reportes", icon: <Cancel /> },
+  { name: "Verificacion", icon: <VerifiedUser /> },
 ];
 
-const SideBar = ({ children }) => {
-  const [view, setView] = useState<number>(0);
+// PROPS
+interface SideBarProps {
+  view: number;
+  changeView: any;
+  children: any;
+}
 
+const SideBar = ({ changeView, children, view }: SideBarProps) => {
   // Aqui se manejan todos las vistas del dashboard
+  const setViewProps = (index: number) => () => {
+    changeView(index);
+  };
 
   return (
     <div className={Styles.container}>
@@ -25,6 +33,7 @@ const SideBar = ({ children }) => {
               className={Styles.option}
               key={op.name}
               style={{ color: view === i ? "#07355F" : "#737373" }}
+              onClick={setViewProps(i)}
             >
               {op.icon}
               <h3>{op.name}</h3>
