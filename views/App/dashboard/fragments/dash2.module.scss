@@ -74,6 +74,19 @@
       }
     }
   }
+
+  .resources {
+    @include flexPosition(column, flex-start, flex-start);
+    width: 100%;
+    height: auto;
+
+    .cont_resources {
+      @include flexPosition(row, flex-start, center);
+      flex-wrap: wrap;
+      width: 100%;
+      height: auto;
+    }
+  }
 }
 
 // =======================================================
@@ -96,6 +109,19 @@
     margin: 8px 0px;
   }
 
+  p {
+    margin: 0px;
+  }
+}
+
+.resource {
+  @include flexPosition(column, flex-start, flex-start);
+  padding: 16px;
+  margin: 0px 16px 16px 0px;
+  border: 2px solid #c4c4c4;
+  border-radius: 6px;
+
+  h3,
   p {
     margin: 0px;
   }

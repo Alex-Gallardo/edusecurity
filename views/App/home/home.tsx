@@ -38,6 +38,7 @@ const Home = () => {
   // STATE
   const [comment, setComment] = useState<GComment>(c);
   const [courses, setCourses] = useState<Course[]>([]);
+  const [resources, setResources] = useState<Resource[]>([]);
 
   // CONTEXT
   const userCtx = useContext(UserContext);
@@ -47,8 +48,14 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
+    // OBTENER TODOS LO CURSOS
     getAllFromCollection<Course>("Courses").then((res: Course[]) =>
       setCourses(res)
+    );
+
+    // OBTENER TODOS LOS RECURSOS
+    getAllFromCollection<Resource>("Resources").then((res: Resource[]) =>
+      setResources(res)
     );
   }, []);
 
@@ -144,12 +151,12 @@ const Home = () => {
       <section>
         <h1 style={{ marginBottom: "0px" }}>Empezemos a aprender!</h1>
         <div className={Styles.carousel}>
-          {courses.map((course: any, index: number) => (
+          {resources.map((resource: Resource, index: number) => (
             <VideoCmp
-              id={course.id}
-              title={course.title}
-              subtitle={course.subtitle}
-              key={`${course.id}_${index}`}
+              id={resource._id}
+              title={resource.title}
+              subtitle={resource.description}
+              key={`${resource._id}_${index}`}
             ></VideoCmp>
           ))}
         </div>
@@ -168,7 +175,7 @@ const Home = () => {
                 <img src={course.cover}></img>
                 <h4>{course.title}</h4>
                 <p>{course.description}</p>
-                <p>{course.score}</p>
+                {/* <p>{course.score}</p> */}
               </div>
             );
           })}

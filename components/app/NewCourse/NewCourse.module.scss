@@ -67,22 +67,49 @@
   }
 }
 
-.update_img {
-  @include flexPosition(row, center, center);
-  width: 200px;
-  height: 100px;
-  cursor: pointer;
-  border-radius: 6px;
-  border: 2px dashed #fff;
-}
-
 .cont_form {
   @include flexPosition(column, center, center);
   width: auto;
   height: 100%;
+  // border-right: 2px solid #c4c4c4;
+  // border-left: 2px solid #c4c4c4;
+  // padding: 0px 16px;
+
+  h3 {
+    margin: 0px;
+    font-weight: 400;
+    width: 100%;
+  }
 
   .textfield {
     background-color: #fff;
+    border-radius: 4px;
+  }
+}
+
+.update_img {
+  @include flexPosition(row, space-between, center);
+  width: auto;
+  height: auto;
+  padding: 6px 6px 6px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 2px dashed #fff;
+
+  h2 {
+    margin-right: 16px;
+  }
+
+  label {
+    @include flexPosition(row, center, center);
+    width: auto;
+    height: 100%;
+
+    img {
+      width: 200px;
+      height: 150px;
+      border-radius: 6px;
+    }
   }
 }
 

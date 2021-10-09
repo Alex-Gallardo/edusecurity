@@ -1,14 +1,14 @@
 import { Context, createContext } from "react";
 
 // KEYS
-interface ContextProps {
+interface ContextUserProps {
   user: User;
   setUser: (user: User) => unknown;
   deleteUser: (id: string) => unknown;
 }
 
 // VALORES POR DEFECTO
-const DefContext: ContextProps = {
+const DefContext: ContextUserProps = {
   user: {
     uid: "",
     photo_url: "",
@@ -22,6 +22,6 @@ const DefContext: ContextProps = {
 };
 
 // CONTEXTO
-const UserContext: Context<ContextProps> = createContext(DefContext);
+const UserContext: Context<ContextUserProps> = createContext(DefContext);
 
 export default UserContext;

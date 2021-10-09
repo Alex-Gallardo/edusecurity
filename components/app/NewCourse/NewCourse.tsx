@@ -9,6 +9,8 @@ import Styles from "./NewCourse.module.scss";
 // @MATERIAL
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // UTILS
 import { saveInCollection } from "utils/DB";
@@ -22,6 +24,8 @@ interface NewCourseProps {
 
 const NewCourse = (props: NewCourseProps) => {
   // STATE
+  const [loading, setLoading] = useState<boolean>(false);
+  const [srcIMG, setSrcIMG] = useState<string>("/images/click.jpg");
   const [course, setCourse] = useState<Course>({
     _id: new Date().getTime() + "",
     cover: "",
@@ -46,6 +50,7 @@ const NewCourse = (props: NewCourseProps) => {
 
   // COMPUTAR STORAGE-FIREBASE
   const computeImg = (value: any) => {
+    setLoading(true);
     const files = value.target.files;
     console.log("file-input", files, files[0].name);
 
@@ -56,6 +61,8 @@ const NewCourse = (props: NewCourseProps) => {
           const tmp = course;
           tmp.cover = r;
           setCourse(tmp);
+          setSrcIMG(r);
+          setLoading(false);
           // @ts-ignore
           window.Alert({
             title: "Accion completada",
@@ -71,7 +78,7 @@ const NewCourse = (props: NewCourseProps) => {
           body: "Hubo un error en la subida del archivo, intenta recargar la pagina e intentalo de nuevo",
           type: "error",
         });
-        console.log("upload-image-NewCourse", err);
+        console.error("upload-image-NewCourse", err);
       });
   };
 
@@ -88,6 +95,9 @@ const NewCourse = (props: NewCourseProps) => {
           title: "Curso creado exitosamente",
           body: `El curso "${course.title}" se añadio a tu colección de cursos.`,
           type: "confirm",
+          onConfirm: () => {
+            location.reload();
+          },
         });
       }
     );
@@ -95,25 +105,44 @@ const NewCourse = (props: NewCourseProps) => {
 
   return (
     <div className={props.toogle ? Styles.container_o : Styles.container_c}>
-      <section className={Styles.cont_form}>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <h2>Subiendo imagen... por favor espere</h2>{" "}
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <section
+        className={Styles.cont_form}
+        style={{ display: props.toogle ? "flex" : "none" }}
+      >
+        <h3>Título:</h3>
         <TextField
+          fullWidth
           name="title"
-          label="Nombre del curso"
           variant="filled"
           className={Styles.textfield}
           style={{ marginBottom: "18px" }}
           onChange={handleChange}
         ></TextField>
+        <h3>Descripción:</h3>
         <TextField
+          multiline
+          fullWidth
           name="description"
-          label="Descripcion"
           variant="filled"
           className={Styles.textfield}
           onChange={handleChange}
         ></TextField>
       </section>
-      <section className={Styles.update_img}>
-        <label htmlFor="user_image">Upload</label>
+      <section
+        className={Styles.update_img}
+        style={{ display: props.toogle ? "flex" : "none" }}
+      >
+        <h2>Imagen de portada:</h2>
+        <label htmlFor="user_image">
+          <img src={srcIMG} alt={course.title} />
+        </label>
         <input
           id="user_image"
           accept="image/*"
@@ -128,6 +157,7 @@ const NewCourse = (props: NewCourseProps) => {
           variant="outlined"
           color="inherit"
           size="large"
+          style={{ display: props.toogle ? "flex" : "none" }}
           onClick={addNewCourse}
         >
           Subir

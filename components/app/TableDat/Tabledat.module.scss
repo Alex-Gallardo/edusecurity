@@ -35,44 +35,48 @@
   }
 }
 
-.box {
-  @include flexPosition(row, space-between, flex-start);
+.container {
+  @include flexPosition(column, center, center);
   width: 100%;
   height: auto;
-  padding: 32px;
-  color: #fff;
-  background-color: #07355f;
-  border-radius: 6px;
+  border: 1px solid #c4c4c4;
 
-  section {
-    @include flexPosition(column, flex-start, flex-end);
-    width: 46%;
+  .header {
+    @include flexPosition(row, space-between, center);
+    width: 100%;
     height: auto;
 
-    .textfield{
-      background-color: #fff;
-      margin-bottom: 24px;
-      border-radius: 4px;
-    }
     h3 {
+      text-align: center;
+      color: #07355f;
+      flex: 1;
+      height: auto;
+      padding: 6px 14px;
       margin: 0px;
-      font-weight: 400;
-      width: 100%;
+      border: 2px solid #c4c4c4;
     }
   }
 
-  .cont_dat {
-    @include flexPosition(column, flex-start, flex-start);
+  .dat {
+    @include flexPosition(row, space-between, center);
+    width: 100%;
+    height: auto;
 
-    img{
-      width: 264px;
-      height: 150px;
-      border-radius: 6px;
-    }
+    div {
+      @include flexPosition(row, center, center);
+      width: 100%;
+      height: auto;
 
-    p {
-      color: #c4c4c4;
-      margin: 0px;
+      h1 {
+        color: #262626;
+        text-align: center;
+        flex: 1;
+        height: auto;
+        padding: 14px;
+        margin: 0px;
+        border: 2px solid #c4c4c4;
+        font-size: 2em;
+      }
     }
   }
 }

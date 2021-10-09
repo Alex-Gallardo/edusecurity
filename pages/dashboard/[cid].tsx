@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getFromCollection } from "../../utils/DB";
-import DashboardView2 from "./../../views/App/dashboard/fragments/dash2";
+
+// UTILS
+import { getFromCollection } from "utils/DB";
+
+// COMPONENTS
 import Layout from "components/app/Layout/Layout";
+
+// VIEWS
+import DashboardView2 from "views/App/dashboard/fragments/dash2";
+
+// @MATERIAL
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface Resource {
   id: string;
@@ -21,10 +31,11 @@ const Init = () => {
 
   useEffect(() => {
     console.log("courseID:", cid);
-
-    // @ts-ignore
-    getFromCollection<Course>(cid, "Courses").then((res) => setCourse(res));
-    console.log("Curso obtenido", course);
+    if (cid) {
+      // @ts-ignore
+      getFromCollection<Course>(cid, "Courses").then((res) => setCourse(res));
+      console.log("Curso obtenido", course);
+    }
   }, [cid]);
 
   if (course) {
@@ -34,7 +45,14 @@ const Init = () => {
       </Layout>
     );
   } else {
-    return <h1>Nada aun</h1>;
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   }
 };
 

@@ -35,14 +35,13 @@ const Dashboard = ({ courses }: DashboardProps) => {
         <title>EduSegurity - Dashboard</title>
       </Head>
       <section className={Styles.head}>
-        <h1>Crea un nuevo curso</h1>
-        <Fab onClick={toogleNewCourse}>
-          {" "}
-          <Add />{" "}
+        <h1>Crea un nuevo curso:</h1>
+        <Fab onClick={toogleNewCourse} color="primary" variant="circular" style={{borderRadius: '30px'}}>
+          <Add />
         </Fab>
       </section>
       <NewCourse toogle={toogle} />
-      <h3>Tus cursos</h3>
+      <h3>Tus cursos:</h3>
       <section className={Styles.courses}>
         {courses.map((c: Course, i: number) => {
           return (
@@ -54,7 +53,7 @@ const Dashboard = ({ courses }: DashboardProps) => {
               <img src={c.cover}></img>
               <h4>{c.title}</h4>
               <p>{c.description}</p>
-              <p>{c.score}</p>
+              {/* <p>{c.score}</p> */}
             </div>
           );
         })}

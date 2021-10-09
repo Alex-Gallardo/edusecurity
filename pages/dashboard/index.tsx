@@ -15,9 +15,14 @@ const Init = () => {
   const { user } = userCTX;
 
   useEffect(() => {
-    getAllFromCollection<Course>("Courses").then((res: Course[]) =>
-      setCourses(res)
-    );
+    const tmpC: Course[] = [];
+    if (user)
+      getAllFromCollection<Course>("Courses").then((res: Course[]) => {
+        res.forEach((r: Course) => {
+          if (r.user_id === user.uid) tmpC.push(r);
+        });
+        setCourses(tmpC);
+      });
   }, []);
 
   return (

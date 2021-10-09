@@ -38,6 +38,7 @@
 .container {
   @include flexPosition(row, flex-start, flex-start);
   min-width: 400px;
+  max-width: 500px;
   height: 150px;
   border-radius: 10px;
   //   border: 2px solid #07355f;
@@ -65,11 +66,26 @@
     padding: 0px 16px;
     background-color: #f2f2f2;
 
-    p, h1{
-        width: 100%;
+    p{
+        width: 300px;
         text-overflow:ellipsis;
         overflow:hidden;
         white-space:nowrap;
+    }
+
+    h3{
+      width: 300px;
+      height: 38px;
+      display: block;
+      display: -webkit-box;
+      max-width: 100%;
+      margin: 0 auto;
+     
+      line-height: 1;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
