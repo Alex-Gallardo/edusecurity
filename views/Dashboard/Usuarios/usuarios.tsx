@@ -22,6 +22,7 @@ interface UsuariosProps {
 
 const Usuarios = (props: UsuariosProps) => {
   // SELECT - USER.STATE
+  console.log(props)
   const [state, setState] = useState<number>(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -41,15 +42,16 @@ const Usuarios = (props: UsuariosProps) => {
   };
 
   // DAR DE ALTA
-  const upUser = (uid: string) => () => {
+  const upUser = (user: User)  => {
     setAnchorEl(null);
+    console.log(user)
     // @ts-ignore
     window.Alert({
       title: "Dar de alta (Maestro)",
       body: "El usuario tendra un rol de maestro, quieres darlo de alta?",
       type: "confirm",
       onConfirm: () => {
-        saveInCollection<User>({ state: 1 }, uid, "users", true)
+        saveInCollection<User>({ state: 1 }, user.uid, "users", true)
           .then(() => {
             location.reload();
           })
@@ -61,7 +63,7 @@ const Usuarios = (props: UsuariosProps) => {
   };
 
   // DAR DE BAJA
-  const downUser = (uid: string) => () => {
+  const downUser = (user: User)  => {
     setAnchorEl(null);
     // @ts-ignore
     window.Alert({
@@ -69,7 +71,7 @@ const Usuarios = (props: UsuariosProps) => {
       body: "El usuario tendra un rol de estudiante, quieres darlo de baja?",
       type: "confirm",
       onConfirm: () => {
-        saveInCollection<User>({ state: 0 }, uid, "users", true)
+        saveInCollection<User>({ state: 0 }, user.uid, "users", true)
           .then(() => {
             location.reload();
           })
@@ -81,7 +83,7 @@ const Usuarios = (props: UsuariosProps) => {
   };
 
   // ELIMINAR
-  const deleteUser = (uid: string) => () => {
+  const deleteUser = (uid: string)  => {
     setAnchorEl(null);
     // @ts-ignore
     window.Alert({
@@ -140,9 +142,9 @@ const Usuarios = (props: UsuariosProps) => {
                 <ExpandMore />
               </ToggleButton>
               <Menu anchorEl={anchorEl} open={open} onClose={closeMenu}>
-                <MenuItem onClick={upUser(user.uid)}>Dar de alta</MenuItem>
-                <MenuItem onClick={downUser(user.uid)}>Dar de baja</MenuItem>
-                <MenuItem onClick={deleteUser(user.uid)} color="red">
+                <MenuItem onClick={()=> upUser(user)}>Dar de alta</MenuItem>
+                <MenuItem onClick={()=> downUser(user)}>Dar de baja</MenuItem>
+                <MenuItem onClick={()=> deleteUser(user.uid)} color="red">
                   Eliminar
                 </MenuItem>
               </Menu>
