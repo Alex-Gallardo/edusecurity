@@ -54,9 +54,21 @@
   }
 
   .cont_chd {
-    @include flexPosition(row, center, center);
+    @include flexPosition(column, flex-start, center);
     flex: 4;
     height: 100%;
-    background-color: tomato;
+    background-color: #fff;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 7px;
+      // padding: 2px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background: #07355f;
+      // padding: 2px;
+      // border-radius: 6px;
+    }
   }
 }

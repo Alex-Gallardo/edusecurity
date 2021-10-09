@@ -1,0 +1,106 @@
+@mixin flexPosition($dir, $pos, $alg) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $pos;
+  align-items: $alg;
+}
+
+@mixin sombra {
+  box-shadow: 0px 0px 12px 2px rgba(173, 173, 173, 0.75);
+  -webkit-box-shadow: 0px 0px 12px 2px rgba(173, 173, 173, 0.75);
+  -moz-box-shadow: 0px 0px 12px 2px rgba(173, 173, 173, 0.75);
+}
+
+@mixin animation($dura, $name, $fill, $timi) {
+  animation-duration: $dura;
+  animation-name: $name;
+  animation-fill-mode: $fill;
+  animation-timing-function: $timi;
+}
+
+@mixin mobile {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+.container_o {
+  @include flexPosition(row, space-around, center);
+  @include animation(1s, fadeIn, both, ease-in-out);
+  width: 100%;
+  max-width: 1250px;
+  height: auto;
+  padding: 24px;
+  color: #fff;
+  background-color: #07355f;
+  border-radius: 5px;
+  transition: 1s;
+}
+
+.container_c {
+  width: 100%;
+  max-width: 1250px;
+  height: 2px;
+  background-color: #07355f;
+  // transition: 1s;
+
+  & > * {
+    display: none;
+  }
+}
+
+.update_img {
+  @include flexPosition(row, center, center);
+  width: 200px;
+  height: 100px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 2px dashed #fff;
+}
+
+.cont_form {
+  @include flexPosition(column, center, center);
+  width: auto;
+  height: 100%;
+
+  .textfield {
+    background-color: #fff;
+  }
+}
+
+// ANIMACIONES
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

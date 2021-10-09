@@ -17,8 +17,8 @@ const DefContext: ContextProps = {
     courses_taken: [],
     state: 0,
   },
-  setUser: ()=> {},
-  deleteUser: ()=> {},
+  setUser: () => {},
+  deleteUser: () => {},
 };
 
 // CONTEXTO
