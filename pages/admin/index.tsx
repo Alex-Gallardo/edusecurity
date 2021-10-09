@@ -22,10 +22,14 @@ const Init = () => {
 
   useEffect(() => {
     // OBTNENER TODOS LOS USUARIOS
-    getAllFromCollection<User>("users").then((res) => setUsers(res)).catch((err)=>console.error('get-users-index:', err))
+    getAllFromCollection<User>("users")
+      .then((res) => setUsers(res))
+      .catch((err) => console.error("get-users-index:", err));
 
     // OBTENERMOS TODOS LOS REQUEST-CHECK
-    getAllFromCollection<GComment>("RequestCheck").then((res) =>setChecks([...res])).catch((err)=>console.error('get-requestcheks-index:', err))
+    getAllFromCollection<GComment>("RequestCheck")
+      .then((res) => setChecks(res))
+      .catch((err) => console.error("get-requestcheks-index:", err));
   }, []);
 
   // CAMBIAR DE VISTAS

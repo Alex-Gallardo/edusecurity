@@ -25,7 +25,8 @@ function MyApp({ Component, pageProps }) {
           if (
             !router.pathname.startsWith("/watch") &&
             !router.pathname.startsWith("/admin") &&
-            !router.pathname.startsWith("/foro")
+            !router.pathname.startsWith("/foro") &&
+            !router.pathname.startsWith("/dashboard")
           )
             router.push("/");
         } else {

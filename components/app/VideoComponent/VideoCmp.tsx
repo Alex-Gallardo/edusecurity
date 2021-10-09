@@ -15,13 +15,13 @@ const VideoCmp = (props: VideoCmpProps) => {
   const { id, title, subtitle } = props;
 
   // ENVIAR A WATCH
-  const watchResource = (id) => () => {
-    Router.replace({ pathname: "/watch/[id]", query: { id } });
+  const watchResource = () => {
+    Router.replace({ pathname: "/watch/[rid]", query: { rid: id } });
   };
 
   return (
-    <div className={Styles.container} onClick={watchResource(id)}>
-        <div className={Styles.viewer}></div>
+    <div className={Styles.container} onClick={watchResource}>
+      <div className={Styles.viewer}></div>
       <div className={Styles.info_course}>
         <p>{title}</p>
         <h3>{subtitle}</h3>
