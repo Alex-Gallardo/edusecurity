@@ -4,7 +4,7 @@ import {
   ref,
   uploadBytes,
   deleteObject,
-  getDownloadURL,
+  getDownloadURL
 } from "firebase/storage";
 
 export const addToStorage = async (
@@ -39,26 +39,4 @@ export const getURLFromStorage = async (directory: string, name: string) => {
   const refName: string = `/${directory}/${name}`;
   const refs = ref(str, refName);
   return getDownloadURL(refs);
-};
-
-const getRef = async (path: string) => {
-  const { getStorage, ref } = await import("firebase/storage");
-
-  // STORAGE
-  const firebaseApp = await getFirebase();
-  const str = getStorage(firebaseApp);
-  const refs = ref(str, path);
-
-  return refs;
-};
-
-export const getURL = async (path: string): Promise<string> => {
-  const { getDownloadURL } = await import("firebase/storage");
-
-  // STORAGE
-  const refs = await getRef(path);
-
-  // LISTA
-  const url = await getDownloadURL(refs);
-  return url;
 };

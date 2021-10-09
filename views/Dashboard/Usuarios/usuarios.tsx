@@ -18,6 +18,7 @@ interface UsuariosProps {
 
 const Usuarios = (props: UsuariosProps) => {
   // SELECT - USER.STATE
+  console.log(props)
   const [state, setState] = useState<number>(0);
 
   // FILTROS
