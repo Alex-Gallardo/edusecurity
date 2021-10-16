@@ -31,6 +31,7 @@ const Home = () => {
   const [comment, setComment] = useState<GComment>(c);
   const [courses, setCourses] = useState<Course[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
+  const [videos, setVideos] = useState<Resource[]>([]);
 
   // CONTEXT
   const userCtx = useContext(UserContext);
@@ -51,14 +52,32 @@ const Home = () => {
     );
   }, []);
 
-  useEffect(()=>{ 
+  useEffect(() => {
+    let tmpCS: string[] = [];
 
-    if(user){
-      // user.courses_taken.forEach((idC: string)=>{
-
-      // })
+    if (user) {
+      user.courses_taken.forEach((idC: string) => {
+        courses.forEach((c: Course) => {
+          if (idC === c._id) {
+            tmpCS.push(c._id);
+          }
+        });
+      });
     }
-  },[])
+
+    let tmpRT = [];
+
+    tmpCS.forEach((idR: string) => {
+      resources.forEach((r: Resource) => {
+        if (idR === r.course_id) {
+          console.log("idCOURSE: ", idR, "<>", r._id);
+          tmpRT.push(r);
+        }
+      });
+    });
+
+    setVideos(tmpRT);
+  }, [user]);
 
   // MANEJADOR DE TXT - TEACH
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,7 +171,7 @@ const Home = () => {
       <section>
         <h1 style={{ marginBottom: "0px" }}>Empezemos a aprender!</h1>
         <div className={Styles.carousel}>
-          {resources.map((resource: Resource, index: number) => (
+          {videos.map((resource: Resource, index: number) => (
             <VideoCmp
               id={resource._id}
               title={resource.title}
