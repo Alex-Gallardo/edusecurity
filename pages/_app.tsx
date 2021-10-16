@@ -26,6 +26,7 @@ function MyApp({ Component, pageProps }) {
             !router.pathname.startsWith("/watch") &&
             !router.pathname.startsWith("/admin") &&
             !router.pathname.startsWith("/foro") &&
+            !router.pathname.startsWith("/config") &&
             !router.pathname.startsWith("/dashboard")
           )
             router.push("/");

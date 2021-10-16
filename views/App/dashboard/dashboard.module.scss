@@ -47,6 +47,22 @@
     width: 100%;
     max-width: 1250px;
     padding: 24px 0px;
+    padding-bottom: 0px;
+
+    .btn_add {
+      @include flexPosition(row, space-between, center);
+      border-radius: 30px;
+      padding: 0px 16px;
+
+      &:hover {
+        color: #fff;
+        font-weight: 500;
+      }
+
+      p{
+        margin-right: 12px;
+      }
+    }
   }
 
   .courses {

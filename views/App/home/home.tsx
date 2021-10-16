@@ -9,24 +9,16 @@ import { getAllFromCollection, saveInCollection } from "utils/DB";
 // ROUTER
 import { useRouter } from "next/router";
 
+// COMPONENTS
+import VideoCmp from "components/app/VideoComponent/VideoCmp";
+import CardCourse from "components/app/CardCourse/CardCourse";
+
 // @MATERIAL
 import Rating from "@mui/material/Rating";
 import TextField from "@mui/material/TextField";
 
 // STYLES
 import Styles from "./home.module.scss";
-
-// COMPONENTS
-import VideoCmp from "components/app/VideoComponent/VideoCmp";
-
-// ==== COURSES
-// {
-//   id: "watch-video-01",
-//   title: "Ciberseguridad personal",
-//   subtitle: "3. Seguridad en redes sociales",
-//   score: "2.1",
-//   from: "Redait Media",
-// },
 
 const c: GComment = {
   _id: new Date().getTime() + "",
@@ -58,6 +50,15 @@ const Home = () => {
       setResources(res)
     );
   }, []);
+
+  useEffect(()=>{ 
+
+    if(user){
+      // user.courses_taken.forEach((idC: string)=>{
+
+      // })
+    }
+  },[])
 
   // MANEJADOR DE TXT - TEACH
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,15 +169,10 @@ const Home = () => {
         <div className={Styles.carousel}>
           {courses.map((course) => {
             return (
-              <div
-                className={Styles.cc2}
-                key={`cc2_${course.title}_${course._id}`}
-              >
-                <img src={course.cover}></img>
-                <h4>{course.title}</h4>
-                <p>{course.description}</p>
-                {/* <p>{course.score}</p> */}
-              </div>
+              <CardCourse
+                course={course}
+                key={`${course._id}${course.title}`}
+              ></CardCourse>
             );
           })}
         </div>

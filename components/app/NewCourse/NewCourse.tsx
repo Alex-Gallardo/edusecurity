@@ -112,57 +112,79 @@ const NewCourse = (props: NewCourseProps) => {
         <h2>Subiendo imagen... por favor espere</h2>{" "}
         <CircularProgress color="inherit" />
       </Backdrop>
-      <section
-        className={Styles.cont_form}
-        style={{ display: props.toogle ? "flex" : "none" }}
-      >
-        <h3>Título:</h3>
-        <TextField
-          fullWidth
-          name="title"
-          variant="filled"
-          className={Styles.textfield}
-          style={{ marginBottom: "18px" }}
-          onChange={handleChange}
-        ></TextField>
-        <h3>Descripción:</h3>
-        <TextField
-          multiline
-          fullWidth
-          name="description"
-          variant="filled"
-          className={Styles.textfield}
-          onChange={handleChange}
-        ></TextField>
-      </section>
-      <section
-        className={Styles.update_img}
-        style={{ display: props.toogle ? "flex" : "none" }}
-      >
-        <h2>Imagen de portada:</h2>
-        <label htmlFor="user_image">
-          <img src={srcIMG} alt={course.title} />
-        </label>
-        <input
-          id="user_image"
-          accept="image/*"
-          type="file"
-          multiple={false}
-          style={{ display: "none" }}
-          onChange={(e: any) => computeImg(e)}
-        />
-      </section>
-      <section>
-        <Button
-          variant="outlined"
-          color="inherit"
-          size="large"
+      <div className={Styles.header_pass} style={{ display: props.toogle ? "flex" : "none" }}>
+        <div className={Styles.box_pass}>
+          <h1>1</h1>
+          <p>Añade titulo y descripción</p>
+        </div>
+        <div className={Styles.bar} />
+        <div className={Styles.box_pass}>
+          <h1>2</h1>
+          <p>Sube tu imagen de portada</p>
+        </div>
+        <div className={Styles.bar} />
+        <div className={Styles.box_pass}>
+          <h1>3</h1>
+          <p>Preciona el boton </p>
+        </div>
+      </div>
+      <div className={Styles.body}>
+        {/* TITULO-TEXTO */}
+        <section
+          className={Styles.cont_form}
           style={{ display: props.toogle ? "flex" : "none" }}
-          onClick={addNewCourse}
         >
-          Subir
-        </Button>
-      </section>
+          <h3>Título:</h3>
+          <TextField
+            fullWidth
+            name="title"
+            variant="filled"
+            className={Styles.textfield}
+            style={{ marginBottom: "18px" }}
+            onChange={handleChange}
+          ></TextField>
+          <h3>Descripción:</h3>
+          <TextField
+            multiline
+            fullWidth
+            name="description"
+            variant="filled"
+            className={Styles.textfield}
+            onChange={handleChange}
+          ></TextField>
+        </section>
+
+        {/* IMAGEN */}
+        <section
+          className={Styles.update_img}
+          style={{ display: props.toogle ? "flex" : "none" }}
+        >
+          <h2>Imagen de portada:</h2>
+          <label htmlFor="user_image">
+            <img src={srcIMG} alt={course.title} />
+          </label>
+          <input
+            id="user_image"
+            accept="image/*"
+            type="file"
+            multiple={false}
+            style={{ display: "none" }}
+            onChange={(e: any) => computeImg(e)}
+          />
+        </section>
+        {/* SUBIR */}
+        <section>
+          <Button
+            variant="outlined"
+            color="inherit"
+            size="large"
+            style={{ display: props.toogle ? "flex" : "none" }}
+            onClick={addNewCourse}
+          >
+            Subir
+          </Button>
+        </section>
+      </div>
     </div>
   );
 };

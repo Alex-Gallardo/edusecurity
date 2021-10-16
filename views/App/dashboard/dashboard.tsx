@@ -36,7 +36,13 @@ const Dashboard = ({ courses }: DashboardProps) => {
       </Head>
       <section className={Styles.head}>
         <h1>Crea un nuevo curso:</h1>
-        <Fab onClick={toogleNewCourse} color="primary" variant="circular" style={{borderRadius: '30px'}}>
+        <Fab
+          onClick={toogleNewCourse}
+          color="primary"
+          variant="extended"
+          className={Styles.btn_add}
+        >
+          <p>Añadir</p>
           <Add />
         </Fab>
       </section>

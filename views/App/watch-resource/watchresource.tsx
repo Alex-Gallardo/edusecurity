@@ -2,17 +2,18 @@ import React from "react";
 
 // COMPONENTS
 import ReactPlayer from "react-player";
+import BoxComments from "components/app/BoxComments/BoxComments";
 
 // STYLES
 import Styles from "./watchresource.module.scss";
 
-interface PropsResource {
+interface WatchResourceProps {
   resource: Resource;
 }
 
 // Obtener recurso de Context
-const WatchResource = ({ resource }: PropsResource) => {
-  console.log("props", resource);
+const WatchResource = ({ resource }: WatchResourceProps) => {
+  console.log("whatchResourceProps", resource);
   return (
     <main className={Styles.container}>
       <section className={Styles.section_info}>
@@ -31,7 +32,7 @@ const WatchResource = ({ resource }: PropsResource) => {
       </section>
       <section className={Styles.section_comments}>
         <h2>Comentarios:</h2>
-        <div className={Styles.comments}></div>
+        <BoxComments comments={resource.comments} courseID={resource._id}/>
       </section>
     </main>
   );

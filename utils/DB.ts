@@ -14,7 +14,7 @@ import {
   Unsubscribe,
   DocumentReference,
   getDocs,
-  PartialWithFieldValue
+  PartialWithFieldValue,
 } from "firebase/firestore";
 
 // GLOBALES
@@ -38,7 +38,7 @@ export const getCollection = async (
   return collection(globalDB, colName);
 };
 
-// GUARDAR 
+// GUARDAR
 export const saveInCollection = async <T>(
   data: PartialWithFieldValue<T>,
   dataId: string,
@@ -50,7 +50,7 @@ export const saveInCollection = async <T>(
   return setDoc(colDoc, data, { merge });
 };
 
-// OBTENER 
+// OBTENER
 export const getFromCollection = async <T>(dataId: string, colName: string) => {
   const collection = await getCollection(colName);
   const colDoc = doc(collection, dataId);
@@ -59,12 +59,12 @@ export const getFromCollection = async <T>(dataId: string, colName: string) => {
 };
 
 // OBTENER TODOS
-export const getAllFromCollection = async<T>(colName:string) => {
+export const getAllFromCollection = async <T>(colName: string) => {
   const collection = await getCollection(colName);
-  const docsRef = await getDocs(collection)
-  const docsData = docsRef.docs.map((doc) => doc.data()) as T[]
-  return docsData
-}
+  const docsRef = await getDocs(collection);
+  const docsData = docsRef.docs.map((doc) => doc.data()) as T[];
+  return docsData;
+};
 
 // OBTENER TIEMPO REAL
 export const getListener = async <T>(

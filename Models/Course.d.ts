@@ -16,5 +16,5 @@ interface Resource {
   title: string;
   description: string;
   resource_url: string;
-  comments?: Comment[];
+  comments?: GComment[];
 }

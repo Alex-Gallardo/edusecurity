@@ -14,10 +14,12 @@ const Init = () => {
   } = router;
 
   useEffect(() => {
-    // @ts-ignore
-    getFromCollection<Resource>(rid, "Resources").then((res) => {
-      setResource(res);
-    });
+    if (rid) {
+      // @ts-ignore
+      getFromCollection<Resource>(rid, "Resources").then((res) => {
+        setResource(res);
+      });
+    }
   }, [rid]);
 
   return (

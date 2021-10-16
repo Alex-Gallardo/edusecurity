@@ -1,0 +1,71 @@
+@mixin flexPosition($dir, $pos, $alg) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $pos;
+  align-items: $alg;
+}
+
+@mixin sombra {
+  box-shadow: 0px 0px 12px 2px rgba(173, 173, 173, 0.75);
+  -webkit-box-shadow: 0px 0px 12px 2px rgba(173, 173, 173, 0.75);
+  -moz-box-shadow: 0px 0px 12px 2px rgba(173, 173, 173, 0.75);
+}
+
+@mixin mobile {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+.container {
+  @include flexPosition(column, space-between, center);
+  width: 100%;
+  min-width: 460px;
+  height: 100%;
+  background-color: #ececec;
+  border-radius: 4px;
+
+  .comments {
+    @include flexPosition(column, flex-start, center);
+    width: 100%;
+    height: 100%;
+    max-height: 464px;
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  .add_comment {
+    @include flexPosition(row, space-between, center);
+    width: 100%;
+    height: auto;
+    padding: 12px;
+    background-color: #fff;
+    border: 2px solid #ececec;
+    border-radius: 4px;
+
+    .btn_add {
+      margin-left: 16px;
+      border-radius: 50px;
+      color: #fff;
+      background-color: #c4c4c4;
+    }
+  }
+}

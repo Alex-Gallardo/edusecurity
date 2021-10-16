@@ -49,9 +49,12 @@ const UserProvider = ({ children }) => {
     (async () =>
       (listener = await userListener((user) => {
         if (user) {
-          getFromCollection(user.uid, "users").then((res: User) =>
-            setUser(res)
-          );
+          getFromCollection<User>(user.uid, "users")
+            .then((res: User) => setUser(res))
+            .catch((err) => {
+              console.error("getUser-UserProvider", err);
+              setUser(u);
+            });
         } else {
           setUser(u);
         }
@@ -67,7 +70,7 @@ const UserProvider = ({ children }) => {
       value={{
         user: state.user,
         setUser,
-        deleteUser
+        deleteUser,
       }}
     >
       {children}

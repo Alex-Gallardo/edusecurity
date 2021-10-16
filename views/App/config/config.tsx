@@ -22,6 +22,7 @@ const Config = () => {
   // CONTEXT
   const userCtx = useContext(UserContext);
   const { user } = userCtx;
+
   // ESTADO
   const [state, setState] = useState<User>(user);
 
@@ -68,63 +69,75 @@ const Config = () => {
 
   return (
     <main className={Styles.container}>
-      {/* HEADER */}
-      <section style={{ marginTop: "32px" }}>
-        {/* PERFIL INFO */}
+      <div
+        className={Styles.bac_box}
+        style={{
+          backgroundColor: user && user.state === 1 ? "#A800FF" : "#07355f",
+        }}
+      />
+
+      {/* PERFIL INFO */}
+      <section className={Styles.body_}>
+        <img
+          src={
+            user?.photo_url ||
+            "https://i.pinimg.com/550x/f7/da/98/f7da9864a7c3079df7c26173520d18fc.jpg"
+          }
+          alt="picture-perfil"
+          className={Styles.body_img}
+        />
+
+        {/* DAT-PERFIL */}
         <div className={Styles.perfil}>
-          <img src={user?.photo_url} />
-          <div className={Styles.perfil_info}>
-            <h2>
-              {user?.name} {user?.last_name}
-            </h2>
-            <p>{user?.state === 0 ? "Estudiante" : "Maestro"}</p>
-          </div>
+          <h2>
+            {user?.name} {user?.last_name}
+          </h2>
+          <p>{user?.state === 0 ? "Estudiante" : "Maestro"}</p>
         </div>
+
+        {/* CURSOS TOMADOS */}
+        <section className={Styles.info}>
+          <div className={Styles.cont_info}>
+            <h3>Cursos tomados:</h3>
+            <p>{state?.courses_taken?.length || 0}</p>
+          </div>
+          {user?.state === 0 ? (
+            ""
+          ) : (
+            <div className={Styles.cont_info}>
+              <h3>Cursos subidos:</h3>
+              <p>{state?.courses_id?.length || 0}</p>
+            </div>
+          )}
+        </section>
 
         {/* CERRAR SESION */}
         <Button variant="contained" color="secondary" onClick={logOut}>
           Cerrar Sesion
         </Button>
-      </section>
-
-      {/* ACTUALIZA TU INFORMACION */}
-      <section className={Styles.cont_data} style={{ margin: "0px" }}>
-        <h2 style={{ margin: "0px" }}>Actualiza tu información</h2>
-      </section>
-
-      {/* DAT INFORMACION */}
-      <section className={Styles.cont_data}>
-        <TextField
-          name="name"
-          label="Nombre"
-          variant="outlined"
-          value={state?.name}
-          className={Styles.input_data}
-          onChange={setValue}
-        ></TextField>
-        <TextField
-          name="last_name"
-          label="Apellido"
-          variant="outlined"
-          value={state?.last_name}
-          className={Styles.input_data}
-          onChange={setValue}
-        ></TextField>
-      </section>
-
-      {/* CURSOS TOMADOS */}
-      <section className={Styles.info}>
-        <div className={Styles.cont_info}>
-          <h3>Cursos tomados</h3>
-          <p>{state?.courses_taken.length || 0}</p>
-        </div>
-      </section>
-
-      {/* GUARDAR INFO */}
-      <section>
-        <Button variant="contained" color="primary" onClick={actDatUser}>
-          Guardar
-        </Button>
+        <hr />
+        <section className={Styles.cont_data}>
+          <h2>Actualiza tu información</h2>
+          <TextField
+            name="name"
+            label="Nombre"
+            variant="outlined"
+            value={state?.name}
+            className={Styles.input_data}
+            onChange={setValue}
+          ></TextField>
+          <TextField
+            name="last_name"
+            label="Apellido"
+            variant="outlined"
+            value={state?.last_name}
+            className={Styles.input_data}
+            onChange={setValue}
+          ></TextField>
+          <Button variant="contained" color="primary" onClick={actDatUser}>
+            Guardar
+          </Button>
+        </section>
       </section>
     </main>
   );
