@@ -4,7 +4,7 @@ import {
   ref,
   uploadBytes,
   deleteObject,
-  getDownloadURL
+  getDownloadURL,
 } from "firebase/storage";
 
 export const addToStorage = async (
@@ -40,3 +40,4 @@ export const getURLFromStorage = async (directory: string, name: string) => {
   const refs = ref(str, refName);
   return getDownloadURL(refs);
 };
+
