@@ -32,7 +32,7 @@ const FComment = (props: ForumCommentProps) => {
     window.Alert({
       title:
         comment.comments.length > 0
-        ? "Todos los comentarios"
+          ? "Todos los comentarios"
           : "Aun no hay comentarios",
       body:
         comment.comments.length > 0
