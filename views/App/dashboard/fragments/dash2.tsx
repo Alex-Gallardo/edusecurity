@@ -38,16 +38,18 @@ const DashboardView2 = ({ course }: DashboardProps) => {
       <Head>
         <title>EduSegurity - Dashboard</title>
       </Head>
-      {/* INFORMACION */}
-      <section className={Styles.info}>
-        {/* DAT-COURSE */}
-        <section className={Styles.info_dat}>
+      {/* !R CONTENEDOR */}
+      <section className={Styles.cont_}>
+        <section className={Styles.cont_info_}>
           <h2>Informacion:</h2>
-          <div className={Styles.info_dat_info}>
+          {/* DAT-COURSE */}
+          <div className={Styles.cont_info_dat_}>
             <img src={course.cover} alt={course.title} />
-            <h2>{course.title}</h2>
-            <p style={{marginBottom: '24px'}}>{course.description}</p>
-            <TableDat course={course} />
+            <div className={Styles.info_dat}>
+              <h2>{course.title}</h2>
+              <p style={{ marginBottom: "24px" }}>{course.description}</p>
+              <TableDat course={course} />
+            </div>
           </div>
         </section>
 

@@ -18,31 +18,29 @@ interface ForumCommentProps {
 }
 
 const FComment = (props: ForumCommentProps) => {
-  const [userF, setUserF] = useState<User | null>(null);
-  const { comment } = props;
-  const [comments, setComments] = useState<GComment[]>([])
+  // STATE
+  const [userComment, setUserComment] = useState<User | null>(null);
   const [commentt, setCommentt] = useState<GComment>({
     _id: "",
     message: "",
-    user_id: ""
-  })
+    user_id: "",
+  });
 
-  //Context 
-  const userCtx = useContext(UserContext)
-  const { user } = userCtx
+  // PROPS
+  const { comment } = props;
 
-
+  //Context
+  const userCTX = useContext(UserContext);
+  const { user } = userCTX;
 
   useEffect(() => {
     getFromCollection<User>(comment.user_id, "users")
-      .then((user) => setUserF(user))
+      .then((user) => setUserComment(user))
       .catch((err) => console.log("Error en traida de usuario: ", err));
   }, []);
 
   // MOSTRAR COMENTARIOS
   const showComments = () => {
-
-
     // @ts-ignore
     window.Alert({
       title:
@@ -51,66 +49,79 @@ const FComment = (props: ForumCommentProps) => {
           : "Aun no hay comentarios",
       body:
         comment.comments.length > 0
-          ? `${comment.comments.length}. comentarios de ${comment.title}`
+          ? `${comment.comments.length}. comentarios para "${comment.title}"`
           : "Sin comentarios",
       type: "confirm",
       customElements: (
         <div className={Styles.comments}>
-          {comment.comments.map((c: GComment, index:number) => {
-            return <div className={Styles.comments_comment} key={c._id+index}>
-              <h4>{c.message}</h4>
-            </div>;
+          {comment.comments.map((c: GComment, index: number) => {
+            return (
+              <div className={Styles.comments_comment} key={c._id + index}>
+                <h4>{c.message}</h4>
+              </div>
+            );
           })}
         </div>
       ),
     });
   };
 
-  const computetext = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { target: { value, name } } = e
-    const tmpC = commentt
-    tmpC.message = value
-    tmpC._id = new Date().getTime() + ""
-    tmpC.user_id = user.uid
-    setCommentt(tmpC)
+  // ASIGNAR COMENTARIO
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value, name },
+    } = e;
+    const tmpC = commentt;
+    tmpC[name] = value;
+    setCommentt(tmpC);
+  };
 
-  }
-
-  const addnewcomment = () => {
+  // AGREGAR NUEVO COMENTARIO
+  const addNewComment = () => {
     // @ts-ignore
     window.Alert({
       title: "Añadir Comentario",
-      body: "Escribir comentario",
+      body: "Escribe tu comentario",
       type: "confirm",
       customElements: (
-        <div>
-          <TextField fullWidth name="comment" onChange={computetext}>
+        <TextField
+          fullWidth
+          multiline
+          name="message"
+          onChange={handleChange}
+          style={{ marginTop: "16px" }}
+        />
+      ),
+      onConfirm: () => {
+        // VARS
+        const tmpCS = comment.comments;
+        const tmpCT = commentt;
 
-          </TextField>
-        </div>
+        tmpCT._id = new Date().getTime() + "";
+        tmpCT.user_id = user.uid;
+        tmpCS.push(tmpCT);
 
-      ), onConfirm: () => {
-        //  setComments([...comments])
-        console.log(comments, commentt)
-        const tmpCS = comment.comments
-        tmpCS.push(commentt)
-        setComments(tmpCS)
-        setCommentt({ _id: "", message: "", user_id: "" })
-        console.log(tmpCS, comment._id)
-        saveInCollection({ comments:tmpCS }, comment._id, "ForumComments", true).then((res) => {
-          // @ts-ignore
-          window.Alert({
-            title: "Comentario Guardado",
-            body: "Haz añadido un nuevo comentario",
-            type: "confirm"
+        setCommentt({ _id: "", message: "", user_id: "" });
+
+        // GUARDAR COMENTARIOS EN DB
+        saveInCollection(
+          { comments: tmpCS },
+          comment._id,
+          "ForumComments",
+          true
+        )
+          .then((_res) => {
+            // @ts-ignore
+            window.Alert({
+              title: "Comentario Guardado",
+              body: "Haz añadido un nuevo comentario",
+              type: "confirm",
+            });
           })
-        }).catch((err) => console.error("savecoment-comment", err))
-      }
-    })
-
-
-
-  }
+          .catch((err) => console.error("savecoment-comment", err));
+      },
+    });
+  };
 
   return (
     <div className={Styles.container}>
@@ -121,21 +132,25 @@ const FComment = (props: ForumCommentProps) => {
         <div className={Styles.user_info}>
           <img
             src={
-              userF !== null
-                ? userF.photo_url
+              userComment !== null
+                ? userComment.photo_url
                 : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             }
           />
           <p>
-            Posteado por <span>{userF?.name}</span>
+            Posteado por <span>{userComment?.name}</span>
           </p>
         </div>
-        <Tooltip title="Comentarios">
-          <div className={Styles.user_comments} >
-            <Sms onClick={showComments} /> <p>{comment.comments.length}</p>
-            <Add onClick={addnewcomment} />
-          </div>
-        </Tooltip>
+        <div className={Styles.user_comments}>
+          <Tooltip title="Comentarios">
+            <div className={Styles.comments_ms}>
+              <Sms onClick={showComments} /> <p>{comment.comments.length}</p>
+            </div>
+          </Tooltip>
+          <Tooltip title="Añadir comentario">
+            <Add className={Styles.add_} onClick={addNewComment} />
+          </Tooltip>
+        </div>
       </section>
     </div>
   );

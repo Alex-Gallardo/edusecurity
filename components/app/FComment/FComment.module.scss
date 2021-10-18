@@ -54,7 +54,7 @@
   p {
     margin: 0px;
   }
-  p{
+  p {
     color: #737373;
   }
 
@@ -96,19 +96,27 @@
       color: #c4c4c4;
       cursor: pointer;
 
-      p {
-        margin-left: 8px;
+      .comments_ms {
+        @include flexPosition(row, center, center);
+        width: auto;
+        p {
+          margin: 0px 8px ;
+        }
       }
     }
   }
 }
 
-// = = = = = = = COMENTARIOS = = = = = = = 
+// = = = = = = = COMENTARIOS = = = = = = =
 .comments {
-  @include flexPosition(column, center, center);
+  @include flexPosition(column, flex-start, center);
   width: 100%;
   height: auto;
+  max-height: 350px;
+  padding: 16px 0px;
   overflow-y: auto;
+  margin-top: 16px;
+
 
   &::-webkit-scrollbar {
     width: 7px;
@@ -119,11 +127,17 @@
     border-radius: 6px;
   }
 
-  .comments_comment{
+  .comments_comment {
     @include flexPosition(column, flex-start, flex-start);
     width: 100%;
-    padding: 12px;
+    padding: 12px 16px;
     border: 1px solid #07355f;
+    border-radius: 4px;
     margin-bottom: 12px;
+
+    h4 {
+      margin: 0px;
+      font-weight: 400;
+    }
   }
 }
