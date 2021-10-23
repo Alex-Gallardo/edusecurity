@@ -6,7 +6,7 @@ import "../styles/globals.scss";
 
 // PROVIDER
 import UserProvider from "../context/UserProvider";
-import { userListener } from "./../utils/Auth";
+import { userListener } from "utils/Auth";
 
 // NEXT
 import AlertTemplate from "components/app/lualert";
@@ -27,11 +27,12 @@ function MyApp({ Component, pageProps }) {
             !router.pathname.startsWith("/admin") &&
             !router.pathname.startsWith("/foro") &&
             !router.pathname.startsWith("/config") &&
+            !router.pathname.startsWith("/app") &&
             !router.pathname.startsWith("/dashboard")
           )
-            router.push("/");
+            router.push("/app");
         } else {
-          router.push("/login");
+          router.push("/");
         }
       })))();
 

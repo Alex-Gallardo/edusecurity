@@ -1,17 +1,12 @@
 import React from "react";
 
 // COMPONENTS
-import Layout from "../components/app/Layout/Layout";
 
 // VIEWS
-import Home from "../views/App/home/home";
+import LandingPage from "views/Landing/index";
 
 const Init = () => {
-  return (
-    <Layout>
-      <Home></Home>
-    </Layout>
-  );
+  return <LandingPage></LandingPage>;
 };
 
 export default Init;

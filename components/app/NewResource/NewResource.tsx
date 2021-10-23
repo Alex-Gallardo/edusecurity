@@ -20,14 +20,15 @@ import { saveInCollection } from "utils/DB";
 // PROPS
 interface NewResourceProps {
   courseID: string;
+  resourcesIDS: string[];
 }
 
-const NewResource = ({ courseID }: NewResourceProps) => {
+const NewResource = ({ courseID, resourcesIDS }: NewResourceProps) => {
   // STATE
   const [loading, setLoading] = useState<boolean>(false);
   const [srcIMG, setSrcIMG] = useState<string>("/images/click.jpg");
   const [resource, setResource] = useState<Resource>({
-    _id: new Date().getTime() + "",
+    _id: "",
     user_id: "",
     course_id: "",
     title: "",
@@ -65,6 +66,7 @@ const NewResource = ({ courseID }: NewResourceProps) => {
             "https://images.assetsdelivery.com/thumbnails/blankstock/blankstock1802/blankstock180200731.jpg"
           );
           setLoading(false);
+
           // @ts-ignore
           window.Alert({
             title: "Accion completada",
@@ -88,6 +90,7 @@ const NewResource = ({ courseID }: NewResourceProps) => {
   // CREAR NUEVO CURSO
   const addNewResource = () => {
     const tmpResource: Resource = resource;
+    tmpResource._id = new Date().getTime() + "";
     tmpResource.user_id = user.uid;
     tmpResource.course_id = courseID;
     console.log("tmpCourse:", tmpResource);
@@ -100,15 +103,28 @@ const NewResource = ({ courseID }: NewResourceProps) => {
           title: "",
           description: "",
           resource_url: "",
-          _id: new Date().getTime() + "",
+          _id: "",
         });
-        // @ts-ignore
-        window.Alert({
-          title: "Recurso añadido exitosamente",
-          body: `El recurso "${resource.title}" se añadio a tu colección de recursos.`,
-          type: "confirm",
-          onConfirm: () => location.reload(),
+
+        const tmpResources: string[] = resourcesIDS;
+        tmpResources.push(tmpResource._id);
+
+        saveInCollection<Course>(
+          { resources_id: tmpResources },
+          courseID,
+          "Courses",
+          true
+        ).then((_res2) => {
+          // @ts-ignore
+          window.Alert({
+            title: "Recurso añadido exitosamente",
+            body: `El recurso "${resource.title}" se añadio a tu colección de recursos.`,
+            type: "confirm",
+            onConfirm: () => location.reload(),
+          });
         });
+
+        // SI HAY ERROR
       })
       .catch((err) => {
         console.error("uploadResource-state(Resource)-NewResource.tsx:", err);

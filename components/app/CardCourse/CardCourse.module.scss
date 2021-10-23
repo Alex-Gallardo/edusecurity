@@ -39,6 +39,7 @@
   @include flexPosition(column, flex-start, center);
   width: 250px;
   margin-right: 24px;
+  margin-bottom: 24px;
   height: auto;
   background-color: #ececec;
   border-radius: 4px;
@@ -140,7 +141,7 @@
         }
 
         p {
-          color: #8C8C8C;
+          color: #8c8c8c;
         }
       }
 

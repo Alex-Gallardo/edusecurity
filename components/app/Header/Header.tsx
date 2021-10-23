@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 // STYLES
@@ -15,16 +15,25 @@ import Button from "@mui/material/Button";
 import InputSearch from "../Search/Search";
 
 const Header = () => {
+  const [imgSRC, setImgSRC] = useState<string>(
+    "https://www.marathonranking.com/wp-content/uploads/imgs/loading.gif"
+  );
+
+  // router
   const router = useRouter();
 
   const userContext = useContext(UserContext);
   const { user } = userContext;
 
+  useEffect(() => {
+    if (user) setImgSRC(user.photo_url);
+  }, [user]);
+
   // ENVIAR A: CONFIG
   const sendConfig = () => router.push("/config");
 
   // ENVIAR A: INICIO
-  const sendHome = () => router.push("/");
+  const sendHome = () => router.push("/app");
 
   // ENVIAR A: FORO
   const sendForum = () => router.push("/foro");
@@ -49,7 +58,7 @@ const Header = () => {
         <Button variant="outlined" color="inherit" onClick={sendForum}>
           Foro
         </Button>
-        <img src={user?.photo_url || "https://www.marathonranking.com/wp-content/uploads/imgs/loading.gif"} alt={`Photo: ${user?.name}`} />
+        <img src={imgSRC} alt={`Photo: ${user?.name}`} />
         <Settings className={Styles.setting_icon} onClick={sendConfig} />
       </div>
     </nav>

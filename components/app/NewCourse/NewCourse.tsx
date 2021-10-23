@@ -27,7 +27,7 @@ const NewCourse = (props: NewCourseProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [srcIMG, setSrcIMG] = useState<string>("/images/click.jpg");
   const [course, setCourse] = useState<Course>({
-    _id: new Date().getTime() + "",
+    _id: "",
     cover: "",
     description: "",
     resources_id: [],
@@ -85,19 +85,31 @@ const NewCourse = (props: NewCourseProps) => {
   // CREAR NUEVO CURSO
   const addNewCourse = () => {
     const tmpCourse: Course = course;
+    tmpCourse._id = new Date().getTime() + "";
     tmpCourse.user_id = user.uid;
     console.log("tmpCourse:", tmpCourse);
 
     saveInCollection<Course>(course, course._id, "Courses", true).then(
       (_res) => {
-        // @ts-ignore
-        window.Alert({
-          title: "Curso creado exitosamente",
-          body: `El curso "${course.title}" se añadio a tu colección de cursos.`,
-          type: "confirm",
-          onConfirm: () => {
-            location.reload();
-          },
+        const tmpCourses: string[] = user.courses_id || [];
+        tmpCourses.push(tmpCourse._id);
+
+        // AÑADIR ID-CURSO USUARIO
+        saveInCollection<User>(
+          { courses_id: tmpCourses },
+          user.uid,
+          "users",
+          true
+        ).then((_res2) => {
+          // @ts-ignore
+          window.Alert({
+            title: "Curso creado exitosamente",
+            body: `El curso "${course.title}" se añadio a tu colección de cursos.`,
+            type: "confirm",
+            onConfirm: () => {
+              location.reload();
+            },
+          });
         });
       }
     );
@@ -112,7 +124,10 @@ const NewCourse = (props: NewCourseProps) => {
         <h2>Subiendo imagen... por favor espere</h2>{" "}
         <CircularProgress color="inherit" />
       </Backdrop>
-      <div className={Styles.header_pass} style={{ display: props.toogle ? "flex" : "none" }}>
+      <div
+        className={Styles.header_pass}
+        style={{ display: props.toogle ? "flex" : "none" }}
+      >
         <div className={Styles.box_pass}>
           <h1>1</h1>
           <p>Añade titulo y descripción</p>

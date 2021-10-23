@@ -30,6 +30,7 @@ const Home = () => {
   // STATE
   const [comment, setComment] = useState<GComment>(c);
   const [courses, setCourses] = useState<Course[]>([]);
+  const [coursesTaken, setCoursesTaken] = useState<Course[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
   const [videos, setVideos] = useState<Resource[]>([]);
 
@@ -53,24 +54,26 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    let tmpCS: string[] = [];
+    let tmpCS: Course[] = [];
 
     if (user) {
       user.courses_taken.forEach((idC: string) => {
         courses.forEach((c: Course) => {
           if (idC === c._id) {
-            tmpCS.push(c._id);
+            tmpCS.push(c);
           }
         });
       });
     }
 
+    setCoursesTaken(tmpCS)
+
     let tmpRT = [];
 
-    tmpCS.forEach((idR: string) => {
+    tmpCS.forEach((crse: Course) => {
       resources.forEach((r: Resource) => {
-        if (idR === r.course_id) {
-          console.log("idCOURSE: ", idR, "<>", r._id);
+        if (crse._id === r.course_id) {
+          console.log("idCOURSE: ", crse._id, "<>", r._id);
           tmpRT.push(r);
         }
       });

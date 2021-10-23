@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Router from "next/router";
 
 // STYLES
 import Styles from "./dashboard.module.scss";
@@ -11,6 +10,7 @@ import Head from "next/head";
 // @MATERIAL
 import Fab from "@mui/material/Fab";
 import Add from "@material-ui/icons/Add";
+import CardCourse from "components/app/CardCourse/CardCourse";
 
 // PROPS
 interface DashboardProps {
@@ -23,11 +23,6 @@ const Dashboard = ({ courses }: DashboardProps) => {
 
   // AGREGAR UN NUEVO CURSO
   const toogleNewCourse = () => setToogle(true);
-
-  // ENVIAR A WATCH
-  const watchResource = (cid) => () => {
-    Router.replace({ pathname: "/dashboard/[cid]", query: { cid } });
-  };
 
   return (
     <div className={Styles.container}>
@@ -49,20 +44,9 @@ const Dashboard = ({ courses }: DashboardProps) => {
       <NewCourse toogle={toogle} />
       <h3>Tus cursos:</h3>
       <section className={Styles.courses}>
-        {courses.map((c: Course, i: number) => {
-          return (
-            <div
-              className={Styles.cc2}
-              key={`cc2_${c.title}_${c._id}`}
-              onClick={watchResource(c._id)}
-            >
-              <img src={c.cover}></img>
-              <h4>{c.title}</h4>
-              <p>{c.description}</p>
-              {/* <p>{c.score}</p> */}
-            </div>
-          );
-        })}
+        {[...courses, ...courses].map((c: Course) => (
+          <CardCourse action course={c} key={`${c._id}${c.title}`}></CardCourse>
+        ))}
       </section>
     </div>
   );

@@ -24,10 +24,15 @@ const getAuthUser = async () => {
   return getAuth(res);
 };
 
-export const register = async (email: string, pass: string) => {
+export const register = async (
+  email: string,
+  pass: string,
+  name: string,
+  last_name: string
+) => {
   return createUserWithEmailAndPassword(await getAuthUser(), email, pass).then(
     (res) => {
-      if (getAdditionalUserInfo(res).isNewUser) saveUser(res);
+      if (getAdditionalUserInfo(res).isNewUser) saveUser(res, name, last_name);
     }
   );
 };
@@ -51,26 +56,30 @@ export const googleLogin = async () => {
 };
 
 export const logout = async () => {
-	const auth = await getAuthUser()
-	window.postMessage({
-		action: 'logout',
-	})
-	return auth.signOut()
-}
+  const auth = await getAuthUser();
+  window.postMessage({
+    action: "logout",
+  });
+  return auth.signOut();
+};
 
 export const userListener = async (callback: (user: UserFB) => unknown) => {
   return onAuthStateChanged(await getAuthUser(), callback);
 };
 
-export const saveUser = async (cred: UserCredential) => {
+export const saveUser = async (
+  cred: UserCredential,
+  name?: string,
+  last_name?: string
+) => {
   const {
     user: { uid, photoURL, displayName },
   } = cred;
 
   const tmpUser: User = {
     uid,
-    name: displayName,
-    last_name: "",
+    name: name ? name : displayName,
+    last_name: last_name ? last_name : "",
     photo_url: photoURL,
     state: 0,
     courses_taken: [],

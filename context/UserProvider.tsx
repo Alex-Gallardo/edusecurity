@@ -16,9 +16,9 @@ const UserProvider = ({ children }) => {
   const initialState: User = {
     uid: new Date().getTime() + "",
     photo_url:
-      "https://i.pinimg.com/550x/f7/da/98/f7da9864a7c3079df7c26173520d18fc.jpg",
-    name: "Gumball",
-    last_name: "Watterson",
+      "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg",
+    name: "No User",
+    last_name: "NULL",
     courses_taken: [],
     state: 0,
   };
@@ -48,9 +48,13 @@ const UserProvider = ({ children }) => {
     // **Transforma una funcion asincrona a sincrona
     (async () =>
       (listener = await userListener((user) => {
+
+        // console.log('Disponibilidad de usuario: ', user)
+        
         if (user) {
           getFromCollection<User>(user.uid, "users")
-            .then((res: User) => setUser(res))
+            .then((res: User) => {
+              setUser(res)})
             .catch((err) => {
               console.error("getUser-UserProvider", err);
               setUser(u);

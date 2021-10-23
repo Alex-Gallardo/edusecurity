@@ -1,0 +1,203 @@
+@mixin flexPosition($dir, $pos, $alg) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $pos;
+  align-items: $alg;
+}
+
+@mixin mobile {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+.main {
+  @include flexPosition(column, flex-start, center);
+  width: 100%;
+  height: auto;
+  background-color: #f2f2f2;
+
+  .topbar {
+    @include flexPosition(row, space-between, center);
+    width: 100%;
+    padding: 24px 32px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+
+    h2 {
+      margin: 0px;
+    }
+
+    .cont_btns {
+      @include flexPosition(row, center, center);
+      width: auto;
+
+      .btn {
+        margin-right: 16px;
+      }
+    }
+  }
+
+  .container {
+    @include flexPosition(column, flex-start, flex-start);
+    width: 80%;
+    height: 100%;
+
+    .box {
+      @include flexPosition(row, space-between, center);
+      width: 100%;
+      height: 300px;
+      background-color: #e8e8e8;
+      margin-bottom: 32px;
+      padding: 0px 42px;
+      background-image: url("https://images.unsplash.com/photo-1584433144859-1fc3ab64a957?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1330&q=80");
+      background-position: center;
+      background-size: cover;
+
+      .square {
+        @include flexPosition(column, flex-start, flex-start);
+        height: 225px;
+        width: 225px;
+        background-color: #fff;
+        padding: 24px;
+
+        h3 {
+          margin: 0px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+
+    h2 {
+      margin-bottom: 0px;
+    }
+    p {
+      margin: 0px;
+    }
+
+    .types {
+      @include flexPosition(row, space-between, center);
+      width: 100%;
+      padding: 24px 0px;
+
+      p {
+        font-weight: 500;
+        margin: 0px;
+      }
+    }
+
+    .box_outlined {
+      @include flexPosition(column, flex-start, flex-start);
+      width: 100%;
+      height: auto;
+      border: 1px solid #262626;
+      padding: 32px;
+
+      h3,
+      p {
+        margin: 0px;
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  .center_bar {
+    @include flexPosition(row, center, center);
+    width: 100%;
+    padding: 32px;
+    background-color: #e8e8e8;
+    margin: 50px 0px;
+
+    .boxito {
+      @include flexPosition(row, center, center);
+      width: 300px;
+      height: auto;
+      margin: 0px 32px;
+
+      .cont_icon {
+        @include flexPosition(row, center, center);
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        min-height: 50px;
+        border-radius: 25px;
+        background-color: #adadad;
+        margin-right: 16px;
+      }
+
+      p {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .contained {
+    @include flexPosition(row, center, center);
+    width: 80%;
+    height: auto;
+    margin: 32px 0px;
+    background-color: #fff;
+
+    img {
+      width: 400px;
+      height: 400px;
+      margin-right: 50px;
+    }
+
+    .info {
+      @include flexPosition(column, flex-start, flex-start);
+      width: 500px;
+      height: auto;
+
+      h1 {
+        margin: 0px;
+      }
+    }
+  }
+
+  footer{
+    @include flexPosition(row, space-between, center);
+    width: 100%;
+    padding: 32px 50px;
+    background-color: #07355f;
+    color: #fff;
+    margin-top: 50px;
+
+    h2{
+      margin: 0px;
+      font-weight: 400;
+    }
+
+    .f_info{
+      @include flexPosition(column, flex-start, flex-start);
+      width: auto;
+      height: auto;
+
+      p{
+        margin: 0px;
+        font-size: 0.8em;
+      }
+    }
+  }
+}

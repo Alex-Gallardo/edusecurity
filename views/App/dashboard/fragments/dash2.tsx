@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
+import Router from "next/router";
 
 // UTILS
-import { getAllFromCollection } from "utils/DB";
+import { getAllFromCollection, getFromCollection } from "utils/DB";
 
 // STYLES
 import Styles from "./dash2.module.scss";
 
 // COMPONENTS
 import NewResource from "components/app/NewResource/NewResource";
-import TableDat from "./../../../../components/app/TableDat/Tabledat";
+import TableDat from "components/app/TableDat/Tabledat";
 
 // @MATERIAL
+import Button from "@mui/material/Button";
+import ArrowBack from "@material-ui/icons/ArrowBack";
 
 // PROPS
 interface DashboardProps {
@@ -22,7 +25,7 @@ const DashboardView2 = ({ course }: DashboardProps) => {
   // STATE
   const [resources, setResourses] = useState<Resource[]>([]);
 
-  useState(() => {
+  useEffect(() => {
     const tmpR: Resource[] = [];
     getAllFromCollection<Resource>("Resources").then((res: Resource[]) => {
       res.forEach((r: Resource) => {
@@ -30,20 +33,35 @@ const DashboardView2 = ({ course }: DashboardProps) => {
       });
       setResourses(tmpR);
     });
-    // @ts-ignore
   }, []);
+
+  const sendBack = () => {
+    Router.push("/dashboard");
+  };
 
   return (
     <div className={Styles.container}>
       <Head>
         <title>EduSegurity - Dashboard</title>
       </Head>
-      {/* !R CONTENEDOR */}
+
+      {/* 1R -------- */}
       <section className={Styles.cont_}>
+        {/* INFORMACION COURSE */}
         <section className={Styles.cont_info_}>
-          <h2>Informacion:</h2>
+          <div className={Styles.cont_back}>
+            <Button
+              variant="contained"
+              startIcon={<ArrowBack />}
+              onClick={sendBack}
+            >
+              Regreasar
+            </Button>
+            {/* <h2>Información:</h2> */}
+          </div>
+
           {/* DAT-COURSE */}
-          <div className={Styles.cont_info_dat_}>
+          <div className={Styles.info_dat_}>
             <img src={course.cover} alt={course.title} />
             <div className={Styles.info_dat}>
               <h2>{course.title}</h2>
@@ -54,12 +72,16 @@ const DashboardView2 = ({ course }: DashboardProps) => {
         </section>
 
         {/* UPDATE NEW-RESOURCE */}
-        <section className={Styles.info_dat}>
-          <h2>Publica un nuevo video</h2>
-          <NewResource courseID={course._id} />
+        <section className={Styles.add_resource}>
+          <h2>Publica un nuevo video:</h2>
+          <NewResource
+            courseID={course._id}
+            resourcesIDS={course.resources_id}
+          />
         </section>
       </section>
 
+      {/* --------------------------------------------------------------------------------------------------- */}
       {/* RECURSOS */}
       <section className={Styles.courses}>
         <h2>{resources.length} recursos:</h2>

@@ -1,23 +1,25 @@
 import React, { FormEvent, useState } from "react";
-import { login } from "../../../utils/Auth";
-import { facebookLogin, googleLogin } from "../../../utils/Auth";
+import { useRouter } from "next/router";
 
-// STYLES
-import Styles from "./login.module.scss";
+// UTILS
+import { login } from "utils/Auth";
+import { facebookLogin, googleLogin } from "utils/Auth";
 
 // @material
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-interface PropsLogin {
-  sendToRegister: () => unknown;
-}
+// STYLES
+import Styles from "./login.module.scss";
 
-const Login = (props: PropsLogin) => {
+const Login = () => {
   const [state, setState] = useState<{ email: string; pass: string }>({
     email: "",
     pass: "",
   });
+
+  // ROUTER
+  const router = useRouter();
 
   // Setear valores (Input)
   const setValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,22 +31,20 @@ const Login = (props: PropsLogin) => {
   // Autenticar
   const authUser = async (e: FormEvent) => {
     e.preventDefault();
-    try{
+    try {
       const res = await login(state.email, state.pass);
-    console.log("Login:", res.user);
-      
-    }catch(error){ 
+      console.log("Login:", res.user);
+    } catch (error) {
       // @ts-ignore
       window.Alert({
-        title:"Credenciales Invalidas",
-        body:"Favor revisar que tu correo y contraseña se encuentren escritas correctamente",
-        type:"confirm",
-        onConfirm:()=>{
-          setState({email:"",pass:""})
-        }
-      })
-    };
-      
+        title: "Credenciales Invalidas",
+        body: "Favor revisar que tu correo y contraseña se encuentren escritas correctamente",
+        type: "confirm",
+        onConfirm: () => {
+          setState({ email: "", pass: "" });
+        },
+      });
+    }
   };
 
   // Ingresar con facebook
@@ -57,26 +57,35 @@ const Login = (props: PropsLogin) => {
     googleLogin();
   };
 
+  // ENVIAR A REGISTER
+  const sendToRegister = () => {
+    router.push("/register");
+  };
+
   return (
     <main className={Styles.main} onSubmit={authUser}>
       <form className={Styles.info}>
         <h1>Inicia sesion</h1>
         <TextField
+          fullWidth
           name="email"
           label="Correo"
           variant="outlined"
+          className={Styles.input}
           value={state.email}
           onChange={setValue}
         />
         <TextField
+          fullWidth
           name="pass"
           label="Contraseña"
           variant="outlined"
+          className={Styles.input}
           value={state.pass}
           onChange={setValue}
           type="password"
         />
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" className={Styles.input}>
           Iniciar
         </Button>
         <h3>O</h3>
@@ -103,9 +112,15 @@ const Login = (props: PropsLogin) => {
               Facebook
             </div>
           </Button>
-          <p onClick={props.sendToRegister}>No tienes una cuenta?</p>
         </div>
       </form>
+      <Button
+        onClick={sendToRegister}
+        variant="contained"
+        style={{ marginTop: "32px" }}
+      >
+        No tienes una cuenta?
+      </Button>
     </main>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Router from "next/router";
 
 // UTILS
 import { getFromCollection, saveInCollection } from "utils/DB";
@@ -84,6 +85,11 @@ const CardCourse = (props: CardCourseProps) => {
     }
   };
 
+  // ENVIAR A WATCH
+  const watchResource = (cid) => () => {
+    Router.replace({ pathname: "/dashboard/[cid]", query: { cid } });
+  };
+
   return (
     <div className={Styles.box}>
       <Backdrop
@@ -137,14 +143,25 @@ const CardCourse = (props: CardCourseProps) => {
         <Rating readOnly size="small" value={course.score} />
         <p>{course.description}</p>
         <hr />
-        <Button
-          variant="contained"
-          size="small"
-          color="primary"
-          onClick={openViewCourse}
-        >
-          Ver
-        </Button>
+        {props.action ? (
+          <Button
+            variant="contained"
+            size="small"
+            color="primary"
+            onClick={watchResource(course._id)}
+          >
+            CONFIG
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            size="small"
+            color="primary"
+            onClick={openViewCourse}
+          >
+            Ver
+          </Button>
+        )}
       </section>
     </div>
   );

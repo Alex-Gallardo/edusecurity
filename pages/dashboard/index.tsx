@@ -23,7 +23,7 @@ const Init = () => {
         });
         setCourses(tmpC);
       });
-  }, []);
+  }, [user]);
 
   return (
     <>
