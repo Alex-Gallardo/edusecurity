@@ -128,7 +128,8 @@
 
 
 .resource {
-  @include flexPosition(column, flex-start, flex-start);
+  @include flexPosition(row,  space-between, flex-start);
+  width: 100%;
   padding: 24px;
   margin: 0px 16px 16px 0px;
   border-radius: 6px;
@@ -141,5 +142,9 @@
   p {
     margin: 0px;
     color:#6B6B6B;
+  }
+
+  .menu{
+    @include flexPosition(column, flex-start, center);
   }
 }

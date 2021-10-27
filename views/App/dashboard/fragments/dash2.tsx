@@ -3,7 +3,7 @@ import Head from "next/head";
 import Router from "next/router";
 
 // UTILS
-import { getAllFromCollection, getFromCollection } from "utils/DB";
+import { getAllFromCollection } from "utils/DB";
 
 // STYLES
 import Styles from "./dash2.module.scss";
@@ -11,6 +11,7 @@ import Styles from "./dash2.module.scss";
 // COMPONENTS
 import NewResource from "components/app/NewResource/NewResource";
 import TableDat from "components/app/TableDat/Tabledat";
+import ResourceCmp from "../components/resource";
 
 // @MATERIAL
 import Button from "@mui/material/Button";
@@ -81,19 +82,13 @@ const DashboardView2 = ({ course }: DashboardProps) => {
         </section>
       </section>
 
-      {/* --------------------------------------------------------------------------------------------------- */}
       {/* RECURSOS */}
       <section className={Styles.courses}>
         <h2>{resources.length} recursos:</h2>
         <div className={Styles.cont_resources}>
-          {resources.map((r: Resource, i: number) => {
-            return (
-              <div className={Styles.resource} key={`${r._id}_${i}`}>
-                <h3>{r.title}</h3>
-                <p>{r.description}</p>
-              </div>
-            );
-          })}
+          {resources.map((r: Resource, i: number) => (
+            <ResourceCmp resource={r} key={r._id + "_" + i} />
+          ))}
         </div>
       </section>
     </div>

@@ -20,6 +20,7 @@ const ViewUser = ({ user }: ViewUserProps) => {
   const open = Boolean(anchorEl);
 
   const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('Lo que entra cuando abres el menu', event.currentTarget)
     setAnchorEl(event.currentTarget);
   };
 

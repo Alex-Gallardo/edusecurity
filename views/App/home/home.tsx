@@ -26,61 +26,22 @@ const c: GComment = {
   user_id: "",
 };
 
-const Home = () => {
+// PROPS
+interface HomeProps {
+  courses: Course[];
+  coursesTaken: Course[];
+}
+
+const Home = ({ courses, coursesTaken }: HomeProps) => {
   // STATE
   const [comment, setComment] = useState<GComment>(c);
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [coursesTaken, setCoursesTaken] = useState<Course[]>([]);
-  const [resources, setResources] = useState<Resource[]>([]);
-  const [videos, setVideos] = useState<Resource[]>([]);
 
   // CONTEXT
   const userCtx = useContext(UserContext);
   const { user } = userCtx;
 
   // ROUTER
-  const router = useRouter();
-
-  useEffect(() => {
-    // OBTENER TODOS LO CURSOS
-    getAllFromCollection<Course>("Courses").then((res: Course[]) =>
-      setCourses(res)
-    );
-
-    // OBTENER TODOS LOS RECURSOS
-    getAllFromCollection<Resource>("Resources").then((res: Resource[]) =>
-      setResources(res)
-    );
-  }, []);
-
-  useEffect(() => {
-    let tmpCS: Course[] = [];
-
-    if (user) {
-      user.courses_taken.forEach((idC: string) => {
-        courses.forEach((c: Course) => {
-          if (idC === c._id) {
-            tmpCS.push(c);
-          }
-        });
-      });
-    }
-
-    setCoursesTaken(tmpCS)
-
-    let tmpRT = [];
-
-    tmpCS.forEach((crse: Course) => {
-      resources.forEach((r: Resource) => {
-        if (crse._id === r.course_id) {
-          console.log("idCOURSE: ", crse._id, "<>", r._id);
-          tmpRT.push(r);
-        }
-      });
-    });
-
-    setVideos(tmpRT);
-  }, [user]);
+  const router = useRouter()
 
   // MANEJADOR DE TXT - TEACH
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,6 +119,7 @@ const Home = () => {
             )}
           </div>
         </div>
+
         {/* ENSENA / DASHBOARD */}
         {user && user.state === 1 ? (
           <div className={Styles.btn_dash} onClick={sendDashboard}>
@@ -174,13 +136,8 @@ const Home = () => {
       <section>
         <h1 style={{ marginBottom: "0px" }}>Empezemos a aprender!</h1>
         <div className={Styles.carousel}>
-          {videos.map((resource: Resource, index: number) => (
-            <VideoCmp
-              id={resource._id}
-              title={resource.title}
-              subtitle={resource.description}
-              key={`${resource._id}_${index}`}
-            ></VideoCmp>
+          {coursesTaken.map((course: Course, index: number) => (
+            <VideoCmp course={course} key={`${course._id}_${index}`} />
           ))}
         </div>
       </section>
@@ -189,14 +146,9 @@ const Home = () => {
       <section>
         <h1 style={{ marginBottom: "0px" }}>Que aprender ahora</h1>
         <div className={Styles.carousel}>
-          {courses.map((course) => {
-            return (
-              <CardCourse
-                course={course}
-                key={`${course._id}${course.title}`}
-              ></CardCourse>
-            );
-          })}
+          {courses.map((course) => (
+            <CardCourse course={course} key={`${course._id}${course.title}`} />
+          ))}
         </div>
       </section>
     </main>

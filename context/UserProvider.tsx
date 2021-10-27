@@ -49,7 +49,7 @@ const UserProvider = ({ children }) => {
     (async () =>
       (listener = await userListener((user) => {
 
-        // console.log('Disponibilidad de usuario: ', user)
+        console.log('Disponibilidad de usuario: ', user)
         
         if (user) {
           getFromCollection<User>(user.uid, "users")

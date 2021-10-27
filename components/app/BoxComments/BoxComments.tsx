@@ -67,6 +67,7 @@ const BoxComments = (props: BoxCommentsProps) => {
         .then((_res) => console.log("Mensaje subido correctamente"))
         .catch((err) => {
           console.error("saveResourceComments-merge-BoxComments", err);
+          
           // @ts-ignore
           window.Alert({
             title: "Mensaje no enviado!",

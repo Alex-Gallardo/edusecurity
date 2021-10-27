@@ -44,8 +44,8 @@ const Dashboard = ({ courses }: DashboardProps) => {
       <NewCourse toogle={toogle} />
       <h3>Tus cursos:</h3>
       <section className={Styles.courses}>
-        {[...courses, ...courses].map((c: Course) => (
-          <CardCourse action course={c} key={`${c._id}${c.title}`}></CardCourse>
+        {courses.map((c: Course, i:number) => (
+          <CardCourse action course={c} key={`${c._id}_${c.user_id}_${i}`}></CardCourse>
         ))}
       </section>
     </div>

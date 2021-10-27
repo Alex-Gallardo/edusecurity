@@ -20,6 +20,7 @@ import FComment from "components/app/FComment/FComment";
 const Foro = () => {
   // STATE
   const [comments, setComments] = useState<ForumComment[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [newComment, setNewComment] = useState<ForumComment>({
     _id: new Date().getTime() + "",
     date: new Date(),
@@ -37,6 +38,10 @@ const Foro = () => {
     getAllFromCollection<ForumComment>("ForumComments")
       .then((cmmts) => setComments(cmmts))
       .catch((err) => console.log("Ocurrio un error en: ", err));
+
+    getAllFromCollection<User>("users")
+      .then((res) => setUsers(res))
+      .catch((err) => console.log("getAllUsers-Foro: ", err));
   }, []);
 
   // MANEJADOR DE DATOS
@@ -87,12 +92,12 @@ const Foro = () => {
       const tmp = newComment;
       tmp.user_id = user.uid;
       setNewComment(tmp);
-      
+
       saveInCollection<ForumComment>(
         newComment,
         newComment._id,
         "ForumComments"
-        )
+      )
         .then(() => {
           // @ts-ignore
           window.Alert({
@@ -140,7 +145,7 @@ const Foro = () => {
       {/* COMENTARIOS */}
       <section className={Styles.comments}>
         {comments.map((c: ForumComment) => (
-          <FComment comment={c} key={`${c._id}_${c.date}`}></FComment>
+          <FComment comment={c} users={users} key={`${c._id}_${c.date}`} ></FComment>
         ))}
       </section>
     </main>

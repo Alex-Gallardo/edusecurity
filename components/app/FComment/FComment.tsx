@@ -1,20 +1,27 @@
 import React, { useState, useEffect, useContext } from "react";
+
 // UTILS
-import { getFromCollection, saveInCollection } from "./../../../utils/DB";
+import { saveInCollection } from "utils/DB";
+
+// COMPONENTS
+import CComment from "./components/CComment";
 
 // @MATERIAL
 import Sms from "@material-ui/icons/SmsOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
+import Add from "@material-ui/icons/Add";
+import TextField from "@mui/material/TextField";
+
+// CONTEXT
+import UserContext from "context/UserContext";
 
 // STYLES
 import Styles from "./FComment.module.scss";
-import Add from "@material-ui/icons/Add";
-import TextField from "@mui/material/TextField";
-import UserContext from "context/UserContext";
 
 // PROPS
 interface ForumCommentProps {
   comment: ForumComment;
+  users: User[];
 }
 
 const FComment = (props: ForumCommentProps) => {
@@ -27,17 +34,17 @@ const FComment = (props: ForumCommentProps) => {
   });
 
   // PROPS
-  const { comment } = props;
+  const { comment, users } = props;
 
   //Context
   const userCTX = useContext(UserContext);
   const { user } = userCTX;
 
   useEffect(() => {
-    getFromCollection<User>(comment.user_id, "users")
-      .then((user) => setUserComment(user))
-      .catch((err) => console.log("Error en traida de usuario: ", err));
-  }, []);
+    const tmpUsr = users.find((u) => u.uid == comment.user_id);
+    // console.log("users:", users, tmpUsr);
+    setUserComment(tmpUsr);
+  }, [users]);
 
   // MOSTRAR COMENTARIOS
   const showComments = () => {
@@ -56,9 +63,7 @@ const FComment = (props: ForumCommentProps) => {
         <div className={Styles.comments}>
           {comment.comments.map((c: GComment, index: number) => {
             return (
-              <div className={Styles.comments_comment} key={c._id + index}>
-                <h4>{c.message}</h4>
-              </div>
+              <CComment users={users} comment={c} key={`${c._id}_${index}`} />
             );
           })}
         </div>
@@ -132,7 +137,7 @@ const FComment = (props: ForumCommentProps) => {
         <div className={Styles.user_info}>
           <img
             src={
-              userComment !== null
+              userComment != null || userComment != undefined
                 ? userComment.photo_url
                 : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             }

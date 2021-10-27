@@ -72,12 +72,28 @@ const CardCourse = (props: CardCourseProps) => {
 
       saveInCollection<User>({ courses_taken: tmpCTK }, user.uid, "users", true)
         .then((_res) => {
-          // @ts-ignore
-          window.Alert({
-            title: "Curso añadido!",
-            body: `El curso "${course.title}" esta disponible en tu lista de cursos`,
-            type: "confirm",
-          });
+          const tmpStds: string[] = course.students;
+          tmpStds.push(user.uid);
+          saveInCollection<Course>(
+            { students: tmpStds },
+            course._id,
+            "Courses",
+            true
+          )
+            .then((_res2) => {
+              // @ts-ignore
+              window.Alert({
+                title: "Curso añadido!",
+                body: `El curso "${course.title}" esta disponible en tu lista de cursos`,
+                type: "confirm",
+                onConfirm: () => {
+                  location.reload();
+                },
+              });
+            })
+            .catch((err) =>
+              console.error("addStudentCouse-CardCourse-students:", err)
+            );
         })
         .catch((err) =>
           console.error("saveCouseTaken-CardCourse-courses_taken:", err)
