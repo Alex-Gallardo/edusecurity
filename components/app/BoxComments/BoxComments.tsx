@@ -72,7 +72,7 @@ const BoxComments = (props: BoxCommentsProps) => {
           window.Alert({
             title: "Mensaje no enviado!",
             body: "Ocurrio un error al enviar el mensaje, prueba de nuevo o intentalo mas tarde.",
-            type: "Confirm",
+            type: "confirm",
           });
         });
     }

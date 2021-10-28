@@ -125,18 +125,4 @@
     background: #07355f;
     border-radius: 6px;
   }
-
-  .comments_comment {
-    @include flexPosition(column, flex-start, flex-start);
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #07355f;
-    border-radius: 4px;
-    margin-bottom: 12px;
-
-    h4 {
-      margin: 0px;
-      font-weight: 400;
-    }
-  }
 }

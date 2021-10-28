@@ -36,7 +36,7 @@
 }
 
 .container {
-  @include flexPosition(column, flex-start, flex-start);
+  @include flexPosition(row, flex-start, flex-start);
   width: 100%;
   padding: 12px 16px;
   border: 1px solid #07355f;
@@ -47,9 +47,10 @@
       width: 35px;
       height: 35px;
       border-radius: 17px;
+      margin-right: 16px;
   }
 
-  h4 {
+  p {
     margin: 0px;
     font-weight: 400;
   }

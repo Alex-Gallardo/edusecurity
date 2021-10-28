@@ -10,16 +10,16 @@ interface CCommentProps {
 }
 
 const CComment = ({ users, comment }: CCommentProps) => {
-  const [user, setUser] = useState<string>('');
+  const [user, setUser] = useState<string>("https://developers.google.com/web/images/contributors/no-photo.jpg");
 
   useEffect(() => {
-    const tmpUsr = users.find((u)=>u.uid== comment.user_id)
-    if(tmpUsr) setUser(tmpUsr.photo_url)
+    const tmpUsr = users.find((u) => u.uid == comment.user_id);
+    if (tmpUsr) setUser(tmpUsr.photo_url);
   }, []);
 
   return (
     <div className={Styles.container}>
-      <img src={user} alt='img-comment'/>
+      <img src={user} alt="img" />
       <p>{comment.message}</p>
     </div>
   );

@@ -13,12 +13,14 @@ import Styles from "./index.module.scss";
 // UTILS
 import { getAllFromCollection } from "utils/DB";
 import Verificacion from "./../../views/Dashboard/Verificacion/verificacion";
+import Reportes from "./../../views/Dashboard/Reportes/reportes";
 
 const Init = () => {
   // Aqui se van a manejar todos los eventos del dashboard
   const [view, setView] = useState<number>(0);
   const [users, setUsers] = useState<User[]>([]);
   const [checks, setChecks] = useState<GComment[]>([]);
+  const [reports, setReports] = useState<Report[]>([]);
 
   useEffect(() => {
     // OBTNENER TODOS LOS USUARIOS
@@ -26,10 +28,15 @@ const Init = () => {
       .then((res) => setUsers(res))
       .catch((err) => console.error("get-users-index:", err));
 
-    // OBTENERMOS TODOS LOS REQUEST-CHECK
+    // OBTENEMOS TODOS LOS REQUEST-CHECK
     getAllFromCollection<GComment>("RequestCheck")
       .then((res) => setChecks(res))
-      .catch((err) => console.error("get-requestcheks-index:", err));
+      .catch((err) => console.error("get-requestcheks-admin/index:", err));
+
+    // OBTENEMOS TODOS LOS REPORTES
+    getAllFromCollection<Report>("Reports")
+      .then((res) => setReports(res))
+      .catch((err) => console.error("get-requestreports-admin/index:", err));
   }, []);
 
   // CAMBIAR DE VISTAS
@@ -42,7 +49,7 @@ const Init = () => {
         {view === 0 ? (
           <Usuarios users={users}></Usuarios>
         ) : view === 1 ? (
-          ""
+          <Reportes reports={reports} />
         ) : (
           <Verificacion requets={checks} />
         )}

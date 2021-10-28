@@ -3,6 +3,9 @@ import React from "react";
 // UTILS
 import { deleteFromCollection } from "utils/DB";
 
+// COMPONENTS
+import CComment from "components/app/FComment/components/CComment";
+
 // @MATERIAL
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -15,11 +18,36 @@ import Styles from "./resource.module.scss";
 // PROPS
 interface ResourceCmpProps {
   resource: Resource;
+  users: User[]
 }
 
-const ResourceCmp = ({ resource }: ResourceCmpProps) => {
-  // VER COMENTARIOS
-  const viewComments = () => {};
+const ResourceCmp = ({ resource, users }: ResourceCmpProps) => {
+
+
+  // MOSTRAR COMENTARIOS
+  const showComments = () => {
+    // @ts-ignore
+    window.Alert({
+      title:
+        resource.comments.length > 0
+          ? "Todos los comentarios"
+          : "Aun no hay comentarios",
+      body:
+        resource.comments.length > 0
+          ? `${resource.comments.length}. comentarios para "${resource.title}"`
+          : "Sin comentarios",
+      type: "confirm",
+      customElements: (
+        <div className={Styles.comments}>
+          {resource.comments.map((c: GComment, index: number) => {
+            return (
+              <CComment users={users} comment={c} key={`${c._id}_${index}`} />
+            );
+          })}
+        </div>
+      ),
+    });
+  };
 
   // ELIMINAR RECURSO
   const deleteResource = () => {
@@ -36,9 +64,9 @@ const ResourceCmp = ({ resource }: ResourceCmpProps) => {
               title: "Recurso eliminado",
               body: `El recurso ${resource.title} se elimino con exito`,
               type: "confirm",
-              onConfirm: ()=>{
-                  location.reload()
-              }
+              onConfirm: () => {
+                location.reload();
+              },
             });
           })
           .catch((err) => {
@@ -48,7 +76,7 @@ const ResourceCmp = ({ resource }: ResourceCmpProps) => {
               body: `Al parecer recurso ${resource.title} no se pudo eliminar. Recarga la pagina o intentalo mas tarde`,
               type: "confirm",
             });
-            console.log('deleteResource-resource-', err)
+            console.log("deleteResource-resource-", err);
           });
       },
     });
@@ -62,7 +90,7 @@ const ResourceCmp = ({ resource }: ResourceCmpProps) => {
       </div>
       {/* VER COMENTARIOS */}
       <Tooltip title="Comentarios" className={Styles.btn_act}>
-        <IconButton onClick={viewComments}>
+        <IconButton onClick={showComments}>
           <p className={Styles.p_}>{resource.comments?.length || 0}</p>
           <Comment color="disabled" />
         </IconButton>

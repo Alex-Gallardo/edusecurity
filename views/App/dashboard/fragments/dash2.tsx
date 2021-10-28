@@ -25,6 +25,7 @@ interface DashboardProps {
 const DashboardView2 = ({ course }: DashboardProps) => {
   // STATE
   const [resources, setResourses] = useState<Resource[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     const tmpR: Resource[] = [];
@@ -34,6 +35,10 @@ const DashboardView2 = ({ course }: DashboardProps) => {
       });
       setResourses(tmpR);
     });
+
+    getAllFromCollection<User>("users")
+      .then((res) => setUsers(res))
+      .catch((err) => console.log("getAllUsers-dash2:", err));
   }, []);
 
   const sendBack = () => {
@@ -87,7 +92,7 @@ const DashboardView2 = ({ course }: DashboardProps) => {
         <h2>{resources.length} recursos:</h2>
         <div className={Styles.cont_resources}>
           {resources.map((r: Resource, i: number) => (
-            <ResourceCmp resource={r} key={r._id + "_" + i} />
+            <ResourceCmp resource={r} users={users} key={r._id + "_" + i} />
           ))}
         </div>
       </section>

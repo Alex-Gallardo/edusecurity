@@ -24,7 +24,7 @@ const LandingPage = () => {
     <main className={Styles.main}>
       {/* TOPBAR */}
       <section className={Styles.topbar}>
-        <h2>EduSegurity</h2>
+        <h2>EduSecurity</h2>
         <div className={Styles.cont_btns}>
           <Button
             variant="outlined"
@@ -67,7 +67,7 @@ const LandingPage = () => {
             deseas desarrollar tu carrera en hacking o volverte un experto en
             Red Team.{" "}
           </p>
-          <Button variant="outlined" onClick={sendToLogin}>Explorar Edusegurity</Button>
+          <Button variant="outlined" onClick={sendToLogin}>Explorar Edusecurity</Button>
           <div className={Styles.carousel}></div>
         </div>
       </div>
@@ -113,7 +113,7 @@ const LandingPage = () => {
         </div>
       </div>
       <footer>
-        <h2>EduSegurity</h2>
+        <h2>EduSecurity</h2>
         <div className={Styles.f_info}>
           <p>Español</p>
           <p>©2021 Edusecurity Inc.</p>

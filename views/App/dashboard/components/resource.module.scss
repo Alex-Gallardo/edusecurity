@@ -58,17 +58,37 @@
     }
   }
 
-  .btn_act{
-      margin: 0px 8px;
+  .btn_act {
+    margin: 0px 8px;
 
-      .p_{
-          font-size: 0.6em;
-          color: #6b6b6b;
-          margin-right: 4px;
-      }
+    .p_ {
+      font-size: 0.6em;
+      color: #6b6b6b;
+      margin-right: 4px;
+    }
   }
 
   .menu {
     @include flexPosition(column, flex-start, center);
+  }
+}
+
+// = = = = = = = COMENTARIOS = = = = = = =
+.comments {
+  @include flexPosition(column, flex-start, center);
+  width: 100%;
+  height: auto;
+  max-height: 350px;
+  padding: 16px 0px;
+  overflow-y: auto;
+  margin-top: 16px;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #07355f;
+    border-radius: 6px;
   }
 }
