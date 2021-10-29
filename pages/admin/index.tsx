@@ -14,6 +14,7 @@ import Styles from "./index.module.scss";
 import { getAllFromCollection } from "utils/DB";
 import Verificacion from "./../../views/Dashboard/Verificacion/verificacion";
 import Reportes from "./../../views/Dashboard/Reportes/reportes";
+import Cursos from "views/Dashboard/Cursos/Cursos";
 
 const Init = () => {
   // Aqui se van a manejar todos los eventos del dashboard
@@ -21,6 +22,8 @@ const Init = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [checks, setChecks] = useState<GComment[]>([]);
   const [reports, setReports] = useState<Report[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [resources, setResourses] = useState<Resource[]>([]);
 
   useEffect(() => {
     // OBTNENER TODOS LOS USUARIOS
@@ -37,6 +40,16 @@ const Init = () => {
     getAllFromCollection<Report>("Reports")
       .then((res) => setReports(res))
       .catch((err) => console.error("get-requestreports-admin/index:", err));
+
+    // OBTENEMOS TODOS LOS CURSOS
+    getAllFromCollection<Course>("Courses")
+      .then((res) => setCourses(res))
+      .catch((err) => console.error("get-requestCourses-admin/index:", err));
+
+      // OBTENEMOS TODOS LOS RECURSOS
+    getAllFromCollection<Resource>("Resources")
+    .then((res) => setResourses(res))
+    .catch((err) => console.error("get-requestResources-admin/index:", err));
   }, []);
 
   // CAMBIAR DE VISTAS
@@ -47,11 +60,15 @@ const Init = () => {
       <HeaderDsh></HeaderDsh>
       <SideBar changeView={(e: number) => handleView(e)} view={view}>
         {view === 0 ? (
-          <Usuarios users={users}></Usuarios>
+          <Usuarios users={users} courses={courses}></Usuarios>
         ) : view === 1 ? (
+          <Cursos courses={courses} resources={resources}/>
+        ) : view === 2 ? (
           <Reportes reports={reports} />
-        ) : (
+        ) : view === 3 ? (
           <Verificacion requets={checks} />
+        ) : (
+          <h1>Graficas</h1>
         )}
       </SideBar>
     </div>

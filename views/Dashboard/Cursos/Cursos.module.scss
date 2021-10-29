@@ -93,21 +93,4 @@
       }
     }
   }
-
-  .body {
-    @include flexPosition(row, flex-start, flex-start);
-    width: 100%;
-    height: auto;
-
-    .course {
-      @include flexPosition(column, flex-start, flex-start);
-      width: 100%;
-      padding: 0px;
-    }
-  }
-
-  .users {
-    @include flexPosition(column, flex-start, center);
-    width: 100%;
-  }
 }

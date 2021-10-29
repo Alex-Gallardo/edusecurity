@@ -1,0 +1,112 @@
+@mixin flexPosition($dir, $pos, $alg) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $pos;
+  align-items: $alg;
+}
+
+@mixin mobile {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+.container {
+  @include flexPosition(row, space-between, center);
+  width: 100%;
+  height: 180px;
+  background-color: #fff;
+  border-radius: 4px;
+  margin-bottom: 24px;
+
+  .img {
+    background-position: center;
+    background-size: cover;
+    width: 250px;
+    height: 180px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    margin-right: 16px;
+  }
+
+  .course_info {
+    @include flexPosition(column, flex-start, flex-start);
+    height: 100%;
+    flex: 3;
+    padding: 24px 0px;
+    cursor: pointer;
+
+    h1 {
+      margin: 0px;
+      margin-bottom: 8px;
+    }
+    p {
+      margin: 0px;
+      display: block;
+      display: -webkit-box;
+      color: #262626;
+      width: 100%;
+      height: auto;
+      max-height: 50px;
+      line-height: 1;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  .actions {
+    @include flexPosition(row, center, center);
+    width: auto;
+    height: 100%;
+    margin-right: 16px;
+  }
+}
+
+// MODAL
+.modal_ {
+  @include flexPosition(column, flex-start, flex-start);
+  width: 100%;
+  max-width: 800px;
+  overflow-y: auto;
+  height: auto;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 24px;
+
+  .cont_1 {
+    @include flexPosition(column, flex-start, flex-start);
+    width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+    background-color: #f2f2f2;  
+    padding: 16px;
+  }
+
+  .modal_actions {
+    @include flexPosition(row, flex-end, flex-end);
+    width: 100%;
+    height: auto;
+    border-top: 2px solid #f2f2f2;
+    padding-top: 16px;
+  }
+}

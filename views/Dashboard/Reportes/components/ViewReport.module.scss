@@ -38,12 +38,13 @@
 .cont {
   @include flexPosition(column, flex-start, flex-start);
   width: 100%;
-  height: 100%;
+  height: auto;
   background-color: #fff;
   color: #07355f;
   border-radius: 4px;
   padding: 1.5em 2em;
   transition: 0.4s;
+  margin-bottom: 32px;
 
   &:hover{
       @include sombra;
@@ -51,12 +52,13 @@
 
   section {
     width: 100%;
-    padding: 0px;
+    padding: 0px 0px;
   }
 
   .header {
     @include flexPosition(row, flex-end, center);
     width: 100%;
+    padding: 0px;
 
     h2 {
       margin: 0px;
@@ -81,6 +83,7 @@
   .firma {
     @include flexPosition(row, space-between, center);
     width: 100%;
+    padding: 0px;
 
     .firma_info {
       @include flexPosition(row, flex-start, center);

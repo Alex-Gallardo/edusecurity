@@ -13,19 +13,24 @@ import { deleteFromCollection, saveInCollection } from "utils/DB";
 // PROPS
 interface ViewUserProps {
   user: User;
+  onChange: any;
 }
 
-const ViewUser = ({ user }: ViewUserProps) => {
+const ViewUser = ({ user, onChange }: ViewUserProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('Lo que entra cuando abres el menu', event.currentTarget)
+    console.log("Lo que entra cuando abres el menu", event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
 
   const closeMenu = () => {
     setAnchorEl(null);
+  };
+
+  const changeViewUser = (uid: string) => () => {
+    onChange(uid);
   };
 
   // DAR DE ALTA
@@ -90,7 +95,7 @@ const ViewUser = ({ user }: ViewUserProps) => {
 
   return (
     <div className={Styles.box_user}>
-      <div className={Styles.cont_dat}>
+      <div className={Styles.cont_dat} onClick={changeViewUser(user.uid)}>
         <img
           src={
             user.photo_url ||
