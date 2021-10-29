@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 
+// COMPONENTS
+import ViewVideo from "../ViewVideo/ViewVideo";
+
+// UTILS
+import { deleteFromCollection } from "utils/DB";
+
 // @MATERIAL
 import IconButton from "@mui/material/IconButton";
-
-// STYLES
-import Styles from "./ViewCourse.module.scss";
 import Delete from "@material-ui/icons/Delete";
 import Tooltip from "@mui/material/Tooltip";
 import Backdrop from "@mui/material/Backdrop";
 import Button from "@mui/material/Button";
-import ViewVideo from "../ViewVideo/ViewVideo";
+
+// STYLES
+import Styles from "./ViewCourse.module.scss";
 
 // PROPS
 interface ViewCourseProps {
@@ -29,6 +34,27 @@ const ViewCourse = ({ course, resources }: ViewCourseProps) => {
     }
   }, [resources]);
 
+  // BORRAR CURSO
+  const deleteCourse = () => {
+    window.Alert({
+      title: "Eliminar curso",
+      body: "Seguro que quieres eliminar este curso? (Se eliminara de forma permanete)",
+      type: "confirm",
+      onConfirm: () => {
+        deleteFromCollection(course._id, "Courses")
+          .then((_res) => {
+            window.Alert({
+              title: "Curso eliminado!",
+              body: `Curso "${course.title}" eliminado correctamente`,
+              type: "confirm",
+              onConfirm: () => location.reload(),
+            });
+          })
+          .catch((err) => console.log("deleteCourse-ViewCourse:", err));
+      },
+    });
+  };
+
   return (
     <div className={Styles.container}>
       <Backdrop
@@ -36,9 +62,10 @@ const ViewCourse = ({ course, resources }: ViewCourseProps) => {
         open={loading}
       >
         <main className={Styles.modal_}>
+          <h2 style={{marginTop: '8px'}}>Videos de: {course.title}</h2>
           <div className={Styles.cont_1}>
             {videos.map((r: Resource, i: number) => {
-              return <ViewVideo resource={r} key={`${r._id}_${i}`} />;
+              return <ViewVideo resource={r} cid={course._id} videos={course.resources_id} key={`${r._id}_${i}`} />;
             })}
           </div>
           <div className={Styles.modal_actions}>
@@ -60,7 +87,7 @@ const ViewCourse = ({ course, resources }: ViewCourseProps) => {
       </div>
       <div className={Styles.actions}>
         <Tooltip title="Eliminar video">
-          <IconButton>
+          <IconButton onClick={deleteCourse}>
             <Delete color="disabled" />
           </IconButton>
         </Tooltip>

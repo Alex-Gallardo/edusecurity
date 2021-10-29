@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 
 // COMPONENTS
 
@@ -13,18 +13,43 @@ import ViewCourse from "./components/ViewCourse/ViewCourse";
 
 interface CursosProps {
   courses: Course[];
-  resources: Resource[]
+  resources: Resource[];
 }
 
 const Courses = ({ courses, resources }: CursosProps) => {
   // SELECT - USER.STATE
   const [state, setState] = useState<string>("");
-  const [view, setView] = useState<number>(0);
+  const [view, setView] = useState<Course[]>(courses);
 
-  // FILTROS
-  const handleChange = (e: any) => {
-    const val = e.target.value;
-    setState(val);
+  //   const coursesRef: React.MutableRefObject<Course[]> = useRef<Course[]>(courses);
+
+  // BUSCADOR
+  const changeSearchBusiness = (ev: ChangeEvent<HTMLInputElement>) => {
+    // NORMALIZAR ENTRADAS
+    const nfd = (str: string) =>
+      str
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    // OBTENER DATOS
+    const input: HTMLInputElement = ev.target as HTMLInputElement;
+    let filterCourses: Course[] = [];
+    const val: string = input.value;
+
+    // FILTRAR POSTS
+    filterCourses = courses.filter(
+      (businessSearch: Course) => {
+        if (nfd(businessSearch.title).indexOf(nfd(val)) >= 0) return true;
+        return false;
+      }
+    );
+
+    // ACTUALIZAR ESTADOS
+    setTimeout(() => {
+      setView([...filterCourses]);
+    }, 200);
   };
 
   return (
@@ -34,12 +59,16 @@ const Courses = ({ courses, resources }: CursosProps) => {
         <TextField
           variant="outlined"
           label="Buscar curso"
-          onClick={handleChange}
+          onChange={changeSearchBusiness}
         ></TextField>
       </section>
-      <section className={Styles.users}>
-        {courses.map((c: Course, index: number) => (
-          <ViewCourse course={c} resources={resources} key={`${c._id}_${index}`} />
+      <section className={Styles.courses}>
+        {view.map((c: Course, index: number) => (
+          <ViewCourse
+            course={c}
+            resources={resources}
+            key={`${c._id}_${index}`}
+          />
         ))}
       </section>
     </main>

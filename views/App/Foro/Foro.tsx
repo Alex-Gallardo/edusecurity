@@ -1,4 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  ChangeEvent,
+} from "react";
 
 // CONTEXT
 import UserContext from "context/UserContext";
@@ -34,9 +40,16 @@ const Foro = () => {
   const userCtx = useContext(UserContext);
   const { user } = userCtx;
 
+  const commentsRef: React.MutableRefObject<ForumComment[]> = useRef<
+    ForumComment[]
+  >([]);
+
   useEffect(() => {
     getAllFromCollection<ForumComment>("ForumComments")
-      .then((cmmts) => setComments(cmmts))
+      .then((cmmts) => {
+        setComments(cmmts);
+        commentsRef.current = cmmts;
+      })
       .catch((err) => console.log("Ocurrio un error en: ", err));
 
     getAllFromCollection<User>("users")
@@ -52,6 +65,33 @@ const Foro = () => {
     const tmp = newComment;
     tmp[name] = value;
     setNewComment(tmp);
+  };
+
+  // BUSCADOR
+  const changeSearchForo = (ev: ChangeEvent<HTMLInputElement>) => {
+    // NORMALIZAR ENTRADAS
+    const nfd = (str: string) =>
+      str
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    // OBTENER DATOS
+    const input: HTMLInputElement = ev.target as HTMLInputElement;
+    let filterForo: ForumComment[] = [];
+    const val: string = input.value;
+
+    // FILTRAR POSTS
+    filterForo = commentsRef.current.filter((foroSearch: ForumComment) => {
+      if (nfd(foroSearch.title).indexOf(nfd(val)) >= 0) return true;
+      return false;
+    });
+
+    // ACTUALIZAR ESTADOS
+    setTimeout(() => {
+      setComments([...filterForo]);
+    }, 200);
   };
 
   // NUEVO FORUM-COMMENT
@@ -131,6 +171,7 @@ const Foro = () => {
             label="Buscar en foro"
             placeholder="Buscar por palabra o clave..."
             variant="outlined"
+            onChange={changeSearchForo}
           />
           <Button
             variant="contained"
@@ -144,8 +185,13 @@ const Foro = () => {
 
       {/* COMENTARIOS */}
       <section className={Styles.comments}>
+        {comments.length === 0?<h2>Sin comentarios </h2>:''}
         {comments.map((c: ForumComment) => (
-          <FComment comment={c} users={users} key={`${c._id}_${c.date}`} ></FComment>
+          <FComment
+            comment={c}
+            users={users}
+            key={`${c._id}_${c.date}`}
+          ></FComment>
         ))}
       </section>
     </main>

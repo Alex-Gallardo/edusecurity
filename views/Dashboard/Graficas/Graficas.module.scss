@@ -47,8 +47,27 @@
     padding-top: 50px;
   }
 
-  .courses{
-      @include flexPosition(column, flex-start, flex-start);
-      width: 100%;
+  .graphcs {
+    @include flexPosition(column, flex-start, center);
+    width: 100%;
+    height: auto;
+
+    .cont_gph {
+      @include flexPosition(column, flex-start, center);
+      width: 80%;
+      height: auto;
+      background-color: #fff;
+      border-radius: 4px;
+      max-height: 500px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
   }
+}
+
+.graph {
+  width: 300px;
+  height: 200px;
+  max-width: 500px;
+  max-height: 300px;
 }

@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 
+// UTILS
+import { getAllFromCollection } from "utils/DB";
+
 // COMPONENTS
 import HeaderDsh from "../../components/dashboard/HeaderDsh/HeaderDsh";
 import SideBar from "../../components/dashboard/SideBar/SideBar";
 
 // VIEWS
-import Usuarios from "./../../views/Dashboard/Usuarios/usuarios";
+import Usuarios from "views/Dashboard/Usuarios/usuarios";
+import Verificacion from "views/Dashboard/Verificacion/verificacion";
+import Reportes from "views/Dashboard/Reportes/reportes";
+import Cursos from "views/Dashboard/Cursos/Cursos";
+import Graficas from "views/Dashboard/Graficas/Graficas";
 
 // STYLES
 import Styles from "./index.module.scss";
-
-// UTILS
-import { getAllFromCollection } from "utils/DB";
-import Verificacion from "./../../views/Dashboard/Verificacion/verificacion";
-import Reportes from "./../../views/Dashboard/Reportes/reportes";
-import Cursos from "views/Dashboard/Cursos/Cursos";
 
 const Init = () => {
   // Aqui se van a manejar todos los eventos del dashboard
@@ -46,10 +47,10 @@ const Init = () => {
       .then((res) => setCourses(res))
       .catch((err) => console.error("get-requestCourses-admin/index:", err));
 
-      // OBTENEMOS TODOS LOS RECURSOS
+    // OBTENEMOS TODOS LOS RECURSOS
     getAllFromCollection<Resource>("Resources")
-    .then((res) => setResourses(res))
-    .catch((err) => console.error("get-requestResources-admin/index:", err));
+      .then((res) => setResourses(res))
+      .catch((err) => console.error("get-requestResources-admin/index:", err));
   }, []);
 
   // CAMBIAR DE VISTAS
@@ -62,13 +63,13 @@ const Init = () => {
         {view === 0 ? (
           <Usuarios users={users} courses={courses}></Usuarios>
         ) : view === 1 ? (
-          <Cursos courses={courses} resources={resources}/>
+          <Cursos courses={courses} resources={resources} />
         ) : view === 2 ? (
           <Reportes reports={reports} />
         ) : view === 3 ? (
           <Verificacion requets={checks} />
         ) : (
-          <h1>Graficas</h1>
+          <Graficas users={users} courses={courses} />
         )}
       </SideBar>
     </div>

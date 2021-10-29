@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // COMPONENTS
 import ViewUser from "components/dashboard/ViewUser/ViewUser";
@@ -24,14 +24,36 @@ interface UsuariosProps {
 
 const Usuarios = (props: UsuariosProps) => {
   // SELECT - USER.STATE
-  const [state, setState] = useState<number>(0);
   const [view, setView] = useState<number>(0);
   const [userFocus, setUserFocus] = useState<User | null>(null);
+  const [state, setState] = useState<User[]>([]);
 
-  // FILTROS
-  const handleChange = (e: any) => {
-    const val = e.target.value;
-    setState(parseInt(val, 10));
+  useEffect(() => {
+    setState(props.users);
+  }, [props.users]);
+
+  // SELECT
+  const onChangeSelect = (e: any) => {
+    const nfd = (str: string) =>
+      str
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    const val: string = e.target.value;
+    if (val === "2") {
+      setState(props.users);
+      return;
+    }
+    const searchUsers = props.users.filter((bis: User) => {
+      if (nfd(bis.state.toString()).indexOf(nfd(val)) >= 0) return true;
+      return false;
+    });
+
+    setTimeout(() => {
+      setState([...searchUsers]);
+    }, 200);
   };
 
   const handleChangeView = (uid: string) => {
@@ -48,16 +70,16 @@ const Usuarios = (props: UsuariosProps) => {
         <h1>Usuarios</h1>
         <Select
           name="state"
-          variant="standard"
-          value={state + ""}
-          onChange={handleChange}
+          onChange={onChangeSelect}
+          defaultValue="2"
         >
-          <MenuItem value={0}>Estudiante</MenuItem>
-          <MenuItem value={1}>Maestro</MenuItem>
+          <MenuItem value="2">Todos</MenuItem>
+          <MenuItem value="0">Estudiante</MenuItem>
+          <MenuItem value="1">Maestro</MenuItem>
         </Select>
       </section>
       <section className={Styles.users}>
-        {props.users.map((user: User, index: number) => (
+        {state.map((user: User, index: number) => (
           <ViewUser
             user={user}
             onChange={handleChangeView}
@@ -78,7 +100,7 @@ const Usuarios = (props: UsuariosProps) => {
               <p className={Styles.state}>
                 {userFocus?.state === 0 ? "Estudiante" : "Maestro"}
               </p>
-              <StarBorder style={{marginRight: '8px'}}/>
+              <StarBorder style={{ marginRight: "8px" }} />
               <p>{userFocus?.score || 0}</p>
             </div>
           </div>
@@ -97,14 +119,17 @@ const Usuarios = (props: UsuariosProps) => {
         </div>
         <div className={Styles.user_dat}>
           <h3>Cursos dados: </h3>
-          <p>{userFocus.courses_id?userFocus.courses_id.length: 'Ningun curso dado' }</p>
+          <p>
+            {userFocus.courses_id
+              ? userFocus.courses_id.length
+              : "Ningun curso dado"}
+          </p>
         </div>
       </section>
       {/* BODY-INFO */}
       <section className={Styles.body}>
         <section className={Styles.course}>
           <h2 style={{ margin: "0px" }}>Cursos:</h2>
-
         </section>
       </section>
     </main>
