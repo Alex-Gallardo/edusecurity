@@ -31,10 +31,10 @@ const LandingPage = () => {
             className={Styles.btn}
             onClick={sendToLogin}
           >
-            Iniciar sessión
+            Iniciar sesión
           </Button>
           <Button variant="contained" onClick={sendToRegister}>
-            Regístrate
+            Registrarse
           </Button>
         </div>
       </section>
@@ -44,30 +44,34 @@ const LandingPage = () => {
         <div className={Styles.box}>
           <div className={Styles.square}>
             <h3>Disfruta de nuestro contenido</h3>
-            <p>Cursos diseñados para ayudarte a conseguir tus objetivos!</p>
+            <p>¡Cursos diseñados para ayudarte a conseguir tus objetivos!</p>
           </div>
         </div>
         <h2>Una amplia seleccion de cursos</h2>
         <p>
           Elige entre los mejores cursos en video y en línea. con contenido
-          dedicado a la seguridad informatica.
+          dedicado a la seguridad informática.
         </p>
         <div className={Styles.types}>
-          <p>Hacking</p>
-          <p>Read Team</p>
-          <p>Scaning</p>
-          <p>Sniffing</p>
-          <p>Intruición</p>
+          <p>Seguridad en línea</p>
+          <p>Uso del Internet</p>
+          <p>Dispositivos Tecnológicos</p>
+          <p>Peligros del Internet</p>
+          <p>Controles Cibernéticos</p>
         </div>
         <div className={Styles.box_outlined}>
-          <h3>Amplía tus oportunidades profesionales con Edusegurity</h3>
+          <h3>
+            Mejora tus habilidades en tecnología de la mano de la ciberseguridad
+            con Edusecurity.
+          </h3>
           <p>
-            Tanto si trabajas en el segmento de desarrollo, redes,
-            infraestructura, programacion o cualquier otra ciencia digital, si
-            deseas desarrollar tu carrera en hacking o volverte un experto en
-            Red Team.{" "}
+            Tanto si conoces, redes, ciencias, matemáticas, lenguaje o bien otro
+            curso, si deseas desarrollar mejorar y aprender nuevas habilidades
+            que perfeccionaran tu desempeño y el de tus estudiantes.
           </p>
-          <Button variant="outlined" onClick={sendToLogin}>Explorar Edusecurity</Button>
+          <Button variant="outlined" onClick={sendToLogin}>
+            Explora edusecurity
+          </Button>
           <div className={Styles.carousel}></div>
         </div>
       </div>
@@ -105,11 +109,13 @@ const LandingPage = () => {
         <div className={Styles.info}>
           <h1>Conviértete en instructor!</h1>
           <p>
-            Instructores de todo el mundo enseñan en Edusegurity. Proporcionamos
-            la herramientas y las habilidades para que enseñes lo que te
-            apasiona
+            Instructores capacitados enseñan en Edusecurity. Proporcionamos las
+            herramientas y las habilidades para que aprendas y enseñes con las
+            mejores prácticas.
           </p>
-          <Button variant="contained" onClick={sendToLogin}>Empieza en edusegurity</Button>
+          <Button variant="contained" onClick={sendToLogin}>
+            Iniciar sesión
+          </Button>
         </div>
       </div>
       <footer>

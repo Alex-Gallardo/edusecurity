@@ -50,9 +50,19 @@ export const facebookLogin = async () => {
 
 export const googleLogin = async () => {
   const auth = await getAuthUser();
-  return signInWithPopup(auth, GoogleProvider).then((res) => {
-    if (getAdditionalUserInfo(res).isNewUser) saveUser(res);
-  });
+  return signInWithPopup(auth, GoogleProvider)
+    .then((res) => {
+      if (getAdditionalUserInfo(res).isNewUser) saveUser(res);
+    })
+    .catch((err) => {
+      window.Alert({
+        title: "Problemas a ingresar?",
+        body: "Intenta recargar la pagina o intentalo de nuevo",
+        type: "error",
+      });
+
+      console.log("googleLogin-Auth:", err);
+    });
 };
 
 export const logout = async () => {

@@ -50,7 +50,7 @@ const Login = () => {
         body: "Ingresa un correo que sea válido",
         type: "error",
       });
-      return
+      return;
     }
 
     if (!okPass) {
@@ -59,7 +59,7 @@ const Login = () => {
         body: "Ingresa una contraseña que sea válidq",
         type: "error",
       });
-      return
+      return;
     }
 
     // TRY
