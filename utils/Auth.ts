@@ -38,7 +38,18 @@ export const register = async (
 };
 
 export const login = async (email: string, pass: string) => {
-  return signInWithEmailAndPassword(await getAuthUser(), email, pass);
+  return signInWithEmailAndPassword(await getAuthUser(), email, pass).catch(
+    (err) => {
+      window.alert({
+        title: "Correo invalido!",
+        body: "Ingresa un correo que sea valido.",
+        type: "error",
+        onConfirm: ()=>{
+          location.reload()
+        }
+      });
+    }
+  );
 };
 
 export const facebookLogin = async () => {
