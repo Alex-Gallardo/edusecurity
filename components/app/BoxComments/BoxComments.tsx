@@ -20,6 +20,7 @@ import { Send } from "@material-ui/icons";
 // PROPS
 interface BoxCommentsProps {
   courseID: string;
+  resourceTitle: string
   comments?: GComment[];
 }
 
@@ -67,7 +68,7 @@ const BoxComments = (props: BoxCommentsProps) => {
         .then((_res) => console.log("Mensaje subido correctamente"))
         .catch((err) => {
           console.error("saveResourceComments-merge-BoxComments", err);
-          
+
           // @ts-ignore
           window.Alert({
             title: "Mensaje no enviado!",
@@ -89,7 +90,7 @@ const BoxComments = (props: BoxCommentsProps) => {
     <div className={Styles.container}>
       <section className={Styles.comments}>
         {comments.map((com: GComment, i: number) => (
-          <UComment comment={com} key={`${com._id}_${i}`} />
+          <UComment comment={com} resourceTitle={props.resourceTitle} key={`${com._id}_${i}`} />
         ))}
       </section>
       <div className={Styles.add_comment}>

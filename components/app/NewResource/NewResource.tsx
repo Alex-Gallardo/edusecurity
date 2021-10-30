@@ -153,7 +153,8 @@ const NewResource = ({ courseID, resourcesIDS }: NewResourceProps) => {
         </label>
         <input
           id="user_image"
-          accept="video/*,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          accept="video/*"
+          // accept="video/*,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           type="file"
           multiple={false}
           style={{ display: "none" }}

@@ -13,7 +13,7 @@ interface WatchResourceProps {
 
 // Obtener recurso de Context
 const WatchResource = ({ resource }: WatchResourceProps) => {
-  console.log("whatchResourceProps", resource);
+
   return (
     <main className={Styles.container}>
       <section className={Styles.section_info}>
@@ -32,7 +32,7 @@ const WatchResource = ({ resource }: WatchResourceProps) => {
       </section>
       <section className={Styles.section_comments}>
         <h2>Comentarios:</h2>
-        <BoxComments comments={resource.comments} courseID={resource._id}/>
+        <BoxComments comments={resource.comments} courseID={resource._id} resourceTitle={resource.title}/>
       </section>
     </main>
   );

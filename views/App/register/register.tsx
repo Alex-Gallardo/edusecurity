@@ -18,6 +18,8 @@ interface UserAuth {
 }
 
 const Register = () => {
+  const [ok, setOk] = useState<boolean>(true);
+  const [okPass, setOkPass] = useState<boolean>(true);
   const [state, setState] = useState<UserAuth>({
     email: "",
     pass: "",
@@ -29,14 +31,78 @@ const Register = () => {
   const setValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const name = e.target.name;
+
+    const expReg =
+      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+
+    if (name == "email") setOk(expReg.test(value));
+    if (name == "pass" && value.length <= 7) {
+      setOkPass(false);
+    } else if (name === "pass" && value.length > 7) {
+      setOkPass(true);
+    }
+
     setState((state) => ({ ...state, [name]: value }));
   };
 
   // Autenticar
   const authUser = (e: FormEvent) => {
     e.preventDefault();
-    const res = register(state.email, state.pass, state.name, state.last_name);
-    console.log("Register:", res);
+
+    if (!ok) {
+      window.Alert({
+        title: "Correo inválido",
+        body: "Ingresa un correo que sea válido",
+        type: "error",
+      });
+    }
+
+    if (!okPass) {
+      window.Alert({
+        title: "Contraseña inválida",
+        body: "Ingresa una contraseña que sea válidq",
+        type: "error",
+      });
+    }
+
+    if (state.name.length > 0 && state.last_name.length > 0) {
+      // TRY
+      try {
+        let res: any = null;
+        if (ok && okPass) {
+          res = register(state.email, state.pass, state.name, state.last_name);
+        } else {
+          window.Alert({
+            title: "Credenciales Invalidas",
+            body: "Favor revisar complete los campos correctamente",
+            type: "error",
+            onConfirm: () => {
+              setState({ email: "", pass: "", name: "", last_name: "" });
+            },
+          });
+        }
+
+        console.log("Register:", res);
+      } catch (error) {
+        window.Alert({
+          title: "Credenciales Invalidas",
+          body: "Favor revisar que tu correo y contraseña se encuentren escritas correctamente",
+          type: "error",
+          onConfirm: () => {
+            setState({ email: "", pass: "", name: "", last_name: "" });
+          },
+        });
+      }
+    } else {
+      window.Alert({
+        title: "Credenciales Invalidas",
+        body: "Favor revisar que tus campos se encuentres completos!",
+        type: "error",
+        onConfirm: () => {
+          setState({ email: "", pass: "", name: "", last_name: "" });
+        },
+      });
+    }
   };
 
   // Ingresar con facebook
@@ -74,6 +140,7 @@ const Register = () => {
           name="email"
           label="Correo"
           variant="outlined"
+          error={!ok}
           value={state.email}
           onChange={setValue}
         />
@@ -83,6 +150,7 @@ const Register = () => {
           label="Contraseña"
           type="password"
           variant="outlined"
+          error={!okPass}
           value={state.pass}
           onChange={setValue}
         />
@@ -102,7 +170,7 @@ const Register = () => {
               Google
             </div>
           </Button>
-          <Button className={Styles.btn} onClick={singInFacebook}>
+          {/* <Button className={Styles.btn} onClick={singInFacebook}>
             <div className={Styles.cont_btn_auth}>
               <img
                 className={Styles.img}
@@ -112,7 +180,7 @@ const Register = () => {
               />
               Facebook
             </div>
-          </Button>
+          </Button> */}
         </div>
       </form>
     </main>

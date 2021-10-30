@@ -18,6 +18,7 @@ interface VCVideo {
 }
 
 const VCVideo = ({ video, onReport }: VCVideo) => {
+  // STADO REPORTE
   const [report, setReport] = useState<Report>({
     _id: "",
     message: "",
@@ -65,7 +66,7 @@ const VCVideo = ({ video, onReport }: VCVideo) => {
       onConfirm: () => {
         const tmpRP: Report = report;
         tmpRP._id = new Date().getTime() + "";
-        tmpRP.video_id = video._id;
+        tmpRP.video_id = video.title;
 
         saveInCollection<Report>(tmpRP, tmpRP._id, "Reports")
           .then((_res) => {

@@ -18,6 +18,9 @@ const Login = () => {
     pass: "",
   });
 
+  const [ok, setOk] = useState<boolean>(true);
+  const [okPass, setOkPass] = useState<boolean>(true);
+
   // ROUTER
   const router = useRouter();
 
@@ -25,21 +28,55 @@ const Login = () => {
   const setValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const name = e.target.name;
+    const expReg =
+      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+
+    if (name == "email") setOk(expReg.test(value));
+    if (name == "pass" && value.length <= 7) {
+      setOkPass(false);
+    } else if (name === "pass" && value.length > 7) {
+      setOkPass(true);
+    }
+
     setState((state) => ({ ...state, [name]: value }));
   };
 
   // Autenticar
   const authUser = async (e: FormEvent) => {
     e.preventDefault();
+    if (!ok) {
+      window.Alert({
+        title: "Correo inválido",
+        body: "Ingresa un correo que sea válido",
+        type: "error",
+      });
+      return
+    }
+
+    if (!okPass) {
+      window.Alert({
+        title: "Contraseña inválida",
+        body: "Ingresa una contraseña que sea válidq",
+        type: "error",
+      });
+      return
+    }
+
+    // TRY
     try {
-      const res = await login(state.email, state.pass);
+      let res: any = null;
+
+      if (ok && okPass) {
+        res = await login(state.email, state.pass);
+      }
+
       console.log("Login:", res.user);
     } catch (error) {
       // @ts-ignore
       window.Alert({
         title: "Credenciales Invalidas",
         body: "Favor revisar que tu correo y contraseña se encuentren escritas correctamente",
-        type: "confirm",
+        type: "error",
         onConfirm: () => {
           setState({ email: "", pass: "" });
         },
@@ -71,6 +108,7 @@ const Login = () => {
           name="email"
           label="Correo"
           variant="outlined"
+          error={!ok}
           className={Styles.input}
           value={state.email}
           onChange={setValue}
@@ -80,6 +118,7 @@ const Login = () => {
           name="pass"
           label="Contraseña"
           variant="outlined"
+          error={!okPass}
           className={Styles.input}
           value={state.pass}
           onChange={setValue}
@@ -88,7 +127,7 @@ const Login = () => {
         <Button type="submit" variant="contained" className={Styles.input}>
           Iniciar
         </Button>
-        <h3>O</h3>
+        <h3>Tambien puedes inciar con:</h3>
         <div className={Styles.cont_register}>
           <Button className={Styles.btn} onClick={singInGoogle}>
             <div className={Styles.cont_btn_auth}>
@@ -101,7 +140,7 @@ const Login = () => {
               Google
             </div>
           </Button>
-          <Button className={Styles.btn} onClick={singInFacebook}>
+          {/* <Button className={Styles.btn} onClick={singInFacebook}>
             <div className={Styles.cont_btn_auth}>
               <img
                 className={Styles.img}
@@ -111,7 +150,7 @@ const Login = () => {
               />
               Facebook
             </div>
-          </Button>
+          </Button> */}
         </div>
       </form>
       <Button

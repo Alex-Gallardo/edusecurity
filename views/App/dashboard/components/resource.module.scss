@@ -92,3 +92,19 @@
     border-radius: 6px;
   }
 }
+
+.ctn_edith {
+  @include flexPosition(column, flex-start, flex-start);
+  width: 100%;
+
+  p {
+    margin-bottom: 4px;
+  }
+
+  img{
+    width: 264px;
+    height: 150px;
+    border-radius: 6px;
+  }
+
+}
