@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import Image from "next/image";
 
 // UTILS
 import { saveInCollection } from "utils/DB";
@@ -135,12 +136,16 @@ const FComment = (props: ForumCommentProps) => {
       <hr />
       <section className={Styles.user}>
         <div className={Styles.user_info}>
-          <img
+          <Image
             src={
               userComment != null || userComment != undefined
                 ? userComment.photo_url
                 : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             }
+            className={Styles.img}
+            unoptimized
+            width="30px"
+            height="30px"
           />
           <p>
             Posteado por <span>{userComment?.name}</span>

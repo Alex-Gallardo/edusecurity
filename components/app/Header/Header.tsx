@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 // STYLES
 import Styles from "./Header.module.scss";
@@ -58,7 +59,14 @@ const Header = () => {
         <Button variant="outlined" color="inherit" onClick={sendForum}>
           Foro
         </Button>
-        <img src={imgSRC} alt={`Photo: ${user?.name}`} />
+        <Image
+          src={imgSRC}
+          className={Styles.img}
+          alt={`Photo: ${user?.name}`}
+          unoptimized
+          width='50px'
+          height='50px'
+        />
         <Settings className={Styles.setting_icon} onClick={sendConfig} />
       </div>
     </nav>

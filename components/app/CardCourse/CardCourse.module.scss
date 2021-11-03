@@ -109,7 +109,7 @@
     height: auto;
     margin-bottom: 16px;
 
-    img {
+    .img {
       width: 300px;
       height: 100%;
       border-radius: 4px;
@@ -133,9 +133,13 @@
         height: auto;
         padding-top: 16px;
 
-        img {
-          width: 30px;
-          height: 30px;
+        .img_pro {
+          width: 30px !important;
+          max-width: 30px !important;
+          height: 30px !important;
+          max-height: 30px !important;
+          min-width: 30px !important;
+          min-height: 30px !important;
           border-radius: 15px;
           margin-right: 12px;
         }

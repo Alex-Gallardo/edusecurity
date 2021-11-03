@@ -64,7 +64,7 @@
   .cont_dat {
     @include flexPosition(column, flex-start, flex-start);
 
-    img{
+    .img{
       width: 264px;
       height: 150px;
       border-radius: 6px;

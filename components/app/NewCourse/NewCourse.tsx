@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import Image from "next/image";
 
 // CONTEXT
 import UserContext from "context/UserContext";
@@ -176,7 +177,14 @@ const NewCourse = (props: NewCourseProps) => {
         >
           <h2>Imagen de portada:</h2>
           <label htmlFor="user_image">
-            <img src={srcIMG} alt={course.title} />
+            <Image
+              className={Styles.img}
+              src={srcIMG}
+              alt={course.title}
+              unoptimized
+              width="200px"
+              height="150px"
+            />
           </label>
           <input
             id="user_image"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 // STYLES
 import Styles from "./CComment.module.scss";
@@ -10,7 +11,9 @@ interface CCommentProps {
 }
 
 const CComment = ({ users, comment }: CCommentProps) => {
-  const [user, setUser] = useState<string>("https://developers.google.com/web/images/contributors/no-photo.jpg");
+  const [user, setUser] = useState<string>(
+    "https://developers.google.com/web/images/contributors/no-photo.jpg"
+  );
 
   useEffect(() => {
     const tmpUsr = users.find((u) => u.uid == comment.user_id);
@@ -19,7 +22,7 @@ const CComment = ({ users, comment }: CCommentProps) => {
 
   return (
     <div className={Styles.container}>
-      <img src={user} alt="img" />
+      <Image src={user} className={Styles.img} alt="img" unoptimized />
       <p>{comment.message}</p>
     </div>
   );

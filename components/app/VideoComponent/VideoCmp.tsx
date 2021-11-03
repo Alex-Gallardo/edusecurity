@@ -49,7 +49,7 @@ const VideoCmp = (props: VideoCmpProps) => {
         open={loading}
       >
         <main className={Styles.modal_}>
-          <h2 style={{ marginTop: "6px" }}>Videos de "{course.title}"</h2>
+          <h2 style={{ marginTop: "6px" }}>{`Videos de "${course.title}"`}</h2>
           <div className={Styles.carousel}>
             {videos.map((video: Resource) => (
               <VCVideo

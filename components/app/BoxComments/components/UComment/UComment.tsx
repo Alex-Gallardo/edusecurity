@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 // UTILS
 import { getFromCollection, saveInCollection } from "utils/DB";
@@ -6,12 +7,12 @@ import { getFromCollection, saveInCollection } from "utils/DB";
 // COMPONENTS
 import IconButton from "@mui/material/IconButton";
 import Report from "@material-ui/icons/Report";
-
-// STYLES
-import Styles from "./UComment.module.scss";
 import { Select } from "@material-ui/core";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
+
+// STYLES
+import Styles from "./UComment.module.scss";
 
 // PROPS
 interface UCommentProps {
@@ -78,7 +79,7 @@ const UComment = ({ comment, resourceTitle }: UCommentProps) => {
       onConfirm: () => {
         const tmpRP: Report = report;
         tmpRP._id = new Date().getTime() + "";
-        tmpRP.video_id = resourceTitle
+        tmpRP.video_id = resourceTitle;
 
         saveInCollection<Report>(tmpRP, tmpRP._id, "Reports")
           .then((_res) => {
@@ -104,7 +105,7 @@ const UComment = ({ comment, resourceTitle }: UCommentProps) => {
 
   return (
     <div className={Styles.container}>
-      <img src={img} alt={comment._id} />
+      <Image src={img} alt={comment._id} className={Styles.img} unoptimized height='32px' width='32px' />
       <section className={Styles.comments}>
         <p>{comment.message}</p>
         <hr />

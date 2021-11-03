@@ -33,7 +33,7 @@
   @include flexPosition(row, space-between, center);
   width: 100%;
   background-color: #fff;
-  border: 1px solid #E8E8E8;
+  border: 1px solid #e8e8e8;
   padding: 16px 32px;
   border-radius: 4px;
   margin-bottom: 16px;
@@ -41,9 +41,8 @@
 
   .cont_dat {
     @include flexPosition(row, center, center);
-    
 
-    img {
+    .img {
       width: 60px;
       height: 60px;
       border-radius: 30px;

@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 // UTILS
 import { login } from "utils/Auth";
@@ -131,11 +132,12 @@ const Login = () => {
         <div className={Styles.cont_register}>
           <Button className={Styles.btn} onClick={singInGoogle}>
             <div className={Styles.cont_btn_auth}>
-              <img
+              <Image
                 className={Styles.img}
                 width="24px"
                 height="24px"
                 src="https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png"
+                unoptimized
               />
               Google
             </div>

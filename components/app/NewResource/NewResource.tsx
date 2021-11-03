@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import Image from "next/image";
 
 // UTILS
 import { addToStorage, getURLFromStorage } from "utils/Storage";
@@ -147,9 +148,16 @@ const NewResource = ({ courseID, resourcesIDS }: NewResourceProps) => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <section className={Styles.cont_dat}>
-        <h3>Sube un video/archivo:</h3>
+        <h3>Sube un video:</h3>
         <label htmlFor="user_image">
-          <img src={srcIMG} alt={resource._id} />
+          <Image
+            className={Styles.img}
+            src={srcIMG}
+            alt={resource._id}
+            unoptimized
+            width='264px'
+            height='150px'
+          />
         </label>
         <input
           id="user_image"

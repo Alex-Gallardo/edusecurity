@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import Image from "next/image";
 
 // UTILS
 import { deleteFromCollection } from "utils/DB";
@@ -122,7 +123,14 @@ const ResourceCmp = ({ resource, users }: ResourceCmpProps) => {
           />
           <p>Video:</p>
           <label htmlFor="user_image">
-            <img src={srcIMG} alt={resource._id} />
+            <Image
+              className={Styles.img}
+              src={srcIMG}
+              alt={resource._id}
+              unoptimized
+              width='164px'
+              height='150px'
+            />
           </label>
           <input
             id="user_image"

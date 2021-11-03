@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Router from "next/router";
+import Image from "next/image";
 
 // UTILS
 import { getFromCollection, saveInCollection } from "utils/DB";
@@ -27,7 +28,7 @@ const CardCourse = (props: CardCourseProps) => {
 
   // STATE
   const [loading, setLoading] = useState<boolean>(false);
-  const [teacher, setTeacher] = useState<string[]>(["", ""]);
+  const [teacher, setTeacher] = useState<string[]>(["https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg", ""]);
 
   // CONTEXT
   const userCTX = useContext(UserContext);
@@ -114,7 +115,14 @@ const CardCourse = (props: CardCourseProps) => {
       >
         <main className={Styles.modal_}>
           <div className={Styles.cont_1}>
-            <img src={course.cover} alt="Background-Image" />
+            <Image
+              src={course.cover}
+              className={Styles.img}
+              alt="Background-Image"
+              unoptimized
+              height="100%"
+              width="300px"
+            />
             <section className={Styles.modal_info}>
               <h2>{course.title}</h2>
               <Rating
@@ -129,10 +137,13 @@ const CardCourse = (props: CardCourseProps) => {
                 <p>Videos: {course.resources_id.length}</p>
               </div>
               <div className={Styles.modal_pro}>
-                <img
+                <Image
                   src={teacher[0]}
                   className={Styles.img_pro}
                   alt="profile"
+                  unoptimized
+                  width="30px"
+                  height="30px"
                 />
                 <p>{teacher[1]}</p>
               </div>
@@ -153,7 +164,14 @@ const CardCourse = (props: CardCourseProps) => {
           </div>
         </main>
       </Backdrop>
-      <img src={course.cover} alt="EduCourse" />
+      <Image
+        src={course.cover}
+        alt="EduCourse"
+        unoptimized
+        className={Styles.img}
+        width="250px"
+        height="150px"
+      />
       <section className={Styles.cont_info}>
         <h3>{course.title}</h3>
         <Rating readOnly size="small" value={course.score} />

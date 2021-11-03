@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 // COMPONENTS
 import ViewUser from "components/dashboard/ViewUser/ViewUser";
@@ -68,11 +69,7 @@ const Usuarios = (props: UsuariosProps) => {
     <main className={Styles.container}>
       <section className={Styles.header}>
         <h1>Usuarios</h1>
-        <Select
-          name="state"
-          onChange={onChangeSelect}
-          defaultValue="2"
-        >
+        <Select name="state" onChange={onChangeSelect} defaultValue="2">
           <MenuItem value="2">Todos</MenuItem>
           <MenuItem value="0">Estudiante</MenuItem>
           <MenuItem value="1">Maestro</MenuItem>
@@ -93,7 +90,14 @@ const Usuarios = (props: UsuariosProps) => {
       {/* HEADER */}
       <section className={Styles.header}>
         <div className={Styles.header_info}>
-          <img src={userFocus?.photo_url} alt="profile img" />
+          <Image
+            src={userFocus?.photo_url}
+            className={Styles.img}
+            alt="profile img"
+            unoptimized
+            width='70px'
+            height='70px'
+          />
           <div className={Styles.info_}>
             <h1>{userFocus?.name + userFocus?.last_name}</h1>
             <div className={Styles.info_dat}>

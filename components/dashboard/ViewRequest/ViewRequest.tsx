@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 // UTILS
 import { deleteFromCollection, getFromCollection } from "utils/DB";
@@ -83,7 +84,12 @@ const ViewRequest = ({ request }: VRequestProps) => {
     <div className={Styles.box}>
       {/* INFORMACION */}
       <div className={Styles.info}>
-        <img src={user?.photo_url} alt={user?.name} />
+        <Image
+          className={Styles.img}
+          src={user?.photo_url || ''}
+          alt={user?.name}
+          unoptimized
+        />
         <div className={Styles.info_user}>
           <h3>{`${user?.name} ${user?.last_name}`}</h3>
           <p>{request.message}</p>

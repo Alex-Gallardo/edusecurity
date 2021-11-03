@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Router from "next/router";
+import Image from "next/image";
 
 // UTILS
 import { getAllFromCollection } from "utils/DB";
@@ -68,7 +69,14 @@ const DashboardView2 = ({ course }: DashboardProps) => {
 
           {/* DAT-COURSE */}
           <div className={Styles.info_dat_}>
-            <img src={course.cover} alt={course.title} />
+            <Image
+              src={course.cover}
+              alt={course.title}
+              className={Styles.img}
+              unoptimized
+              height='250px'
+              width='100%'
+            />
             <div className={Styles.info_dat}>
               <h2>{course.title}</h2>
               <p style={{ marginBottom: "24px" }}>{course.description}</p>

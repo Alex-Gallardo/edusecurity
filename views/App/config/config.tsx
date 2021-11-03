@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../../../context/UserContext";
+import Image from "next/image";
 
 // STYLES
 import Styles from "./config.module.scss";
@@ -78,13 +79,16 @@ const Config = () => {
 
       {/* PERFIL INFO */}
       <section className={Styles.body_}>
-        <img
+        <Image
           src={
             user?.photo_url ||
             "https://i.pinimg.com/550x/f7/da/98/f7da9864a7c3079df7c26173520d18fc.jpg"
           }
           alt="picture-perfil"
           className={Styles.body_img}
+          unoptimized
+          width='200px'
+          height='200px'
         />
 
         {/* DAT-PERFIL */}

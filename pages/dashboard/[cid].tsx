@@ -30,11 +30,9 @@ const Init = () => {
   } = router;
 
   useEffect(() => {
-    console.log("courseID:", cid);
     if (cid) {
       // @ts-ignore
       getFromCollection<Course>(cid, "Courses").then((res) => setCourse(res));
-      console.log("Curso obtenido", course);
     }
   }, [cid]);
 

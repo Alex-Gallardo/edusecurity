@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 // STYLES
 import Styles from "./ViewUser.module.scss";
@@ -96,12 +97,16 @@ const ViewUser = ({ user, onChange }: ViewUserProps) => {
   return (
     <div className={Styles.box_user}>
       <div className={Styles.cont_dat} onClick={changeViewUser(user.uid)}>
-        <img
+        <Image
           src={
             user.photo_url ||
             "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
           }
           alt={user.name}
+          className={Styles.img}
+          unoptimized
+          width="60px"
+          height="60px"
         />
         <div className={Styles.cont_user_info}>
           <h3>

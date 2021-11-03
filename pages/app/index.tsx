@@ -40,7 +40,7 @@ const Init = () => {
       setCoursesTaken(tmpCS);
     });
     console.log("indexHome");
-  }, []);
+  }, [user?.courses_taken]);
 
   useEffect(() => {
     let tmpCS: Course[] = [];
@@ -56,7 +56,7 @@ const Init = () => {
 
     // console.log("Entrada CtxUser:", userCTken, tmpCS);
     setCoursesTaken(tmpCS);
-  }, [user]);
+  }, [courses]);
 
   return (
     <Layout>

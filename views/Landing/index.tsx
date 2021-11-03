@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 // @MATERIAL
 import Button from "@mui/material/Button";
@@ -102,9 +103,13 @@ const LandingPage = () => {
 
       {/* CONVIERTETE EN INSTRUCTOR */}
       <div className={Styles.contained}>
-        <img
-          src="https://s.udemycdn.com/home/non-student-cta/instructor-1x-v3.jpg"
+        <Image
+          src={"https://s.udemycdn.com/home/non-student-cta/instructor-1x-v3.jpg"}
           alt="instructor"
+          className={Styles.img}
+          unoptimized
+          width='400px'
+          height='400px'
         />
         <div className={Styles.info}>
           <h1>Conviértete en instructor!</h1>
