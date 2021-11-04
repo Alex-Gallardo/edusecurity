@@ -42,7 +42,7 @@ interface HomeProps {
 const Home = ({ courses, coursesTaken, search }: HomeProps) => {
   // STATE
   const [comment, setComment] = useState<GComment>(c);
-  const [cc, setCC] = useState<Course[]>(courses);
+  const [cc, setCC] = useState<Course[]>([]);
 
   // CONTEXT
   const userCtx = useContext(UserContext);
@@ -52,7 +52,8 @@ const Home = ({ courses, coursesTaken, search }: HomeProps) => {
   const router = useRouter();
 
   // REF
-  const coursesRef: React.MutableRefObject<Course[]> = useRef<Course[]>(courses);
+  const coursesRef: React.MutableRefObject<Course[]> =
+    useRef<Course[]>([]);
 
   // MANEJADOR DE TXT - TEACH
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,12 +110,22 @@ const Home = ({ courses, coursesTaken, search }: HomeProps) => {
     });
   };
 
-  useEffect(()=>{
-    setCC(courses)
-  }, [courses])
+  useEffect(() => {
+    getAllFromCollection<Course>("Courses").then((res: Course[]) => {
+      coursesRef.current = courses
+      setCC(res);
+    });
+  }, []);
 
   useEffect(() => {
-    changeSearchHome(search)
+    getAllFromCollection<Course>("Courses").then((res: Course[]) => {
+      coursesRef.current = courses
+      setCC(res);
+    });
+  }, [courses]);
+
+  useEffect(() => {
+    changeSearchHome(search);
   }, [search]);
 
   // BUSCADOR
