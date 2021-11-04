@@ -59,8 +59,23 @@ const Config = () => {
         body: "Seguro que quieres actualizar tus datos?",
         type: "confirm",
         onConfirm: () => {
-          saveInCollection<User>(state, state.uid, "users", true);
-          router.push("/");
+          saveInCollection<User>(state, state.uid, "users", true)
+            .then((_res) => {
+              window.Alert({
+                title: "Actualizacion completa!",
+                body: "Tus datos han sido actualizados",
+                type: "confirm",
+                onConfirm: () => location.reload(),
+              });
+            })
+            .catch((err) => {
+              window.Alert({
+                title: "Upss ocurrio un error",
+                body: "Hubo un problema al actualizar tus datos, recarga la pagina o intentalo mas tarde",
+                type: "error",
+              });
+              console.error("updateUser-config-actDatuser:", err);
+            });
         },
       });
     } catch (error) {
@@ -79,17 +94,19 @@ const Config = () => {
 
       {/* PERFIL INFO */}
       <section className={Styles.body_}>
-        <Image
-          src={
-            user?.photo_url ||
-            "https://i.pinimg.com/550x/f7/da/98/f7da9864a7c3079df7c26173520d18fc.jpg"
-          }
-          alt="picture-perfil"
-          className={Styles.body_img}
-          unoptimized
-          width='200px'
-          height='200px'
-        />
+        <div className={Styles.cont_img}>
+          <Image
+            src={
+              user?.photo_url ||
+              "https://erasmuscoursescroatia.com/wp-content/uploads/2015/11/no-user.jpg"
+            }
+            alt="picture-perfil"
+            className={Styles.body_img}
+            unoptimized
+            width="200px"
+            height="200px"
+          />
+        </div>
 
         {/* DAT-PERFIL */}
         <div className={Styles.perfil}>

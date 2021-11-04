@@ -22,7 +22,14 @@ const CComment = ({ users, comment }: CCommentProps) => {
 
   return (
     <div className={Styles.container}>
-      <Image src={user} className={Styles.img} alt="img" unoptimized />
+      <Image
+        unoptimized
+        src={user}
+        className={Styles.img}
+        alt="img"
+        width="35px"
+        height="35px"
+      />
       <p>{comment.message}</p>
     </div>
   );

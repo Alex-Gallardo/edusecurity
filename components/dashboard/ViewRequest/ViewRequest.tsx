@@ -86,9 +86,11 @@ const ViewRequest = ({ request }: VRequestProps) => {
       <div className={Styles.info}>
         <Image
           className={Styles.img}
-          src={user?.photo_url || ''}
+          src={user?.photo_url || 'https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg'}
           alt={user?.name}
           unoptimized
+          height='60px'
+          width='60px'
         />
         <div className={Styles.info_user}>
           <h3>{`${user?.name} ${user?.last_name}`}</h3>

@@ -59,14 +59,16 @@ const Header = () => {
         <Button variant="outlined" color="inherit" onClick={sendForum}>
           Foro
         </Button>
-        <Image
-          src={imgSRC}
-          className={Styles.img}
-          alt={`Photo: ${user?.name}`}
-          unoptimized
-          width='50px'
-          height='50px'
-        />
+        <div className={Styles.cont_img}>
+          <Image
+            src={imgSRC}
+            className={Styles.img}
+            alt={`Photo: ${user?.name}`}
+            unoptimized
+            width="50px"
+            height="50px"
+          />
+        </div>
         <Settings className={Styles.setting_icon} onClick={sendConfig} />
       </div>
     </nav>

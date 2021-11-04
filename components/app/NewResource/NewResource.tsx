@@ -96,46 +96,59 @@ const NewResource = ({ courseID, resourcesIDS }: NewResourceProps) => {
     tmpResource.course_id = courseID;
     console.log("tmpCourse:", tmpResource);
 
-    // @ts-ignore
-    saveInCollection<Resource>(tmpResource, tmpResource._id, "Resources", true)
-      .then((_res) => {
-        setResource({
-          ...resource,
-          title: "",
-          description: "",
-          resource_url: "",
-          _id: "",
-        });
+    if (tmpResource.resource_url !== "") {
+      // @ts-ignore
+      saveInCollection<Resource>(
+        tmpResource,
+        tmpResource._id,
+        "Resources",
+        true
+      )
+        .then((_res) => {
+          setResource({
+            ...resource,
+            title: "",
+            description: "",
+            resource_url: "",
+            _id: "",
+          });
 
-        const tmpResources: string[] = resourcesIDS;
-        tmpResources.push(tmpResource._id);
+          const tmpResources: string[] = resourcesIDS;
+          tmpResources.push(tmpResource._id);
 
-        saveInCollection<Course>(
-          { resources_id: tmpResources },
-          courseID,
-          "Courses",
-          true
-        ).then((_res2) => {
+          saveInCollection<Course>(
+            { resources_id: tmpResources },
+            courseID,
+            "Courses",
+            true
+          ).then((_res2) => {
+            // @ts-ignore
+            window.Alert({
+              title: "Recurso añadido exitosamente",
+              body: `El recurso "${resource.title}" se añadio a tu colección de recursos.`,
+              type: "confirm",
+              onConfirm: () => location.reload(),
+            });
+          });
+
+          // SI HAY ERROR
+        })
+        .catch((err) => {
+          console.error("uploadResource-state(Resource)-NewResource.tsx:", err);
           // @ts-ignore
           window.Alert({
-            title: "Recurso añadido exitosamente",
-            body: `El recurso "${resource.title}" se añadio a tu colección de recursos.`,
+            title: "Ha ocurrido un error!",
+            body: `El recurso "${resource.title}" no se añadio a tu colección de recursos.`,
             type: "confirm",
-            onConfirm: () => location.reload(),
           });
         });
-
-        // SI HAY ERROR
-      })
-      .catch((err) => {
-        console.error("uploadResource-state(Resource)-NewResource.tsx:", err);
-        // @ts-ignore
-        window.Alert({
-          title: "Ha ocurrido un error!",
-          body: `El recurso "${resource.title}" no se añadio a tu colección de recursos.`,
-          type: "confirm",
-        });
+    } else {
+      window.Alert({
+        title: "Error al subir archivos",
+        body: "Es necesario que subas un video, para poder crear el recurso",
+        type: "error",
       });
+    }
   };
 
   return (
@@ -155,8 +168,8 @@ const NewResource = ({ courseID, resourcesIDS }: NewResourceProps) => {
             src={srcIMG}
             alt={resource._id}
             unoptimized
-            width='264px'
-            height='150px'
+            width="264px"
+            height="150px"
           />
         </label>
         <input

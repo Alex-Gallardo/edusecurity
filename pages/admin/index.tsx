@@ -65,7 +65,9 @@ const Init = () => {
         ) : view === 1 ? (
           <Cursos courses={courses} resources={resources} />
         ) : view === 2 ? (
-          <Reportes reports={reports} />
+          <Reportes
+            reports={reports.filter((r: Report) => r.state === false)}
+          />
         ) : view === 3 ? (
           <Verificacion requets={checks} />
         ) : (

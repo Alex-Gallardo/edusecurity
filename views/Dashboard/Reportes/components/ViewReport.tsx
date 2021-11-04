@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 
 // STYLES
 import Styles from "./ViewReport.module.scss";
+import { saveInCollection } from "utils/DB";
 
 // PROPS
 interface ViewReportProps {
@@ -12,6 +13,28 @@ interface ViewReportProps {
 }
 
 const ViewReport = ({ report }: ViewReportProps) => {
+  const computeHecho = () => {
+    saveInCollection<Report>({ state: true }, report._id, "Reports", true)
+      .then((_res) => {
+        window.Alert({
+          title: "Reporte solucionado",
+          body: "El reporte ha sido actualizado a hecho!",
+          type: "confirm",
+          onConfirm: () => {
+            location.reload();
+          },
+        });
+      })
+      .catch((err) => {
+        window.Alert({
+          title: "Error al actualizar",
+          body: "El reporte NO ha sido actualizado, por favor recarge la pagina o intentelo mas tarde",
+          type: "error",
+        });
+        console.error("updateReport-ViewReport-computeHecho:", err);
+      });
+  };
+
   return (
     <div className={Styles.cont}>
       <section className={Styles.header}>
@@ -27,7 +50,7 @@ const ViewReport = ({ report }: ViewReportProps) => {
         </h2>
       </section>
       <section className={Styles.body}>
-          <p style={{fontWeight: "bold", marginBottom: '4px'}}>Mensaje:</p>
+        <p style={{ fontWeight: "bold", marginBottom: "4px" }}>Mensaje:</p>
         <p>{report.message}</p>
       </section>
       <section className={Styles.firma}>
@@ -55,7 +78,10 @@ const ViewReport = ({ report }: ViewReportProps) => {
           )}
           <h2></h2>
         </div>
-        <Button variant='contained'> Hecho</Button>
+        <Button variant="contained" onClick={computeHecho}>
+          {" "}
+          Hecho
+        </Button>
       </section>
     </div>
   );

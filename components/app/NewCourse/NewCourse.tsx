@@ -188,7 +188,7 @@ const NewCourse = (props: NewCourseProps) => {
           </label>
           <input
             id="user_image"
-            accept="image/*"
+            accept="image/png,image/jpg"
             type="file"
             multiple={false}
             style={{ display: "none" }}
