@@ -133,6 +133,13 @@
         height: auto;
         padding-top: 16px;
 
+        .cont_img{
+          @include flexPosition(row, center, center);
+          width: 30px ;
+          height: 30px;
+          margin-right: 16px;
+        }
+
         .img_pro {
           width: 30px !important;
           max-width: 30px !important;

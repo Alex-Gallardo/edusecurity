@@ -28,7 +28,10 @@ const CardCourse = (props: CardCourseProps) => {
 
   // STATE
   const [loading, setLoading] = useState<boolean>(false);
-  const [teacher, setTeacher] = useState<string[]>(["https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg", ""]);
+  const [teacher, setTeacher] = useState<string[]>([
+    "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg",
+    "",
+  ]);
 
   // CONTEXT
   const userCTX = useContext(UserContext);
@@ -137,14 +140,16 @@ const CardCourse = (props: CardCourseProps) => {
                 <p>Videos: {course.resources_id.length}</p>
               </div>
               <div className={Styles.modal_pro}>
-                <Image
-                  src={teacher[0]}
-                  className={Styles.img_pro}
-                  alt="profile"
-                  unoptimized
-                  width="30px"
-                  height="30px"
-                />
+                <div className={Styles.cont_img}>
+                  <Image
+                    src={teacher[0]}
+                    className={Styles.img_pro}
+                    alt="profile"
+                    unoptimized
+                    width="30px"
+                    height="30px"
+                  />
+                </div>
                 <p>{teacher[1]}</p>
               </div>
             </section>
