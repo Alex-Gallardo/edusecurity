@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 // CONTEXT
 import UserContext from "../../../context/UserContext";
@@ -30,18 +36,23 @@ const c: GComment = {
 interface HomeProps {
   courses: Course[];
   coursesTaken: Course[];
+  search?: string;
 }
 
-const Home = ({ courses, coursesTaken }: HomeProps) => {
+const Home = ({ courses, coursesTaken, search }: HomeProps) => {
   // STATE
   const [comment, setComment] = useState<GComment>(c);
+  const [cc, setCC] = useState<Course[]>(courses);
 
   // CONTEXT
   const userCtx = useContext(UserContext);
   const { user } = userCtx;
 
   // ROUTER
-  const router = useRouter()
+  const router = useRouter();
+
+  // REF
+  const coursesRef: React.MutableRefObject<Course[]> = useRef<Course[]>(courses);
 
   // MANEJADOR DE TXT - TEACH
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,6 +109,39 @@ const Home = ({ courses, coursesTaken }: HomeProps) => {
     });
   };
 
+  useEffect(()=>{
+    setCC(courses)
+  }, [courses])
+
+  useEffect(() => {
+    changeSearchHome(search)
+  }, [search]);
+
+  // BUSCADOR
+  const changeSearchHome = (val: string) => {
+    // NORMALIZAR ENTRADAS
+    const nfd = (str: string) =>
+      str
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    // OBTENER DATOS
+    let filterCourses: Course[] = [];
+
+    // FILTRAR POSTS
+    filterCourses = coursesRef.current.filter((courseHome: Course) => {
+      if (nfd(courseHome.title).indexOf(nfd(val)) >= 0) return true;
+      return false;
+    });
+
+    // ACTUALIZAR ESTADOS
+    setTimeout(() => {
+      setCC([...filterCourses]);
+    }, 200);
+  };
+
   return (
     <main className={Styles.container}>
       {/* HEADER */}
@@ -146,7 +190,7 @@ const Home = ({ courses, coursesTaken }: HomeProps) => {
       <section>
         <h1 style={{ marginBottom: "0px" }}>Que aprender ahora</h1>
         <div className={Styles.carousel}>
-          {courses.map((course) => (
+          {cc.map((course) => (
             <CardCourse course={course} key={`${course._id}${course.title}`} />
           ))}
         </div>

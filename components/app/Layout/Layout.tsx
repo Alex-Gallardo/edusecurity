@@ -9,14 +9,20 @@ import Header from "../Header/Header";
 // STYLES
 import Styles from "./Layout.module.scss";
 
-const Layout = ({ children }) => {
+// PROPS
+interface LayoutProps {
+  children: any,
+  onSearch?: any
+}
+
+const Layout = ({ children, onSearch }: LayoutProps) => {
   return (
     <div className={Styles.container}>
       {/* HEAD */}
       <Head>
         <title>EduSecurity</title>
       </Head>
-      <Header />
+      <Header onSearch={onSearch} />
       <main className={Styles.sub_container}>{children}</main>
     </div>
   );

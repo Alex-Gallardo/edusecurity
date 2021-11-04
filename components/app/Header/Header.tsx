@@ -15,7 +15,12 @@ import Button from "@mui/material/Button";
 // CONPONENTS
 import InputSearch from "../Search/Search";
 
-const Header = () => {
+// PROPS
+interface HeaderProps {
+  onSearch?: any
+}
+
+const Header = ({onSearch}: HeaderProps) => {
   const [imgSRC, setImgSRC] = useState<string>(
     "https://www.marathonranking.com/wp-content/uploads/imgs/loading.gif"
   );
@@ -41,7 +46,7 @@ const Header = () => {
 
   // BUSCAR LOS CURSOS
   const searchCourse = (txt: string) => {
-    console.log("Bucando... ", txt);
+    onSearch(txt);
   };
 
   return (

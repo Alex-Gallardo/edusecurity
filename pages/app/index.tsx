@@ -15,6 +15,7 @@ import Home from "views/App/home/home";
 const Init = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [coursesTaken, setCoursesTaken] = useState<Course[]>([]);
+  const [search, setSearch] = useState<string>("");
 
   // CONTEXT
   const userCtx = useContext(UserContext);
@@ -59,8 +60,8 @@ const Init = () => {
   }, [courses]);
 
   return (
-    <Layout>
-      <Home courses={courses} coursesTaken={coursesTaken} />
+    <Layout onSearch={setSearch}>
+      <Home courses={courses} coursesTaken={coursesTaken} search={search} />
     </Layout>
   );
 };
