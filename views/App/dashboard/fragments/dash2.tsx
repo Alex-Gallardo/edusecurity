@@ -69,14 +69,16 @@ const DashboardView2 = ({ course }: DashboardProps) => {
 
           {/* DAT-COURSE */}
           <div className={Styles.info_dat_}>
-            <Image
-              src={course.cover}
-              alt={course.title}
-              className={Styles.img}
-              unoptimized
-              height='250px'
-              width='100%'
-            />
+            <div className={Styles.cont_img}>
+              <Image
+                src={course.cover}
+                alt={course.title}
+                className={Styles.img}
+                unoptimized
+                height="250px"
+                width="300px"
+              />
+            </div>
             <div className={Styles.info_dat}>
               <h2>{course.title}</h2>
               <p style={{ marginBottom: "24px" }}>{course.description}</p>

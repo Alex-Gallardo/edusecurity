@@ -70,6 +70,13 @@
         width: 100%;
         border-radius: 4px;
 
+        .cont_img{
+          @include flexPosition(row, center, center);
+          height: auto;
+          width: 100%;
+          background-color: #fff;
+        }
+
         .img {
           height: 250px;
           width: 100%;
