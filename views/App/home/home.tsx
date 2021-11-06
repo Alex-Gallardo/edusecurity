@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 // CONTEXT
 import UserContext from "../../../context/UserContext";
@@ -52,8 +46,7 @@ const Home = ({ courses, coursesTaken, search }: HomeProps) => {
   const router = useRouter();
 
   // REF
-  const coursesRef: React.MutableRefObject<Course[]> =
-    useRef<Course[]>([]);
+  const coursesRef: React.MutableRefObject<Course[]> = useRef<Course[]>([]);
 
   // MANEJADOR DE TXT - TEACH
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,20 +104,13 @@ const Home = ({ courses, coursesTaken, search }: HomeProps) => {
   };
 
   useEffect(() => {
-    getAllFromCollection<Course>("Courses").then((res: Course[]) => {
-      coursesRef.current = courses
-      setCC(res);
-    });
-  }, []);
-
-  useEffect(() => {
-    getAllFromCollection<Course>("Courses").then((res: Course[]) => {
-      coursesRef.current = courses
-      setCC(res);
-    });
+    console.log("c-c:", courses, "\ncc:", cc);
+    coursesRef.current = courses
+    setCC(courses);
   }, [courses]);
 
   useEffect(() => {
+    console.log("Entro a search", search);
     changeSearchHome(search);
   }, [search]);
 
@@ -141,16 +127,25 @@ const Home = ({ courses, coursesTaken, search }: HomeProps) => {
     // OBTENER DATOS
     let filterCourses: Course[] = [];
 
-    // FILTRAR POSTS
-    filterCourses = coursesRef.current.filter((courseHome: Course) => {
-      if (nfd(courseHome.title).indexOf(nfd(val)) >= 0) return true;
-      return false;
-    });
+    if(val.length > 0){
+      console.log("ENTRO A SEARCH", val)
 
-    // ACTUALIZAR ESTADOS
-    setTimeout(() => {
-      setCC([...filterCourses]);
-    }, 200);
+      // FILTRAR POSTS
+      filterCourses = coursesRef.current.filter((courseHome: Course) => {
+        if (nfd(courseHome.title).indexOf(nfd(val)) >= 0) return true;
+        return false;
+      });
+  
+      // ACTUALIZAR ESTADOS
+      setTimeout(() => {
+        setCC([...filterCourses]);
+      }, 200);
+    }else{
+      setTimeout(() => {
+        setCC([...coursesRef.current]);
+      }, 200);
+    }
+
   };
 
   return (
@@ -201,9 +196,16 @@ const Home = ({ courses, coursesTaken, search }: HomeProps) => {
       <section>
         <h1 style={{ marginBottom: "0px" }}>Que aprender ahora</h1>
         <div className={Styles.carousel}>
-          {cc.map((course) => (
-            <CardCourse course={course} key={`${course._id}${course.title}`} />
-          ))}
+          {cc.length > 0 ? (
+            cc.map((course) => (
+              <CardCourse
+                course={course}
+                key={`${course._id}${course.title}`}
+              />
+            ))
+          ) : (
+            <p>Sin cursos</p>
+          )}
         </div>
       </section>
     </main>

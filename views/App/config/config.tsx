@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../../context/UserContext";
 import Image from "next/image";
 
@@ -18,6 +18,7 @@ import TextField from "@mui/material/TextField";
 // UTILS
 import { logout } from "utils/Auth";
 import { saveInCollection } from "utils/DB";
+import { addToStorage, getURLFromStorage } from "utils/Storage";
 
 const Config = () => {
   // CONTEXT
@@ -26,9 +27,17 @@ const Config = () => {
 
   // ESTADO
   const [state, setState] = useState<User>(user);
+  const [imgProfile, setImgProfile] = useState<string>(
+    user?.photo_url ||
+      "https://erasmuscoursescroatia.com/wp-content/uploads/2015/11/no-user.jpg"
+  );
 
   // ROUTER
   const router = useRouter();
+
+  useEffect(() => {
+    if (user) setImgProfile(user.photo_url);
+  }, [user]);
 
   // Setear valores (Input)
   const setValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +92,38 @@ const Config = () => {
     }
   };
 
+  // COMPUTAR STORAGE-FIREBASE
+  const computeImg = (value: any) => {
+    const files = value.target.files;
+    console.log("file-input", files, files[0].name);
+
+    addToStorage("Profiles", files[0].name, files[0])
+      .then((_res) => {
+        getURLFromStorage("Profiles", files[0].name).then((r) => {
+          console.log("Respuesta:", _res, r);
+          const tmpU: User = state ? state : user;
+          tmpU.photo_url = r;
+          setImgProfile(r);
+          setState(tmpU);
+          // @ts-ignore
+          window.Alert({
+            title: "Accion completada",
+            body: `La imagen "${files[0].name}" se ha subido correctamente!`,
+            type: "confirm",
+          });
+        });
+      })
+      .catch((err) => {
+        // @ts-ignore
+        window.Alert({
+          title: "Uppss, a ocurrido un error!",
+          body: "Hubo un error en la subida de la imagen, intenta recargar la pagina e intentalo de nuevo",
+          type: "error",
+        });
+        console.error("uploadImage-config-computeImg", err);
+      });
+  };
+
   return (
     <main className={Styles.container}>
       <div
@@ -94,19 +135,24 @@ const Config = () => {
 
       {/* PERFIL INFO */}
       <section className={Styles.body_}>
-        <div className={Styles.cont_img}>
+        <label htmlFor="user_image" className={Styles.cont_img}>
           <Image
-            src={
-              user?.photo_url ||
-              "https://erasmuscoursescroatia.com/wp-content/uploads/2015/11/no-user.jpg"
-            }
+            src={imgProfile}
             alt="picture-perfil"
             className={Styles.body_img}
             unoptimized
             width="200px"
             height="200px"
           />
-        </div>
+        </label>
+        <input
+          id="user_image"
+          accept="image/png,image/jpg"
+          type="file"
+          multiple={false}
+          style={{ display: "none" }}
+          onChange={(e: any) => computeImg(e)}
+        />
 
         {/* DAT-PERFIL */}
         <div className={Styles.perfil}>

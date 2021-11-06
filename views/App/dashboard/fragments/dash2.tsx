@@ -62,7 +62,7 @@ const DashboardView2 = ({ course }: DashboardProps) => {
               startIcon={<ArrowBack />}
               onClick={sendBack}
             >
-              Regreasar
+              Regresar
             </Button>
             {/* <h2>Información:</h2> */}
           </div>
