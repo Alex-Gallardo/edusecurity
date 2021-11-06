@@ -102,7 +102,7 @@ const DashboardView2 = ({ course }: DashboardProps) => {
         <h2>{resources.length} recursos:</h2>
         <div className={Styles.cont_resources}>
           {resources.map((r: Resource, i: number) => (
-            <ResourceCmp resource={r} users={users} key={r._id + "_" + i} />
+            <ResourceCmp resource={r} users={users} key={`${r._id}_${i}`} />
           ))}
         </div>
       </section>

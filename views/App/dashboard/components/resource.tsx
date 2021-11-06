@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 
 // UTILS
@@ -34,12 +34,15 @@ const ResourceCmp = ({ resource, users }: ResourceCmpProps) => {
     title: "",
     description: "",
   });
+  const [resFocus, setResFocus] = useState<Resource>(resource);
 
   // CONTEXT
   const userCTX = useContext(UserContext);
   const { user } = userCTX;
 
-  console.log("resource:", resource);
+  useEffect(() => {
+    if (resource) setResFocus(resource);
+  }, [resource]);
 
   // MOSTRAR COMENTARIOS
   const showComments = () => {
@@ -99,6 +102,13 @@ const ResourceCmp = ({ resource, users }: ResourceCmpProps) => {
     });
   };
 
+  // SETEAR VALORES
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setResFocus((state) => ({ ...state, [name]: value }));
+  };
+
   // EDITAR RECURSO
   const edithResource = () => {
     window.Alert({
@@ -111,25 +121,29 @@ const ResourceCmp = ({ resource, users }: ResourceCmpProps) => {
           <TextField
             fullWidth
             multiline
-            defaultValue={resource.title}
+            name='title'
+            placeholder={resFocus.title}
             className={Styles.input}
+            onChange={handleChange}
           />
           <p>Descripcion:</p>
           <TextField
             fullWidth
             multiline
-            defaultValue={resource.description}
+            name='description'
+            placeholder={resFocus.description}
             className={Styles.input}
+            onChange={handleChange}
           />
           <p>Video:</p>
           <label htmlFor="user_image">
             <Image
               className={Styles.img}
               src={srcIMG}
-              alt={resource._id}
+              alt={resFocus._id}
               unoptimized
-              width='164px'
-              height='150px'
+              width="164px"
+              height="150px"
             />
           </label>
           <input
@@ -139,7 +153,7 @@ const ResourceCmp = ({ resource, users }: ResourceCmpProps) => {
             type="file"
             multiple={false}
             style={{ display: "none" }}
-            onChange={(e: any) => computeImg(e)}
+            onChange={(e: any) => computeResource(e)}
           />
           <p>
             (La calidad soportada es hasta 720px, no se permiten videos mayores
@@ -147,11 +161,17 @@ const ResourceCmp = ({ resource, users }: ResourceCmpProps) => {
           </p>
         </div>
       ),
+      onConfirm:()=>{
+        console.log('antes de subir', resFocus)
+      },
+      onCancel: ()=>{
+        setResFocus(resource)
+      }
     });
   };
 
   // COMPUTAR STORAGE-FIREBASE - Video
-  const computeImg = (value: any) => {
+  const computeResource = (value: any) => {
     // setLoading(true);
     const files = value.target.files;
     console.log("file-input", files, files[0].name);
@@ -191,13 +211,13 @@ const ResourceCmp = ({ resource, users }: ResourceCmpProps) => {
   return (
     <div className={Styles.resource}>
       <div className={Styles.ct_info}>
-        <h3>{resource.title}</h3>
-        <p>{resource.description}</p>
+        <h3>{resFocus.title}</h3>
+        <p>{resFocus.description}</p>
       </div>
       {/* VER COMENTARIOS */}
       <Tooltip title="Comentarios" className={Styles.btn_act}>
         <IconButton onClick={showComments}>
-          <p className={Styles.p_}>{resource.comments?.length || 0}</p>
+          <p className={Styles.p_}>{resFocus.comments?.length || 0}</p>
           <Comment color="disabled" />
         </IconButton>
       </Tooltip>

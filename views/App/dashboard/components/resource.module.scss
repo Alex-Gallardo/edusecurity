@@ -96,6 +96,17 @@
 .ctn_edith {
   @include flexPosition(column, flex-start, flex-start);
   width: 100%;
+  height: 350px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #07355f;
+    border-radius: 6px;
+  }
 
   p {
     margin-bottom: 4px;
